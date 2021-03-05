@@ -2,4 +2,4 @@
 
 ### Blogging platform made for the 22nd century
 
-##### Locality-agnostic and pay-wall based
+##### Locale-agnostic and pay-wall based
