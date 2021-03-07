@@ -82,7 +82,7 @@
        x2="38.354893"
        y2="78.624634"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(68.063514,-56.478604)" />
+       gradientTransform="translate(70.877238,-50.677629)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient855"
@@ -92,7 +92,7 @@
        x2="172.21986"
        y2="150.16188"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(68.063514,-56.478604)" />
+       gradientTransform="matrix(0.61618922,0,0,0.61618922,128.00806,22.083707)" />
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient867"
@@ -102,7 +102,7 @@
        x2="159.64951"
        y2="214.87292"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(68.063514,-56.478604)" />
+       gradientTransform="translate(70.877238,-50.677629)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -135,7 +135,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -144,29 +144,19 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g878"
-       transform="translate(2.8137241,5.8009754)">
-      <ellipse
-         style="opacity:0.977564;fill:url(#linearGradient845);fill-opacity:1;stroke-width:0.529167;stroke-linejoin:round"
+       id="g868">
+      <path
          id="path833"
-         cx="104.51515"
-         cy="126.49069"
-         rx="92.85537"
-         ry="96.736717" />
-      <ellipse
-         style="opacity:0.977564;fill:url(#linearGradient869);fill-opacity:1;stroke-width:0.200801;stroke-linejoin:round"
+         style="opacity:0.977564;fill:url(#linearGradient845);fill-opacity:1;stroke-width:0.529167;stroke-linejoin:round"
+         d="m 200.18424,132.29167 a 92.85537,96.736717 0 0 1 -92.85537,96.73672 92.85537,96.736717 0 0 1 -92.855364,-96.73672 92.85537,96.736717 0 0 1 92.855364,-96.73672 92.85537,96.736717 0 0 1 92.85537,96.73672 z" />
+      <path
          id="path835"
-         cx="220.4852"
-         cy="191.67126"
-         rx="26.810905"
-         ry="25.854511" />
-      <ellipse
-         style="opacity:0.977564;fill:url(#linearGradient857);fill-opacity:1;stroke-width:0.156688;stroke-linejoin:round"
+         style="opacity:0.977564;fill:url(#linearGradient869);fill-opacity:1;stroke-width:0.200801;stroke-linejoin:round"
+         d="m 250.10982,197.47224 a 26.810905,25.854511 0 0 1 -26.8109,25.85452 26.810905,25.854511 0 0 1 -26.81091,-25.85452 26.810905,25.854511 0 0 1 26.81091,-25.85451 26.810905,25.854511 0 0 1 26.8109,25.85451 z" />
+      <path
          id="ellipse837"
-         cx="224.27"
-         cy="124.92911"
-         rx="20.920948"
-         ry="20.17466" />
+         style="opacity:0.977564;fill:url(#linearGradient857);fill-opacity:1;stroke-width:0.0965495;stroke-linejoin:round"
+         d="m 237.15207,133.86519 a 12.891263,12.431408 0 0 1 -12.89126,12.43141 12.891263,12.431408 0 0 1 -12.89126,-12.43141 12.891263,12.431408 0 0 1 12.89126,-12.43141 12.891263,12.431408 0 0 1 12.89126,12.43141 z" />
     </g>
   </g>
 </svg>
