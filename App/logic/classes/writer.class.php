@@ -26,7 +26,7 @@
      * updated using the edit profile module.
      */
     public function register(PDO $conn = null){
-
+        
     }
 
     public function login(PDO $conn = null){
@@ -36,6 +36,7 @@
     public function logout(PDO $conn = null){
 
     }
+
 
     public function __call($name, $arguments)
     {
