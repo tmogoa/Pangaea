@@ -4,7 +4,7 @@
  * Writer class. This class is the super class for the Reader class.
  */
  class Writer{
-    private $writerId, $firstName, $lastName, $email, $password, $phoneNumber, $nationality;
+    private $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality;
     /**
      * all the articles that a writer has written.
      */
@@ -24,9 +24,40 @@
      * Registers a new user.
      * Before this function is called, these fields must be set: email, password. All other fields can be
      * updated using the edit profile module.
+     * @return NEE|NPE|UEE|UPE|ADE|SQE|EEE
+     * NEE: Null Email Error, NPE: Null password Error, UEE: Unqualified email error, UPE: Unqualified
+     * Password Error, ADE: Accessing Database Error, SQE: Sql query error, EEE: Email exist error
+     * @return PNE|PLLE|PULE|PLSE
+     *   Password Number Error: Password must include numbers
+     *  Password Lowercase Letter Error: Password must include lowercase letters
+     *  Password Uppercase Letter Error: Password must include uppercase letters
+     *  Password Length Short Error: Password must length is shorter then 9 characters.
      */
     public function register(PDO $conn = null){
-        
+        if($this->email == null){
+            return "NEE";
+        }
+
+        if($this->password == null){
+            return "NPE";
+        }
+
+        if(Utility::checkEmail($this->email)){
+            return "UEE";
+        }
+
+        //check if email already exist
+        if(Utility::doesEmailExist($this->email)){
+            return "EEE";
+        }
+
+        //checks the strength of the password
+        if(Utility::isPasswordStrong($this->password) !== true){
+            return Utility::isPasswordStrong($this->password);
+        }
+
+        //There are not errors, so we insert the user into the database and set the ID
+
     }
 
     public function login(PDO $conn = null){

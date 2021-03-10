@@ -43,6 +43,28 @@
             }
         }
 
+        /**
+         * Query the database given a specific table
+         * @param $condition
+         * do not include the where clause, e.g 'email = ? AND password = ?'
+         */
+        public static function queryTable($tableName, $columns, $condition, array $values_array, $connection = null){
+            //todo
+        }
+
+        /**
+         * Insert into a table and returns the ID of the row affected if its auto_increment or manually added.
+         * @param $values_specs 
+         * the values of the specfied columns eg. '(?, ?, ?, ?)'
+         * @param $columns_specification
+         * The columns to insert values for. e.g. (email, password, x, y)
+         * @param array $values
+         * 
+         */
+
+         public static function insertIntoTable($tableName, $columns_specification, $values_specs, array $values, $connection = null){
+             //todo
+         }
 
         /**
          * checks names to ensure that they meet policy
@@ -97,7 +119,55 @@
              return false;
          }
 
-         
+         /**
+          * Checks if an email exist already
+          */
+          public static function doesEmailExist($email){
+              $table = "";
+              $columns = "";
+              $condition = "";
+              $values = [];
+              $connection = null;
+
+              if(self::queryTable($table, $columns, $condition, $values, $connection)){
+                  return true;
+              }
+
+              return false;
+          }
+
+          /**
+           * Checks if the password is a qualified password
+           * @return PNE|PLLE|PULE|PLSE
+           * Password Number Error: Password must include numbers
+           * Password Lowercase Letter Error: Password must include lowercase letters
+           * Password Uppercase Letter Error: Password must include uppercase letters
+           * Password Length Short Error: Password must length is shorter then 9 characters.
+           */
+
+           public static function isPasswordStrong($password){
+            if(strlen($password) >= 9){
+                if(preg_match('@[A-Z]@', $password)){
+                   if(preg_match('@[a-z]@', $password)){
+                      if(preg_match('@[0-9]@', $password)){
+                        return true;
+                      }
+                      else{
+                        return "PNE";//Password Number Error
+                      }
+                   }else{
+                     return "PLLE";//Password Lowercase Letter Error
+                   }
+                }
+                else{
+                  return "PULE";//Password Uppercase Letter Errors
+                }
+             }
+             else{
+               return "PLSE";//Password Length Short Error
+             }
+           }
+
     }
 
 ?>
