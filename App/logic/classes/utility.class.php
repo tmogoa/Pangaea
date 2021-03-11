@@ -39,7 +39,7 @@
             }
             catch(PDOException $ex){
                 echo "{$ex->getMessage()}";
-                return null;
+                return false;
             }
         }
 
@@ -47,23 +47,61 @@
          * Query the database given a specific table
          * @param $condition
          * do not include the where clause, e.g 'email = ? AND password = ?'
+         * @param $values_array is an arroy of the values to be inserted at the place holders.
+         * The connection is PDO, so everything is prepared
          */
-        public static function queryTable($tableName, $columns, $condition, array $values_array, $connection = null){
-            //todo
+        public static function queryTable($tableName, $columns, $condition, array $values_array, $connection){
+            $connectionWasPassed = ($connection == null)?false:true;
+            if(!$connectionWasPassed){
+                $connection = self::makeConnection();
+            }
+            $sql = "SELECT $columns from `$tableName` where $condition";
+            $stmt = $connection->prepare($sql);
+            if($stmt->execute($values_array)){
+                $result = $stmt->fetchAll();
+                $return = $result;
+            }
+            else{
+                $return = false;
+            }
+
+            if(!$connectionWasPassed){
+                $connection = null;
+            }
+
+            return $return;
         }
 
         /**
          * Insert into a table and returns the ID of the row affected if its auto_increment or manually added.
          * @param $values_specs 
-         * the values of the specfied columns eg. '(?, ?, ?, ?)'
+         * the values of the specfied columns eg. '?, ?, ?, ?'
          * @param $columns_specification
-         * The columns to insert values for. e.g. (email, password, x, y)
-         * @param array $values
+         * The columns to insert values for. e.g. email, password, x, y
+         * @param array $values to be inserted into the table. Order matters
          * 
          */
 
          public static function insertIntoTable($tableName, $columns_specification, $values_specs, array $values, $connection = null){
-             //todo
+            $connectionWasPassed = ($connection == null)?false:true;
+            if(!$connectionWasPassed){
+                $connection = self::makeConnection();
+            }
+            
+            $sql = "INSERT into `$tableName`($columns_specification) values ($values_specs)";
+            $stmt = $connection->prepare($sql);
+
+            if($stmt->execute($values)){
+                $return = $connection->lastInsertId();
+            }else{
+                $return = false;
+            }
+
+            if(!$connectionWasPassed){
+                $connection = null;
+            }
+
+            return $return;
          }
 
         /**
@@ -126,8 +164,8 @@
               $table = "";
               $columns = "";
               $condition = "";
-              $values = [];
-              $connection = null;
+              $values = [$email];
+              $connection = self::makeConnection();
 
               if(self::queryTable($table, $columns, $condition, $values, $connection)){
                   return true;
