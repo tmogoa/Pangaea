@@ -56,7 +56,19 @@
             return Utility::isPasswordStrong($this->password);
         }
 
-        //There are not errors, so we insert the user into the database and set the ID
+        //There are no errors, so we insert the user into the database and set the ID
+        //hash the password
+        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        //Todo
+        $tableName = "";
+        $column_specs = " email, `password` ";
+        $values_spec = "?, ?";
+        $values = [$this->email, $this->password];
+        $status = Utility::insertIntoTable($tableName, $column_specs, $values_spec, $values);
+        if($status === false){
+            return "SQE";
+        }
+        $this->writerId = $status;
 
     }
 
