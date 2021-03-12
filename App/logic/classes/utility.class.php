@@ -19,6 +19,20 @@
         public static $textAreaRegex = "";
         
         /**
+         * Constants
+         */
+
+        const COUNTRIES = array("Afghanistan", "Albania", "Algeria","Andorra",
+        "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+        "Bahamas", "Bahrain", "Bangladesh","Barbados", "Belarus", "Belgium", "Belize", "Benin",
+        "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
+        "Burkina Faso", "Burundi", "Cote d'Ivoire","Cape-Verde", "Cambodia", "Cameroon", "Canada",
+        "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo-Brazzaville", "Congo-DR", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia(Czech Republic)", "Denmark", "Djibouti", "Dominica", "Dominican-Republic", "Ecuador", "Egypt", "El-Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Estonia", "Eswatini(Swaziland)", "Ethiopia", "Fiji", "Finland",
+        "France", "Gabon", "Gambia", "Georgia","Germany", "Ghana", "Greece","Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary","Iceland", "India","Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy","Japan", "Jersey", "Jamaica", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo","Kuwait", "Kyrgyzstan", "Laos", "Latvia","Lebanon", "Lesotho", "Liberia", "Lybia", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar(formerly Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania","Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San-Marino", "Sao-Tome-and-Principe", "Saudi-Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon-Islands", "Somalia", "South-Africa", "South-Korea", "South-Sudan", "Spain", "Sri-Lanka", "Sudan", "Suriname", "Sweden", "Switzerland",
+        "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste","Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United-Arab-Emirates", "United-Kingdom", "United-States-of-America", "Uruguay", "Uzbekistan", "Vanuatu",
+        "Venezuela","Vetican-City", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
+
+        /**
          * Makes a connection to the database and returns the connection object.
          * @param $options 
          * Pass the array of options if you want to set options.
@@ -50,7 +64,7 @@
          * @param $values_array is an arroy of the values to be inserted at the place holders.
          * The connection is PDO, so everything is prepared
          */
-        public static function queryTable($tableName, $columns, $condition, array $values_array, $connection){
+        public static function queryTable($tableName, $columns, $condition, array $values_array, $connection = null){
             $connectionWasPassed = ($connection == null)?false:true;
             if(!$connectionWasPassed){
                 $connection = self::makeConnection();
@@ -103,6 +117,37 @@
 
             return $return;
          }
+
+        /**
+         * updates a table in the database. Please put ticks around sql keywords like `order` if 
+         * it will be used as a column name or a value. don't put ticks on table names. that is already handled by default.
+         * @param $tableName  the name of the table to be updated
+         * @param $columns_specs  the columns to be updated. E.g. "name = ?, order=?"
+         * @param $condition  the logic in the WHERE clause. e.g. "userId = ?"
+         * @param array $values  the values for the place holder in the $columns_specs and $condition
+         * This method uses PDO under the hood, therefore, order of the values matter.
+         */
+          public function updateTable($tableName, $columns_specs, $condition, array $values, PDO $connection = null){
+                $connectionWasPassed = ($connection == null)?false:true;
+                if(!$connectionWasPassed){
+                    $connection = self::makeConnection();
+                }
+                
+                $sql = "UPDATE `$tableName` set $columns_specs where $condition";
+                $stmt = $connection->prepare($sql);
+
+                if($stmt->execute($values)){
+                    $return = true;
+                }else{
+                    $return = false;
+                }
+
+                if(!$connectionWasPassed){
+                    $connection = null;
+                }
+
+                return $return;
+          }
 
         /**
          * checks names to ensure that they meet policy
@@ -205,6 +250,23 @@
                return "PLSE";//Password Length Short Error
              }
            }
+
+           /**
+            * Checks the nationality of the user to ensure that it was selected from the list and not sent through the console.
+            */
+
+            public static function checkCountry($country){
+                if(!in_array($country, self::COUNTRIES)){
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static function sendVerificationEmail($email){
+                //Send email verification
+            }
+
 
     }
 

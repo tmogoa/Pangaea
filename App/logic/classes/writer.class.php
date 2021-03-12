@@ -14,10 +14,30 @@
      * Creates a writer object with no field set.
      * Every field must be set, including the Id.
      * If you want to create a writer from the database, call
-     * Writer(writerId: int);
+     * Writer(writerId: int); pass the connection in the second parameter if you already
+     * have a connection to use.
      */
-    public function __construct(){
+    public function __construct($writerId = false, $conn = null){
+        if($writerId){
+            $connectionWasPassed = ($conn == null)?false:true;
+            if(!$connectionWasPassed){
+                $conn = Utility::makeConnection();
+            }
+            //todo
+            $tableName = "user";
+            $column_specs = "*";
+            $condition = "userId = ?";
+            $values = [$writerId];
+            $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
+            $this->firstName = $details[0]['firstName'];
+            $this->lastName = $details[0]['lastName'];
+            $this->email = $details[0]['email'];
+            $this->password = $details[0]['password'];
 
+            if(!$connectionWasPassed){
+                $conn = null;
+            }
+        }
     }
 
     /**
@@ -59,6 +79,7 @@
         //There are no errors, so we insert the user into the database and set the ID
         //hash the password
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        
         //Todo
         $tableName = "";
         $column_specs = " email, `password` ";
@@ -78,21 +99,6 @@
 
     public function logout(PDO $conn = null){
 
-    }
-
-
-    public function __call($name, $arguments)
-    {
-        switch($name){
-            //a constructor with an WriterId parameter was called
-            case "Writer":
-                {
-                    $writer = new Writer();
-                    $writer->setWriterId($arguments[0]);
-                    //set the writer details
-                    break;
-                }
-        }
     }
 
     /**
@@ -233,6 +239,100 @@
         $this->nationality = $nationality;
 
         return $this;
+    }
+
+    /**
+     * This saves the state of the Object to the database.
+     * It is mostly useful during profile update. This will persist all fields
+     * that are not null. The password is changed in `changePassword($oldPassword, $newPassword)`
+     *  This method doesn't change the password.
+     * @return string UFNE: Unqualified First Name Error | ULNE: Unqualified Last Name Error |
+     * UEE: Unqualified Email Error | NEEE: New Email Exist Error | UNE: Unqualified Nationality Error| UPNE: Unqualified Phone Number Error
+     * 
+     */
+
+    public function persist(){
+        $changeEmail = false;
+        $column_specs = "";
+        $values = [];
+      if(isset($this->firstName) && $this->firstName !== null){
+            if(!Utility::checkName($this->firstName)){
+                return "UFNE";
+            }
+            $column_specs .= "firstName = ? ";
+            $values[] = $this->firstName;
+      } 
+
+      if(isset($this->lastName) && $this->lastName !== null){
+            if(!Utility::checkName($this->lastName)){
+                return "ULNE";
+            }
+           
+            //some columns are before this one.
+            if(count($values) > 0){
+                $column_specs .", ";
+            }
+            $column_specs .= "lastName = ? ";
+
+            $values[] = $this->lastName;
+      }  
+
+      if(isset($this->email) && $this->email !== null){
+            if(!Utility::checkEmail($this->email)){
+                return "UEE";
+            }
+            //check if email is being changed.
+            $currentDetails = Utility::queryTable("user", "email", "userId = ?", [$this->writerId]);
+            
+            if($this->email != $currentDetails[0]['email']){
+                //email is being changed.
+                //check if the new email already exist in the system
+                if(Utility::doesEmailExist($this->email)){
+                    return "NEEE";
+                }
+
+                //if this is true, we will set the email verification to 0 to make display the confirm email message at the top of the screen when the user logs in.
+                $changeEmail = true;
+                 //some columns are before this one.
+                if(count($values) > 0){
+                    $column_specs .", ";
+                }
+                $column_specs .= "email = ? ";
+
+                $values[] = $this->email;
+            }
+
+            if(isset($this->phoneNumber) && $this->phoneNumber !== null){
+                if(!Utility::checkPhone($this->phoneNumber)){
+                    return "UPNE";
+                }
+
+                if(count($values) > 0){
+                    $column_specs .", ";
+                }
+                $column_specs .= "phone = ? ";
+
+                $values[] = $this->phone;
+            } 
+            
+            if(isset($this->nationality) && $this->nationality !== null){
+                if(!Utility::checkCountry($this->nationality)){
+                    return "UNE";
+                }
+                if(count($values) > 0){
+                    $column_specs .", ";
+                }
+                $column_specs .= "nationality = ? ";
+
+                $values[] = $this->nationality;
+            }
+            
+            //everything is okay
+            //update the database
+            
+        
+
+      }  
     }
  }
 
