@@ -1,6 +1,18 @@
 * {
     font-family: "Poppins", sans-serif;
 }
+a {
+    text-decoration: none;
+}
+.active-indicator {
+    width: 20px;
+    height: 3px;
+    background-color: #2e82ff;
+    visibility: hidden;
+}
+.active-indicator.active {
+    visibility: visible;
+}
 .article {
     font-family: "Newsreader", serif;
 }
@@ -22,6 +34,20 @@
     font-weight: bold;
     color: #2e82ff;
 }
+.nav-item {
+    color: #888989;
+}
+.nav-a-link {
+    color: #888989;
+}
+.nav-a-link.active {
+    color: #2e82ff;
+    font-weight: bolder;
+}
+.nav-item:hover {
+    color: #2e82ff;
+}
+
 .search-box {
     width: 300px;
     color: #888989;
