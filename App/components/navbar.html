@@ -1,0 +1,21 @@
+<div
+    class="d-flex flex-row align-items-center border-bottom p-1 font-13 font-grey"
+>
+    <div><img src="./assets/img/logo.svg" alt="logo" class="logo" /></div>
+    <div class="ms-1 logo-text">Pangaea</div>
+    <div class="ms-5">Home</div>
+    <div class="ms-5">Write</div>
+    <div class="ms-5">Earnings</div>
+    <div class="ms-5">Upgrade</div>
+    <div class="ms-5" id="searchBox"></div>
+    <div
+        class="flex-grow-1 d-flex flex-row justify-content-end align-items-center"
+    >
+        <i class="far fa-bell mx-5" style="font-size: 24px"></i>
+        <div id="userBar"></div>
+    </div>
+</div>
+<script>
+    $("#searchBox").load("./components/searchBox.html");
+    $("#userBar").load("./components/userBar.html");
+</script>

@@ -1,0 +1,32 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+.article {
+    font-family: "Newsreader", serif;
+}
+.font-13 {
+    font-size: 13px;
+}
+.font-12 {
+    font-size: 12px;
+}
+.font-grey {
+    color: #888989;
+}
+.logo {
+    width: 60px;
+    height: 60px;
+}
+.logo-text {
+    font-size: 21px;
+    font-weight: bold;
+    color: #2e82ff;
+}
+.search-box {
+    width: 300px;
+    color: #888989;
+    font-size: 13px;
+}
+.search-box:focus {
+    outline: none;
+}
