@@ -53,6 +53,8 @@
      *  Password Lowercase Letter Error: Password must include lowercase letters
      *  Password Uppercase Letter Error: Password must include uppercase letters
      *  Password Length Short Error: Password must length is shorter then 9 characters.
+     * @return OK
+     * When the operation was successful.
      */
     public function register(PDO $conn = null){
         if($this->email == null){
@@ -91,7 +93,7 @@
             return "SQE";
         }
         $this->writerId = $status;
-
+        return "OK";
     }
 
     public function login(PDO $conn = null){
