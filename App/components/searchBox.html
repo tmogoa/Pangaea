@@ -1,0 +1,11 @@
+<form>
+    <input class="rounded-pill border search-box px-3 py-2" placeholder="Search articles..." contenteditable></input>
+</form>
+<script>
+    $(".submit_on_enter").keydown(function (event) {
+        if (event.keyCode == 13) {
+            //submit data via ajax
+            return false;
+        }
+    });
+</script>
