@@ -1,8 +1,13 @@
 <?php
+
     require_once("../classes/utility.class.php");
     require_once("../classes/writer.class.php");
 
     //to signup, we need the email and the password
+    /**
+     * This procedure is totally not bounded to a front end.
+     * We verify the origin of the message before allowing the operation.
+     */
     $email = isset($_POST['email'])?$_POST['email']:"";
     $password = isset($_POST['password'])?$_POST['password']:"";
 

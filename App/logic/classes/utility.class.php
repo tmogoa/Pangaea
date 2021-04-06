@@ -274,6 +274,13 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
                 //we send the hashed email, the id and the date of signup
 
             }
+
+            /**
+             * This function checks HTTP requests
+             */
+            public static function verifyHttpRequest($request){
+                $request = $_SERVER['REQUEST'];
+            }
     
     }
 
