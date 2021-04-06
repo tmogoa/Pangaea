@@ -1,4 +1,5 @@
 <?php
+include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
 /**
  * The utility class contains all the function in that would normally exist in the functions.php
  * Every field in this class is static and functions are also static.
@@ -119,15 +120,16 @@
          }
 
         /**
+         * This uses PDO under the hood.
          * updates a table in the database. Please put ticks around sql keywords like `order` if 
-         * it will be used as a column name or a value. don't put ticks on table names. that is already handled by default.
+         * they are used as a column name or a value. don't put ticks on table names. that is already handled by default.
          * @param $tableName  the name of the table to be updated
          * @param $columns_specs  the columns to be updated. E.g. "name = ?, order=?"
          * @param $condition  the logic in the WHERE clause. e.g. "userId = ?"
          * @param array $values  the values for the place holder in the $columns_specs and $condition
          * This method uses PDO under the hood, therefore, order of the values matter.
          */
-          public function updateTable($tableName, $columns_specs, $condition, array $values, PDO $connection = null){
+          public static function updateTable($tableName, $columns_specs, $condition, array $values, PDO $connection = null){
                 $connectionWasPassed = ($connection == null)?false:true;
                 if(!$connectionWasPassed){
                     $connection = self::makeConnection();
@@ -263,11 +265,16 @@
                 return true;
             }
 
+            /**
+             * This function sends an email to a user to verify their email.
+             * 
+             */
             public static function sendVerificationEmail($email){
                 //Send email verification
+                //we send the hashed email, the id and the date of signup
+
             }
-
-
+    
     }
 
 ?>

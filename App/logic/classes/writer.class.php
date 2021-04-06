@@ -2,6 +2,7 @@
 
 /**
  * Writer class. This class is the super class for the Reader class.
+ * Registration of a new user happens through this class.
  */
  class Writer{
     private $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality;
@@ -251,10 +252,12 @@
      * 
      */
 
-    public function persist(){
+    public function persist(PDO $pdo){
         $changeEmail = false;
         $column_specs = "";
         $values = [];
+        $reassign_val = [];
+
       if(isset($this->firstName) && $this->firstName !== null){
             if(!Utility::checkName($this->firstName)){
                 return "UFNE";
@@ -273,7 +276,6 @@
                 $column_specs .", ";
             }
             $column_specs .= "lastName = ? ";
-
             $values[] = $this->lastName;
       }  
 
@@ -298,7 +300,6 @@
                     $column_specs .", ";
                 }
                 $column_specs .= "email = ? ";
-
                 $values[] = $this->email;
             }
 
@@ -306,16 +307,15 @@
                 if(!Utility::checkPhone($this->phoneNumber)){
                     return "UPNE";
                 }
-
                 if(count($values) > 0){
                     $column_specs .", ";
                 }
                 $column_specs .= "phone = ? ";
-
                 $values[] = $this->phone;
             } 
             
-            if(isset($this->nationality) && $this->nationality !== null){
+            if(isset($this->nationality) && $this->nationality !== null)
+            {
                 if(!Utility::checkCountry($this->nationality)){
                     return "UNE";
                 }
@@ -323,15 +323,23 @@
                     $column_specs .", ";
                 }
                 $column_specs .= "nationality = ? ";
-
                 $values[] = $this->nationality;
             }
             
             //everything is okay
             //update the database
-            
-        
+            //If the email is to be changed, then save it in the temporary table until it is verified.
+            //Todo
+            ///-----------------------
+            //update the database
+            if(Utility::updateTable('user', $column_specs, "userId = ?", $values, $pdo)){
+                return true;
+            }
+            else{
+                return false;
+            }
 
+            //reconstruct this object
       }  
     }
  }
