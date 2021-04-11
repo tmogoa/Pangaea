@@ -284,6 +284,101 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
                 $request = $_SERVER['REQUEST'];
             }
     
+            /**
+             * This function allows the uploading of images.
+             * It takes the Image Array, the name of the image and the directory to place the image in.
+             * When an image is given a name, the name is appended with a -uniqueId to make the image 
+             * name unique. For example, a name Levi, after upload will be Levi-123a3bc4567c2.jpeg. 
+             * All images are saved as a jpeg format. To retrieve an image, please use the returnImgSrc
+             * function to give you the image source. This is because the unique Id after the image has
+             * been uploaded makes it impossible to fetch it directly.
+             * @param array $image - The image array from $_FILES
+             * @param string $save_name - The name to save the image with
+             * @param string $in_directory - The directory in which the image should be saved.
+             * The directory will be autoloaded. So you don't have to worry about the ../. hehe. However
+             * It must be in the storage directory.
+             * @param bool $update = false. If you are updating a currently existing image, then
+             * set this parameter to true. It will allow the method to delete the previously existing 
+             * image and upload the new one.
+             * 
+             * @return bool
+             */
+
+             public static function uploadImage(array $image, $save_name, $in_directory, $update = false){
+                $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+                $ext = strtolower($ext);
+
+                //if we are updating an image, we will go ahead and delete the previously existing one.
+                if($update){
+                    $oldImage = "../".self::returnImageFullName($save_name, $in_directory);
+                    if(file_exists($oldImage) && $oldImage != "../"){
+                        unlink("../".self::returnImageFullName($save_name, $in_directory));
+                    }  
+                }
+                switch (exif_imagetype($image['tmp_name'])) {
+                    case IMAGETYPE_PNG:
+                        $imageTmp=imagecreatefrompng($image['tmp_name']);
+                        break;
+                    case IMAGETYPE_JPEG:
+                        $imageTmp=imagecreatefromjpeg($image['tmp_name']);
+                        break;
+                    case IMAGETYPE_GIF:
+                        $imageTmp=imagecreatefromgif($image['tmp_name']);
+                        break;
+                    case IMAGETYPE_BMP:
+                        $imageTmp=imagecreatefrombmp($image['tmp_name']);
+                        break;
+                    // Defaults to JPG
+                    default:
+                        $imageTmp=imagecreatefromjpeg($image['tmp_name']);
+                        break;
+                }
+            
+                // quality is a value from 0 (worst) to 100 (best)
+                
+                if(imagejpeg($imageTmp, "../../storage/".$in_directory.$save_name."-".uniqid().".jpeg", 70)){
+                    imagedestroy($imageTmp);
+                    return true;
+                }
+                else{
+                    imagedestroy($imageTmp);
+                    return false;
+                }
+            }
+
+
+            /**
+             * Returns the full name of the image whose name is passed by the image name parameter.
+             * The directory of the image is also passed to the function so that we check the right directory.
+             * @param string $image_name the name of the image whose full name is to be returned.
+             * @param string $in_directory the directory in which we should search.
+             * 
+             * @return string The full name of the image. for example, image name Levi will be returne as 
+             * Levi-123a4e56f3c766.jpeg 
+             */
+
+             public static function returnImageFullName($image_name, $in_directory){
+                $target_dir = "../../storage/$in_directory";
+                $all_files  = glob("$target_dir/$image_name-*.jpeg")[0];
+                $file_name = explode("/", $all_files);
+                $file_name = $file_name[count($file_name) - 1];
+                return $file_name;
+             }
+
+            /**
+             * Checks if an image is in an acceptable format.
+             * The extensions are .jpg, .jpeg, .png, .bmp, .webp 
+             * @param $path the path to the image. Usually it is the tmp_name in the $_FILES
+             * @return bool
+             */
+             public static function isImage($path){
+                $check = getimagesize($path);
+                if(in_array($check[2], array('jpg', IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP, IMAGETYPE_WEBP))){
+                    return true;
+                }
+                return false;
+            }
+
     }
 
 ?>

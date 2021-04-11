@@ -5,8 +5,9 @@
         header("Location: ../../login.php");
     }
 
-    require("../classes/utility.class.php");
-    require("../classes/writer.class.php");
+    spl_autoload_register(function($name){
+        require_once("../classes/$name.php");
+    });
 
     /**
      * Editing a user profile

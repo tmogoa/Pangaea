@@ -1,8 +1,9 @@
 <?php
+    spl_autoload_register(function($name){
+        require_once("../classes/$name.php");
+    });
 
-    require_once("../classes/utility.class.php");
-    require_once("../classes/writer.class.php");
-
+ 
     //to signup, we need the email and the password
     /**
      * This procedure is totally not bounded to a front end.
