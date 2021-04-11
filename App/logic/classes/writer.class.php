@@ -205,6 +205,44 @@
     }
 
     /**
+     * This function changes the password of the user.
+     * It requires that the old password matches the user current password.
+     * If this is not met, then the password is not changed.
+     * This method must only be called when you have the Writer id  and the current password is set.
+     * @param $oldPassword - The current password of the user
+     * @param $newPassword - The new password the user wants to set.
+     * @return WCPE|SQLE WCPE: Wrong Current Password Error| SQLE: SQL Error occurred. All the responses
+     * for the check password function in the Utility.
+     */
+    public function changePassword($oldPassword, $newPassword){
+        if(!isset($this->writerId)){
+            return;
+        }
+
+        //make sure the old password matches.
+        if(!password_verify($oldPassword, $this->password)){
+            return "WCPE"; //Wrong Current Password Error
+        }
+
+        //check if the new password meet the requirements
+        if(Utility::isPasswordStrong($newPassword) !== true){
+            return Utility::isPasswordStrong($newPassword);
+        }
+
+        //save to the database
+        $tableName = "user";
+        $column_specs = "`password` = ?";
+        $condition = "userId = ?";
+        $values = [password_hash($this->password, PASSWORD_DEFAULT), $this->writerId];
+        if(Utility::updateTable($tableName, $column_specs, $condition, $values)){
+            $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+            return true;
+        }else{
+            return "SQLE";//sql error occurred
+        }
+
+    }
+    /**
      * Get the value of phoneNumber
      */ 
     public function getPhoneNumber()

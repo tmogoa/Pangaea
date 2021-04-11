@@ -62,8 +62,10 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
          * Query the database given a specific table
          * @param $condition
          * do not include the where clause, e.g 'email = ? AND password = ?'
-         * @param $values_array is an arroy of the values to be inserted at the place holders.
+         * @param $values_array is an array of the values to be inserted at the place holders.
          * The connection is PDO, so everything is prepared
+         * The table name is treated as an sql keyword. That means, it already has the back ticks around 
+         * it.
          */
         public static function queryTable($tableName, $columns, $condition, array $values_array, $connection = null){
             $connectionWasPassed = ($connection == null)?false:true;
