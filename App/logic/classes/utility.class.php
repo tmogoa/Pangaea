@@ -346,7 +346,6 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
                 }
             }
 
-
             /**
              * Returns the full name of the image whose name is passed by the image name parameter.
              * The directory of the image is also passed to the function so that we check the right directory.
