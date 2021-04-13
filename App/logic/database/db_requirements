@@ -1,0 +1,6 @@
+This file will have the require tables for the database.
+Abart please check this file regularly and update the database using the migration.php
+
+Tables needed
+1. users table
+   -userId, firstname, lastname, phone, email, password
