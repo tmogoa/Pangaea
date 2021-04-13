@@ -1,0 +1,26 @@
+{
+    "name": "Pangaea",
+    "version": "1.0.0",
+    "description": "### Blogging platform",
+    "main": "index.js",
+    "directories": {
+        "doc": "docs"
+    },
+    "scripts": {
+        "build:css": "tailwind build App/src/style.css -o App/assets/css/style.css"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tmogoa/Pangaea.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tmogoa/Pangaea/issues"
+    },
+    "homepage": "https://github.com/tmogoa/Pangaea#readme",
+    "dependencies": {
+        "tailwindcss": "^2.1.1"
+    }
+}
