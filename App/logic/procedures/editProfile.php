@@ -6,7 +6,7 @@
     }
 
     spl_autoload_register(function($name){
-        require_once("../classes/$name.php");
+        require_once("../classes/$name.class.php");
     });
 
     /**
