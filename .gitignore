@@ -4,7 +4,7 @@ bin-release/
 [Oo]bj/
 [Bb]in/
 vendor/
-
+node_modules/
 # Other files and folders
 .settings/
 test.php
