@@ -34,7 +34,8 @@
 
                 )";
 
-                    $conn->prepare($sql);
+                $stmt1 =  $conn->prepare($sql);
+                $stmt1->execute();
 
                 $sql = "CREATE TABLE ArticleTopics
                 (
@@ -44,6 +45,9 @@
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 )";
+                
+                $stmt2 =  $conn->prepare($sql);
+                $stmt2->execute();
 
                 $sql = "CREATE TABLE Article
                 (
@@ -60,6 +64,9 @@
 
                 )";
 
+                $stmt3 =  $conn->prepare($sql);
+                $stmt3->execute();
+
                 $sql = "CREATE TABLE ArticleReaction 
                 (
                 	aReactionId INT(20) UNSIGNED PRIMARY KEY,
@@ -70,20 +77,22 @@
 
                 )";
 
+                $stmt4 =  $conn->prepare($sql);
+                $stmt4->execute();
+
                 $sql = "CREATE TABLE Reading
                 (
                 	readingId INT(20) UNSIGNED PRIMARY KEY,
                 	readerId INT(20) UNSIGNED,
                 	FOREIGN KEY (readerId) REFERENCES users(userId),
-                	articleId INT(20) UNSIGNED,
-                	timeReading 
+                	articleId INT(20) UNSIGNED, timeReading 
                 	FOREIGN KEY (articleId) REFERENCES Article(articleId)
 
 
-                )" 
-
-
-
+                )";
+                
+                $stmt5 =  $conn->prepare($sql);
+                $stmt5->execute();
 
 
                 $conn->commit();
