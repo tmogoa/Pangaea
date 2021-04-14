@@ -1,0 +1,21 @@
+This file will have the require tables for the database.
+Abart please check this file regularly and update the database using the migration.php
+
+All ids should be unsigned int.
+
+Tables needed
+1. users table
+   -userId, firstname, lastname, phone, email, password, preferredArticlesTopic (should be a varchar)
+
+2. ArticleTopics
+   -aTopicId, topic, created_at, updated_at
+
+3. Article table
+   -articleId, writerId (foreign key referencing the userId), articleText, publishStatus(published, draft), created_at, updated_at, published_at
+
+4. ArticleReaction table
+   -articleId (foreign key), applauds, applaudedBy(This should be a varchar), shares (int unsigned)
+
+5. Reading table
+    -readingId, readerId (userId), articleId, timeReading
+

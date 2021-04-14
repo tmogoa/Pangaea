@@ -5,11 +5,11 @@
  * Registration of a new user happens through this class.
  */
  class Writer{
-    private $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality;
+    protected $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality;
     /**
      * all the articles that a writer has written.
      */
-    private $aritcles = [];
+    protected $aritcles = [];
 
     /**
      * Creates a writer object with no field set.
@@ -96,12 +96,22 @@
         return "OK";
     }
 
+    /**
+     * 
+     */
     public function login(PDO $conn = null){
 
     }
 
-    public function logout(PDO $conn = null){
+    /**
+     * Logs out a user and returnt to the home page
+     */
+    public function logout(){
+        if(session_status() == PHP_SESSION_ACTIVE){
+            session_destroy();
+        }
 
+        header("Location: ../../index.php");
     }
 
     /**
