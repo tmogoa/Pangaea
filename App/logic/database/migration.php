@@ -98,6 +98,7 @@
                 $conn->commit();
             }
             catch(Exception $e){
+                echo $e->getMessage();
                 $conn->rollBack();
             }
 

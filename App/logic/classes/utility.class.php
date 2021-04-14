@@ -44,6 +44,9 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
             self::$dbServerName = getenv('DB_HOST');
             self::$dbUserName = getenv('DB_USERNAME');
             self::$dbPassword = getenv('DB_PASSWORD');
+
+            echo "The database name ". self::$dbName;
+            echo "The database name is: ";
             $dsn = "mysql:host=". self::$dbServerName. ";dbname=". self::$dbName;
             if(!$options){
                 $options = [ 
