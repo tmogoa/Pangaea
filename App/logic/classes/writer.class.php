@@ -127,7 +127,7 @@
             if($details){
                 $password = $details[0]['password'];
                 $email = $details[0]['email'];
-
+                
                 
             }
         }
