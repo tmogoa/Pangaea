@@ -135,6 +135,7 @@
                 $password = $details[0]['password'];
                 $writerId = $details[0]['userId'];
 
+                
 
 
                 
