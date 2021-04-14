@@ -1,4 +1,1 @@
-<?php
-
-
-?>
+//Quick start on login procedure
