@@ -101,9 +101,11 @@
             case "--migrate":
                 {
 
+                    echo "\nmigrating\n";
                     $output = null;
                     $cmd = "php ./App/logic/database/migration.php";
                     exec($cmd, $output);
+                    print_r($output);
                     break;
                 }
              case "--help":
