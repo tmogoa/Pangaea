@@ -98,11 +98,12 @@
 
     /**
      * Login a user 
-     * @return EEE|EPE|WPE|WEE|OK
+     * @return EEE|EPE|WPE|WEE|UEE|OK
      * EEE Email Empty error
      * EPE Empty password error
      * WEE Wrong email error
      * WPE Wrong password error  
+     * UEE unqualified email error
      */
 
     public function login(&$conn = null)
