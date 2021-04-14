@@ -124,6 +124,9 @@
 
             $detials = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
         }
+        catch (Exception $e){
+            
+        }
       
     }
 
