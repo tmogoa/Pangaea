@@ -98,7 +98,7 @@
 
     /**
      * Login a user 
-     * @return EEE|EPE|
+     * @return EEE|EPE|WPE
      */
     public function login(&$conn = null)
     {
