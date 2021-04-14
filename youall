@@ -23,6 +23,7 @@
         $filesToObserve = [
             "$app/logic/classes/writer.class.php",
             "$app/logic/classes/utility.class.php",
+            "$app/logic/procedures/login.php",
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
         $commitMessage = "Finishing the login function";
