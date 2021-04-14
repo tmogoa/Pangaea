@@ -4,7 +4,8 @@
         require_once("../classes/$name.class.php");
     });
 
-    $writer = new Writer();
     
+    $writer = new Writer();
+
 
 ?>
