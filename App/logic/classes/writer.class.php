@@ -99,8 +99,9 @@
     /**
      * Login a user 
      */
-    public function login($email, $password)
+    public function login($email, $password, &$conn = null)
     {
+
 
         //Check email and passsword not empty
        if(empty($email)){

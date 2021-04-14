@@ -23,6 +23,7 @@
         $filesToObserve = [
             "$app/logic/database/db_requirements",
             "$app/logic/database/migration.php",
+            "$app/logic/classes/writer.class.php",
             "youall"
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
