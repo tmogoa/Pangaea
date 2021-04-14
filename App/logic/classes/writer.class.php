@@ -113,7 +113,7 @@
         }
 
         if(!isset($this->password) || empty($this->password)){
-            return "EPE";//email password error
+            return "EPE";//empty password error
         }
 
         try{
@@ -134,6 +134,7 @@
 
                 $password = $details[0]['password'];
                 $writerId = $details[0]['userId'];
+
                 
 
                 
