@@ -316,7 +316,7 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
                 if($update){
                     $oldImage = "../".self::returnImageFullName($save_name, $in_directory);
                     if(file_exists($oldImage) && $oldImage != "../"){
-                        unlink("../".self::returnImageFullName($save_name, $in_directory));
+                        unlink("$oldImage");
                     }  
                 }
                 switch (exif_imagetype($image['tmp_name'])) {
@@ -352,7 +352,8 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
 
             /**
              * Returns the full name of the image whose name is passed by the image name parameter.
-             * The directory of the image is also passed to the function so that we check the right directory.
+             * The directory of the image is also passed to the function so that we check the right directory. Please note that all images is stored in the storage folder and that is 
+             * where we are going to check.
              * @param string $image_name the name of the image whose full name is to be returned.
              * @param string $in_directory the directory in which we should search.
              * 

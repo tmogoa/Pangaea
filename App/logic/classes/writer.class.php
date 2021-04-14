@@ -103,8 +103,15 @@
 
     }
 
-    public function logout(PDO $conn = null){
+    /**
+     * Logs out a user and returnt to the home page
+     */
+    public function logout(){
+        if(session_status() == PHP_SESSION_ACTIVE){
+            session_destroy();
+        }
 
+        header("Location: ../../index.php");
     }
 
     /**
