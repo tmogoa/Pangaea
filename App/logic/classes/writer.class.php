@@ -97,10 +97,59 @@
     }
 
     /**
-     * 
+     * Login a user 
+     * @return EEE|EPE|
      */
-    public function login(PDO $conn = null){
+    public function login(&$conn = null)
+    {
 
+        $connectionWasPassed = ($conn == null)?false:true;
+        if(!$connectionWasPassed){
+            $conn = Utility::makeConnection();
+        }
+
+        //Check email and passsword not empty
+        if(!isset($this->email) || empty($this->email)){
+            return "EEE";//email empty error
+        }
+
+        if(!isset($this->password) || empty($this->password)){
+            return "EPE";//empty password error
+        }
+
+        try{
+            $tableName = "users";
+            $columns = "userId, email, password";
+            $values = [$this->email];
+            $condition = "email = ?";
+
+            $details = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
+
+            
+            if($details){
+                if(count($details) < 1){
+
+                    //wrong email
+                    return "WEE";//wrong email error
+                }
+
+                $hashed_password = $details[0]['password'];
+                $writerId = $details[0]['userId'];
+
+                if(!password_verify($this->password, $hashed_password)){
+                    return "WPE";//wrong password error
+                }
+
+                $_SESSION['userId'] = $writerId;
+                $this->writerId = $writerId;
+                return "OK";
+
+            }
+        }
+        catch (Exception $e){
+
+        }
+      
     }
 
     /**

@@ -1,5 +1,5 @@
 <?php
-include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
+//include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
 /**
  * The utility class contains all the function in that would normally exist in the functions.php
  * Every field in this class is static and functions are also static.
@@ -8,9 +8,9 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
         /**
          * For database connections
          */
-        public static $dbName = "";
-        public static $dbServerName = "";
-        public static $dbUserName = "";
+        public static $dbName = "pangaea_db";
+        public static $dbServerName = "localhost";
+        public static $dbUserName = "root";
         public static $dbPassword = "";
         /**
          * Regular expressions for input validations
@@ -40,10 +40,9 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
          * The default options = [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC ]
          */
         public static function makeConnection($options = false){
-            self::$dbName = getenv('DB_NAME');
-            self::$dbServerName = getenv('DB_HOST');
-            self::$dbUserName = getenv('DB_USERNAME');
-            self::$dbPassword = getenv('DB_PASSWORD');
+
+            echo "The database name ". self::$dbName;
+            echo "The database name is: ";
             $dsn = "mysql:host=". self::$dbServerName. ";dbname=". self::$dbName;
             if(!$options){
                 $options = [ 
