@@ -5,11 +5,11 @@
  * Registration of a new user happens through this class.
  */
  class Writer{
-    private $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality;
+    protected $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality;
     /**
      * all the articles that a writer has written.
      */
-    private $aritcles = [];
+    protected $aritcles = [];
 
     /**
      * Creates a writer object with no field set.

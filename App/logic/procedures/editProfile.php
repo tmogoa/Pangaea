@@ -14,12 +14,15 @@
      * We will only require the the email and password be set. Any other that is added by the 
      * user is under their control.
      * We will look for new password, first name, last name, phone number- includes country code, nationality.
+     * If the user sents an image, then we will check the image. We will send back the appropriate 
+     * error messages. however, the image will be uploaded after the database is updated.
+     * User profile image will be save with the prefix profile-img-userId-uniqueid().jpeg
      */
 
      $user = new Writer();
      $changePassword = false;
     
-     $user->writerId =  $_SESSION['userr_id'];
+     $user->setWriterId($_SESSION['userr_id']);
 
      //do not worry about validating the input. Everything is done by the persist method in the Writer
      //class.
@@ -89,5 +92,14 @@
     $conn = Utility::makeConnection();
     echo $user->persist($conn);
 
+    //if the image contains an error, we will not upload it and not error message will be sent back to the user.
+
+    if(isset($_FILES['profile-picture'])){
+        //the user wants to upload their profile image
+        if(Utility::isImage($_FILES['profile-picture']['tmp_name'])){
+            //proceed to upload the image
+            Utility::uploadImage($_FILES['profile-picture'], "profile-img-". $user->getWriterId()."-".uniqid(), true);
+        }
+    }
 
 ?>
