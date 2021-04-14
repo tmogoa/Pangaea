@@ -24,6 +24,7 @@
             src="https://kit.fontawesome.com/1239ccb1ec.js"
             crossorigin="anonymous"
         ></script>
+        <script src="assets/js/main.js"></script>
         <title>Pangaea</title>
     </head>
     <body>
@@ -62,7 +63,7 @@
                     >
                 </div>
 
-                <form action="">
+                <form action="" id="registerForm">
                     <!-- <div class="flex flex-col mb-4">
                         <label
                             for="firstname"
@@ -109,6 +110,10 @@
                             placeholder="email"
                             required
                         />
+                        <span
+                            id="email_error"
+                            class="text-red-500 text-xs ml-2"
+                        ></span>
                     </div>
 
                     <div class="flex flex-col mb-4">
@@ -125,6 +130,10 @@
                             placeholder="password"
                             required
                         />
+                        <span
+                            id="password_error"
+                            class="text-red-500 text-xs ml-2"
+                        ></span>
                     </div>
 
                     <div class="flex flex-col mb-4">
@@ -141,6 +150,10 @@
                             placeholder="password_confirmation"
                             required
                         />
+                        <span
+                            id="password_confirmation_error"
+                            class="text-red-500 text-xs ml-2"
+                        ></span>
                     </div>
 
                     <!-- <div class="flex flex-col mb-4">

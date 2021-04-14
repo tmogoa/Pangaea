@@ -12,12 +12,12 @@
     $email = isset($_POST['email'])?$_POST['email']:"";
     $password = isset($_POST['password'])?$_POST['password']:"";
 
-    $newUser = new Writer();
+    $newUser = new writer();
 
     $newUser->setEmail($email);
     $newUser->setPassword($password);
 
-    $conn = Utility::makeConnection();
+    $conn = utility::makeConnection();
     echo $newUser->register($conn);
 
 ?>
