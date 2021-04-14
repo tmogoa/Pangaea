@@ -27,7 +27,7 @@
             "youall"
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
-        $commitMessage = "Working on the database";
+        $commitMessage = "Finishing the login function";
 
         echo "Listening to these files for changes:
             \n";
