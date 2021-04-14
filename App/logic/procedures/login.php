@@ -1,1 +1,1 @@
-//Quick start on login 
+//Quick start on login procedure
