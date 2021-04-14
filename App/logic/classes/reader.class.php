@@ -50,8 +50,22 @@
         
     }
 
-    public function applaudArticle($articleId){
+    /**
+     * When a user applauds an article, its applauses increases and we will use it to recommend articles to the reader later.
+     * The writerId
+     */
+    public function applaudArticle($articleId, &$conn = false){
+        $connectionWasPassed = ($conn == null)?false:true;
+        if(!$connectionWasPassed){
+            $conn = Utility::makeConnection();
+        }
 
+        $tableName = "articleReaction";
+        $column_specs = "articleId, applaudedBy";
+        $values_specs = "?, ?";
+        $values = [$articleId, $this->writerId];
+
+        Utility::insertIntoTable($tableName, $column_specs, $values, $values, $conn);
     }
 
     public function getReadTimePerArticle($articleId){
