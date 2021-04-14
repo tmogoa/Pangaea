@@ -435,7 +435,7 @@
                 return true;
             }
             else{
-                return false; //Quick check
+                return false;
             }
 
             //reconstruct this object
