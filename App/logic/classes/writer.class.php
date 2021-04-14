@@ -136,7 +136,7 @@
                 $writerId = $details[0]['userId'];
 
                 if(!password_verify($this->password, $hashed_password)){
-                    
+                    return "WPE";//wrong password error
                 }
 
 
