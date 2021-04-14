@@ -102,7 +102,7 @@
      * EEE Email Empty error
      * EPE Empty password error
      */
-    
+
     public function login(&$conn = null)
     {
 
@@ -145,7 +145,7 @@
 
                 $_SESSION['userId'] = $writerId;
                 $this->writerId = $writerId;
-                return "OK";
+                return "OK"; //
 
             }
         }
