@@ -97,11 +97,48 @@
     }
 
     /**
-     * 
+     * Login a user 
      */
-    public function login(PDO $conn = null){
+    public function login($email, $password)
+    {
 
+        //Check email and passsword not empty
+       if(empty($email)){
+           $errorMsg[]="Enter email or password...";
+       }
+       else if (empty($password)){
+            $errorMsg[] = "Enter password or email...";
+       }
+        else{
+            try
+        {
+        // check if the user id and password combination exist in database
+        $select_stmt = $db -> prepare("SELECT * FROM table WHERE email = '$email' AND password = '$password'"); //Sql selct query
+        $select_stmt->execute(array('email'=>$email)); //execute query with bind parameter
+        $row=$select_stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($select_stmt->rowCount()>0) //check condition db
+        {
+            if($email==$row["email"]){
+                if(password_verify($password, $row["password"])){
+                    $_SESSION["user_login"]= $row["email"];
+                    $loginMsg = "Login Successful";
+                    header('Location: ./');
+                }
+            }
+        }
+        else{
+                $errorMsg[] = "Wrong password or email";
+
+        }
     }
+
+    catch(PDOException $e)
+    {
+        $e->getMessage();
+    }
+}
+}
 
     /**
      * Logs out a user and returnt to the home page
