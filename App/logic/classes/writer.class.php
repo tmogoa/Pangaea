@@ -145,7 +145,7 @@
 
                 $_SESSION['userId'] = $writerId;
                 $this->writerId = $writerId;
-                return "OK"; //
+                return "OK"; //Quick comment
 
             }
         }
