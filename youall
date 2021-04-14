@@ -10,8 +10,8 @@
          {
              case "--kmu":
                 {
-                    while(true){
-                        set_time_limit(0);
+                    set_time_limit(0);
+                    while(true){   
                         $cmd = "git pull origin develop";
                         $output = shell_exec($cmd);
                         echo "$output";

@@ -65,9 +65,12 @@
         $values_specs = "?, ?";
         $values = [$articleId, $this->writerId];
 
-        Utility::insertIntoTable($tableName, $column_specs, $values, $values, $conn);
+        Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
     }
 
+    /**
+     * 
+     */
     public function getReadTimePerArticle($articleId){
 
     }
