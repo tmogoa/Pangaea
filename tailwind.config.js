@@ -1,14 +1,15 @@
 module.exports = {
-    purge: ["./src/**/*.html", "./src/**/*.js"],
+    purge: ["./App/*.html", "./App/assets/js/*.js"],
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {},
         fontFamily: {
             sans: ["Inter", "ui-sans-serif"],
+            serif: ["Newsreader", "ui-serif"],
         },
     },
     variants: {
         extend: {},
     },
-    plugins: [],
+    plugins: [require("@tailwindcss/typography")],
 };

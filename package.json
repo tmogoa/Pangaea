@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/tmogoa/Pangaea#readme",
     "dependencies": {
+        "@tailwindcss/typography": "^0.4.0",
         "tailwindcss": "^2.1.1"
     }
 }
