@@ -18,7 +18,7 @@
      * Writer(writerId: int); pass the connection in the second parameter if you already
      * have a connection to use.
      */
-    public function __construct($writerId = false, $conn = null){
+    public function __construct($writerId = false, &$conn = null){
         if($writerId){
             $connectionWasPassed = ($conn == null)?false:true;
             if(!$connectionWasPassed){
@@ -88,7 +88,7 @@
         $column_specs = " email, `password` ";
         $values_spec = "?, ?";
         $values = [$this->email, $this->password];
-        $status = Utility::insertIntoTable($tableName, $column_specs, $values_spec, $values);
+        $status = Utility::insertIntoTable($tableName, $column_specs, $values_spec, $values, $conn);
         if($status === false){
             return "SQE";
         }
