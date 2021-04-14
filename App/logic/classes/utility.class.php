@@ -1,5 +1,5 @@
 <?php
-include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
+//include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
 /**
  * The utility class contains all the function in that would normally exist in the functions.php
  * Every field in this class is static and functions are also static.
