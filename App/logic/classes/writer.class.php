@@ -98,6 +98,7 @@
 
     /**
      * Login a user 
+     * @return EEE|EPE|
      */
     public function login(&$conn = null)
     {
