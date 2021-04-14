@@ -117,7 +117,7 @@
         }
 
         try{
-            $tableName = "user";
+            $tableName = "users";
             $columns = "email, password";
             $values = [$this->email];
             $condition = "email = ?";
