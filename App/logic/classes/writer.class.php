@@ -118,7 +118,7 @@
 
         try{
             $tableName = "users";
-            $columns = "email, password";
+            $columns = "userId, email, password";
             $values = [$this->email];
             $condition = "email = ?";
 
@@ -126,8 +126,15 @@
 
             
             if($details){
+                if(count($details) < 1){
+
+                    //wrong email
+                    return "WEE";//wrong email error
+                }
+
                 $password = $details[0]['password'];
-                $email = $details[0]['email'];
+                $writerId = $details[0]['userId'];
+                
 
                 
             }
