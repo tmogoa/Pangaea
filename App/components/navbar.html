@@ -1,38 +1,57 @@
-<div
-    class="d-flex flex-row align-items-center border-bottom p-1 font-13 font-grey"
+<nav
+    class="flex flex-col sm:flex-row sm:justify-between p-3 bg-white shadow-sm border-b items-center"
 >
-    <a><img src="./assets/img/logo.svg" alt="logo" class="logo" /></a>
+    <ul class="flex flex-col sm:flex-row items-center">
+        <li class="pl-3 pr-6">
+            <a href="index.html" class="flex items-center">
+                <img
+                    src="./assets/img/logo.svg"
+                    alt="logo"
+                    class="w-10 sm:w-12 mr-2"
+                />
+                <span class="text-blue-900 text-xl">Pangaea</span>
+            </a>
+        </li>
+        <li>
+            <a
+                href=""
+                class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md"
+                >Home</a
+            >
+        </li>
+        <li>
+            <a
+                href=""
+                class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md"
+                >Write</a
+            >
+        </li>
+        <li>
+            <a
+                href=""
+                class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md"
+                >Earnings</a
+            >
+        </li>
+        <li>
+            <a
+                href=""
+                class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md"
+                >Upgrade</a
+            >
+        </li>
+    </ul>
 
-    <a class="ms-1 logo-text">Pangaea</a>
-
-    <div class="ms-5 nav-item d-flex flex-column align-items-center">
-        <a class="nav-a-link active">Home</a>
-        <div class="active-indicator rounded active"></div>
-    </div>
-    <div class="ms-5 nav-item d-flex flex-column align-items-center">
-        <a class="nav-a-link">Write</a>
-        <div class="active-indicator rounded"></div>
-    </div>
-    <div class="ms-5 nav-item d-flex flex-column align-items-center">
-        <a class="nav-a-link">Earnings</a>
-        <div class="active-indicator rounded"></div>
-    </div>
-    <div class="ms-5 nav-item d-flex flex-column align-items-center">
-        <a class="nav-a-link">Upgrade</a>
-        <div class="active-indicator rounded"></div>
-    </div>
-    <div class="ms-5" id="searchBox"></div>
-    <div
-        class="flex-grow-1 d-flex flex-row justify-content-end align-items-center"
-    >
-        <i
-            class="far fa-bell mx-5"
-            style="font-size: 24px; color: dodgerblue"
-        ></i>
-        <div id="userBar"></div>
-    </div>
-</div>
+    <ul class="hidden sm:flex sm:flex-row sm:items-center">
+        <li>
+            <div id="searchBox" class="mx-6"></div>
+        </li>
+        <li>
+            <div id="user-drop-down" class="mx-6"></div>
+        </li>
+    </ul>
+</nav>
 <script>
     $("#searchBox").load("./components/searchBox.html");
-    $("#userBar").load("./components/userBar.html");
+    $("#user-drop-down").load("./components/userDropDown.html");
 </script>
