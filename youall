@@ -98,9 +98,17 @@
                     listenAndPush();
                     break;
                 }
+            case "--migrate":
+                {
+
+                    $output = null;
+                    $cmd = "php ./App/logic/database/migration.php";
+                    exec($cmd, $output);
+                    break;
+                }
              case "--help":
                 {
-                    echo "--kmu:   keep Me Updated\n --pta: Push Them all\n--help: help";
+                    echo "--kmu:   keep Me Updated\n--pta: Push Them all\n--migrate: run the database migration file\n--help: help";
                     
                     break;
                 }
