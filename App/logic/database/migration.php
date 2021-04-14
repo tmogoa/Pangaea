@@ -22,16 +22,14 @@
 
                 $sql = "CREATE TABLE users 
                 (
-                	userId INT(20) UNSIGNED PRIMARY KEY,
+                	userId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	firstname VARCHAR(20) NOT NULL,
                 	lastname VARCHAR(20) NOT NULL,
-                	phone CHAR(13) NOT NULL,
-                	email CHAR(50) NOT NULL,
-                	password VARCHAR (50) NOT NULL,
-                	preferredArticleTopics VARCHAR(50),
-                	isSubscribed INT(100)
-
-
+                	phone VARCHAR(15) NOT NULL,
+                	email VARCHAR(255) NOT NULL,
+                	password VARCHAR (256) NOT NULL,
+                	preferredArticleTopics VARCHAR(255),
+                	isSubscribed TINYINT default 0
                 )";
 
                 $stmt1 =  $conn->prepare($sql);
@@ -40,10 +38,10 @@
                 $sql = "CREATE TABLE ArticleTopics
                 (
 
-                aTopicId INT(20) UNSIGNED PRIMARY KEY,
-                topic VARCHAR (30),
+                aTopicId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                topic VARCHAR (255),
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )";
                 
                 $stmt2 =  $conn->prepare($sql);
@@ -51,11 +49,11 @@
 
                 $sql = "CREATE TABLE Article
                 (
-                	articleId INT(20) UNSIGNED PRIMARY KEY,
+                	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED,
                 	articleText TEXT,
                 	publishStatus enum('published', 'draft'),
-                	shares INT, 
+                	shares INT DEFAULT 0, 
                 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 	published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -69,7 +67,7 @@
 
                 $sql = "CREATE TABLE ArticleReaction 
                 (
-                	aReactionId INT(20) UNSIGNED PRIMARY KEY,
+                	aReactionId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	articleId INT (20) UNSIGNED,
                 	applaudedBy INT(20) UNSIGNED,
                 	FOREIGN KEY (applaudedBy) REFERENCES users(userId),
@@ -82,10 +80,10 @@
 
                 $sql = "CREATE TABLE Reading
                 (
-                	readingId INT(20) UNSIGNED PRIMARY KEY,
+                	readingId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	readerId INT(20) UNSIGNED,
                 	FOREIGN KEY (readerId) REFERENCES users(userId),
-                	articleId INT(20) UNSIGNED, timeReading 
+                	articleId INT(20) UNSIGNED, timeReading INT,  
                 	FOREIGN KEY (articleId) REFERENCES Article(articleId)
 
 
