@@ -99,7 +99,7 @@
     /**
      * Login a user 
      */
-    public function login($email, $password, &$conn = null)
+    public function login(&$conn = null)
     {
 
         $connectionWasPassed = ($conn == null)?false:true;
@@ -135,7 +135,7 @@
                 $password = $details[0]['password'];
                 $writerId = $details[0]['userId'];
 
-                
+
 
                 
             }
