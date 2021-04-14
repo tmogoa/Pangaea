@@ -118,14 +118,14 @@
 
         try{
             $tableName = "user";
-            $column = "email, password";
+            $columns = "email, password";
             $values = [$this->email];
             $condition = "email = ?";
 
-            $detials = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
+            $details = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
         }
         catch (Exception $e){
-            
+
         }
       
     }
