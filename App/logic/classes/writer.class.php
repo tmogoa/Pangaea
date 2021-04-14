@@ -139,6 +139,9 @@
                     return "WPE";//wrong password error
                 }
 
+                $_SESSION['userId'] = $writerId;
+                $this->writerId = $writerId;
+                return "OK";
 
                 
             }
