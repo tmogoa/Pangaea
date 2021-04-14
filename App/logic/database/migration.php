@@ -105,4 +105,6 @@
         }
     }
 
+    DatabaseCreator::makeDatabase();
+
 ?>
