@@ -143,7 +143,6 @@
                 $this->writerId = $writerId;
                 return "OK";
 
-                
             }
         }
         catch (Exception $e){
