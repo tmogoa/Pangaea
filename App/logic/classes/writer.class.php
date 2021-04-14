@@ -118,6 +118,10 @@
             return "EEE";//email empty error
         }
 
+        if(!Utility::checkEmail($this->email)){
+            return "UEE";//unacceptable email error
+        }
+
         if(!isset($this->password) || empty($this->password)){
             return "EPE";//empty password error
         }
