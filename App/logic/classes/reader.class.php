@@ -7,6 +7,7 @@
 
     private $recommendedArticles = [];
     private $preferredArticlesTopics = [];
+    private $readerSubscriptionLevel;
 
     public function __construct($writerId = false)
     {
@@ -28,6 +29,7 @@
     public function reportArticle($articleId, $commplaint){
 
     }
+    
 
  }
 
