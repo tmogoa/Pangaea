@@ -98,7 +98,7 @@
 
     /**
      * Login a user 
-     * @return EEE|EPE|WPE
+     * @return EEE|EPE|WPE|WEE|OK
      */
     public function login(&$conn = null)
     {
@@ -435,7 +435,7 @@
                 return true;
             }
             else{
-                return false;
+                return false; //Quick check
             }
 
             //reconstruct this object
