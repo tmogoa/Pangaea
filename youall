@@ -29,6 +29,7 @@
         $filesModificationTime = [];
         $commitMessage = "migration file ready. Your database name should be 'pangaea_db'. call php youall --migrate to run the migrations";
 
+    
         echo "Listening to these files for changes:
             \n";
         print_r($filesToObserve);
