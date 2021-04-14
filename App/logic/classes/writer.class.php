@@ -102,44 +102,30 @@
     public function login($email, $password, &$conn = null)
     {
 
+        $connectionWasPassed = ($conn == null)?false:true;
+        if(!$connectionWasPassed){
+            $conn = Utility::makeConnection();
+        }
 
         //Check email and passsword not empty
-       if(empty($email)){
-           $errorMsg[]="Enter email or password...";
-       }
-       else if (empty($password)){
-            $errorMsg[] = "Enter password or email...";
-       }
-        else{
-            try
-        {
-        // check if the user id and password combination exist in database
-        $select_stmt = $db -> prepare("SELECT * FROM table WHERE email = '$email' AND password = '$password'"); //Sql selct query
-        $select_stmt->execute(array('email'=>$email)); //execute query with bind parameter
-        $row=$select_stmt->fetch(PDO::FETCH_ASSOC);
-
-        if($select_stmt->rowCount()>0) //check condition db
-        {
-            if($email==$row["email"]){
-                if(password_verify($password, $row["password"])){
-                    $_SESSION["user_login"]= $row["email"];
-                    $loginMsg = "Login Successful";
-                    header('Location: ./');
-                }
-            }
+        if(!isset($this->email) || empty($this->email)){
+            return "EEE";//email empty error
         }
-        else{
-                $errorMsg[] = "Wrong password or email";
 
+        if(!isset($this->password) || empty($this->password)){
+            return "EPE";//email password error
         }
-    }
 
-    catch(PDOException $e)
-    {
-        $e->getMessage();
+        try{
+            $tableName = "user";
+            $column = "email, password";
+            $values = [$this->email];
+            $condition = "email = ?";
+
+            $detials = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
+        }
+      
     }
-}
-}
 
     /**
      * Logs out a user and returnt to the home page
