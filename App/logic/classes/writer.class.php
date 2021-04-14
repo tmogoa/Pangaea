@@ -99,6 +99,8 @@
     /**
      * Login a user 
      * @return EEE|EPE|WPE|WEE|OK
+     * EEE Email Empty error
+     * EPE Empty password error
      */
     public function login(&$conn = null)
     {
