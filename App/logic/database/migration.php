@@ -1,7 +1,8 @@
 <?php
     //auto load classes
     spl_autoload_register(function($name){
-        require_once("../classes/$name.class.php");
+        require_once("./App/logic/classes/$name.class.php");
+        
     });
 
     class DatabaseCreator{
