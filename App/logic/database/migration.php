@@ -18,6 +18,8 @@
             try{
                 $conn->beginTransaction();
 
+                //Abart, please write the db creation statement in here. Make sure to add drop if exist or something to check if the table already exist if you only want to update it.
+
                 $conn->commit();
             }
             catch(Exception $e){
