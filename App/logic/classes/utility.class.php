@@ -15,9 +15,9 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
         /**
          * Regular expressions for input validations
          */
-        public static $nameRegex = "";
-        public static $phoneRegex = "";  
-        public static $textAreaRegex = "";
+        public static $nameRegex = "/^[\w]+(\s?[\w\-_\'\.]+?\s*?)+?$/";
+        public static $phoneRegex = "/^\+\d{10,15}$/";  
+        public static $textAreaRegex = ""; //who cares for sql injection when we are using PDO???
         
         /**
          * Constants
@@ -181,24 +181,10 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
         /**
          * checks the textarea input 
          */
-        public static function checkTextAreaInput($textAreaInput){
-            if(preg_match(self::$textAreaRegex, $textAreaInput)){
-                return true;
-            }
-            return false;
+        public static function sanitizeTextEditorInput($textEditorInput){
+            return htmlspecialchars($textEditorInput);
         }
 
-        /**
-         * Checks the editor's input
-         */
-
-         public static function checkEditorInput($editorInput){
-             $inputWithoutTags = strip_tags($editorInput);
-             if(self::checkTextAreaInput($inputWithoutTags)){
-                 return true;
-             }
-             return false;
-         }
         
          /**
           * Checks to verify that the email meets the requirement

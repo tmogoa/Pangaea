@@ -6,16 +6,66 @@
  class Reader extends Writer{
 
     private $recommendedArticles = [];
-    private $preferredArticlesTopics = [];
-    private $readerSubscriptionLevel;
+    private $preferredArticleTopics = [];
+    /**
+     * The reader Subscription is represented as integer
+     * 0 - free user, 1 - paid (false or true)
+     */
+    private $isSubscribed;
 
-    public function __construct($writerId = false)
+    /**
+     * If the writer Id is passed (the reader Id),
+     * then we will fetch this reader information from the database.
+     * By default, it is false.
+     * 
+     * The recommended articles array field is not set by default.
+     * therefore, when ever it is called (the get recommended articles is computed)
+     * 
+     * If you already have a connection object on your script, you can go ahead to pass the connection
+     */
+    public function __construct($writerId = false, $conn = null)
     {
-        parent::__construct($writerId);
+        parent::__construct($writerId, $conn);
+        if($writerId !== false){
+            $connectionWasPassed = ($conn == null)?false:true;
+            if(!$connectionWasPassed){
+                $conn = Utility::makeConnection();
+            }
+            //todo
+            $tableName = "user";
+            $column_specs = "preferredArticles, isSubscribed";
+            $condition = "userId = ?";
+            $values = [$writerId];
+            $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
+            $this->isSubscribed = ($details[0]['isSubscribed'] == 0)?false:true;
+            /**
+             * The preferredArticlesTopics is stored as a JSON array in the database
+             */
+            $this->preferredArticleTopics = json_decode($details[0]['preferredArticleTopics']);
+
+            if(!$connectionWasPassed){
+                $conn = null;
+            }
+        }
+        
     }
 
-    public function applaudArticle($articleId){
+    /**
+     * When a user applauds an article, its applauses increases and we will use it to recommend articles to the reader later.
+     * The writerId
+     */
+    public function applaudArticle($articleId, &$conn = false){
+        $connectionWasPassed = ($conn == null)?false:true;
+        if(!$connectionWasPassed){
+            $conn = Utility::makeConnection();
+        }
 
+        $tableName = "articleReaction";
+        $column_specs = "articleId, applaudedBy";
+        $values_specs = "?, ?";
+        $values = [$articleId, $this->writerId];
+
+        Utility::insertIntoTable($tableName, $column_specs, $values, $values, $conn);
     }
 
     public function getReadTimePerArticle($articleId){
