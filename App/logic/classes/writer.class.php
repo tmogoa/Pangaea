@@ -101,6 +101,8 @@
      * @return EEE|EPE|WPE|WEE|OK
      * EEE Email Empty error
      * EPE Empty password error
+     * WEE Wrong email error
+     * WPE Wrong password error
      */
 
     public function login(&$conn = null)
