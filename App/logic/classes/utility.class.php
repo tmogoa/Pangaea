@@ -40,6 +40,10 @@ include("../../vendor/phpmailer/phpmailer/src/PHPMailer.php");
          * The default options = [PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC ]
          */
         public static function makeConnection($options = false){
+            self::$dbName = getenv('DB_NAME');
+            self::$dbServerName = getenv('DB_HOST');
+            self::$dbUserName = getenv('DB_USERNAME');
+            self::$dbPassword = getenv('DB_PASSWORD');
             $dsn = "mysql:host=". self::$dbServerName. ";dbname=". self::$dbName;
             if(!$options){
                 $options = [ 
