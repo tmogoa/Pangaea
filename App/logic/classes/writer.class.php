@@ -124,7 +124,12 @@
 
             $details = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
 
-            
+            if($details){
+                $password = $details[0]['password'];
+                $email = $details[0]['email'];
+
+                
+            }
         }
         catch (Exception $e){
 
