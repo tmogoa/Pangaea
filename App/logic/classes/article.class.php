@@ -7,11 +7,11 @@
  * The article properties will be set then the addArticle method will be called which adds the article to the system.
  */
     class Article{
-            private $articleId;
-            private $articeText;
-            private $articleTitle;
-            private $articleSubtitle;
-            private $articleTags = [];
+            private $id;
+            private $body;
+            private $title;
+            private $subtitle;
+            private $tags = [];
             private $publishStatus;
             private $media = [];
             private $dateCreated;
@@ -24,10 +24,10 @@
 
             /**
              * Creates an article with no field set.
-             * @param int $articleId - pass the id if you want the article to be constructed from the database.
+             * @param int $id - pass the id if you want the article to be constructed from the database.
              * @param PDO $conn - pass the connection if you already have a connection to use. 
              */
-            public function __construct($articleId = false, $conn = null){
+            public function __construct($id = false, $conn = null){
                 
             }
 
@@ -54,17 +54,17 @@
                 $values_specs = "?";
                 $values = [];
         
-                if(!isset($this->articleTitle) || empty($this->articleTitle)){
+                if(!isset($this->title) || empty($this->title)){
                     return "ETE";//empty title error
                 }
 
                 //Will be looked at if this were to go live
-                $this->articleTitle = Utility::sanitizeTextEditorInput($this->articleTitle);
+                $this->title = Utility::sanitizeTextEditorInput($this->title);
                 //article title
-                $values = [$this->articleTitle];
+                $values = [$this->title];
 
-                if(isset($this->articleSubtitle) && $this->articleSubtitle !== null){
-                        $this->articleSubtitle = Utility::sanitizeTextEditorInput($this->articleSubtitle);
+                if(isset($this->subtitle) && !empty($this->subtitle)){
+                        $this->subtitle = Utility::sanitizeTextEditorInput($this->subtitle);
 
                         if(count($values) > 0){
                             $column_specs .= ", ";
@@ -73,22 +73,23 @@
                         $values_specs .= ", ";
                         $column_specs .= "subtitle";
                         
-                        $values[] = $this->articleSubtitle;
+                        $values[] = $this->subtitle;
                 } 
             
                 //add the article text
-                if(isset($this->articeText) && $this->articeText !== null){
-                        $this->articeText = Utility::sanitizeTextEditorInput($this->articeText);
-
-                        if(count($values) > 0){
-                            $column_specs .= ", ";
-                            $values_specs .= ", ";
-                        }
-                        $values_specs .= ", ";
-                        $column_specs .= "articleText";
-
-                        
+                if(!isset($this->body) || empty($this->body)){
+                         return "EBE";//empty body error
                 }  
+
+                //add the article body
+                $this->body = Utility::sanitizeTextEditorInput($this->body);
+
+                if(count($values) > 0){
+                    $column_specs .= ", ";
+                    $values_specs .= ", ";
+                }
+                $values_specs .= ", ";
+                $column_specs .= "body";
         
               if(isset($this->email) && $this->email !== null){
                     if(!Utility::checkEmail($this->email)){
