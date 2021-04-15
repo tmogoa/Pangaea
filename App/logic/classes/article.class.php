@@ -11,6 +11,7 @@
             private $articeText;
             private $articleTitle;
             private $articleSubtitle;
+            private $articleTags = [];
             private $publishStatus;
             private $media = [];
             private $dateCreated;
