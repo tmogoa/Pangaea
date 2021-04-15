@@ -50,7 +50,7 @@
              */
             public function addArticle(&$conn = null){
                 
-                $column_specs = "articleTitle";
+                $column_specs = "title";
                 $values_specs = "?";
                 $values = [];
         
