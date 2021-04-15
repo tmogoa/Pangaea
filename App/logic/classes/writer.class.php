@@ -24,7 +24,7 @@
             if(!$connectionWasPassed){
                 $conn = Utility::makeConnection();
             }
-            //todo
+            //todo 
             $tableName = "user";
             $column_specs = "*";
             $condition = "userId = ?";
