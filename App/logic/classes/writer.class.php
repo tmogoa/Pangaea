@@ -442,7 +442,6 @@
                 return false; //Quick check
             }
 
-            //reconstruct this object
       }  
     }
  }
