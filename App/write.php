@@ -108,7 +108,7 @@
                         $("#subtitle_label").css("display", "none");
                     }
                 });
-                $("#navbar").load("./components/navbar.html");
+                $("#navbar").load("./components/navbar.php");
 
                 editor = new EditorJS({
                     /**
