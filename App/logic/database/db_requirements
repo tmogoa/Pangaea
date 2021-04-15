@@ -11,7 +11,7 @@ Tables needed
    -aTopicId, topic, created_at, updated_at
 
 3. Article table
-   -articleId, writerId (foreign key referencing the userId), articleText, publishStatus(published, draft), shares (int), created_at, updated_at, published_at
+   -articleId, writerId (foreign key referencing the userId), articleText, articleTitle (varchar 255), publishStatus(published, draft), shares (int), created_at, updated_at, published_at
 
 4. ArticleReaction table
    aReactionId, -articleId (foreign key), applaudedBy (foreign key userId), 
@@ -19,3 +19,5 @@ Tables needed
 5. Reading table
     -readingId, readerId (userId), articleId, timeReading
 
+6. ArticleTags //new
+   -tagRefId, articleId (foreign key), tagId (foreign key from the ArticleTopics table)
