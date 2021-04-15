@@ -21,6 +21,7 @@
 
                 //Abart, please write the db creation statement in here. Make sure to add drop if exist or something to check if the table already exist if you only want to update it.
 
+                //We reomoved the not null from on some columns
                 $sql = "CREATE TABLE users 
                 (
                 	userId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -48,6 +49,7 @@
                 $stmt2 =  $conn->prepare($sql);
                 $stmt2->execute();
 
+                //I already made some updates
                 $sql = "CREATE TABLE Article
                 (
                 	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
