@@ -376,7 +376,7 @@
            
             //some columns are before this one.
             if(count($values) > 0){
-                $column_specs .", ";
+                $column_specs .= ", ";
             }
             $column_specs .= "lastName = ? ";
             $values[] = $this->lastName;
@@ -400,7 +400,7 @@
                 $changeEmail = true;
                  //some columns are before this one.
                 if(count($values) > 0){
-                    $column_specs .", ";
+                    $column_specs .= ", ";
                 }
                 $column_specs .= "email = ? ";
                 $values[] = $this->email;
@@ -411,7 +411,7 @@
                     return "UPNE";
                 }
                 if(count($values) > 0){
-                    $column_specs .", ";
+                    $column_specs .= ", ";
                 }
                 $column_specs .= "phone = ? ";
                 $values[] = $this->phone;
@@ -423,7 +423,7 @@
                     return "UNE";
                 }
                 if(count($values) > 0){
-                    $column_specs .", ";
+                    $column_specs .= ", ";
                 }
                 $column_specs .= "nationality = ? ";
                 $values[] = $this->nationality;

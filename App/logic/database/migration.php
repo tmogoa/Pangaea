@@ -54,8 +54,9 @@
                 (
                 	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED,
-                    articleTitle VARCHAR(500) NOT NULL,
-                	articleText TEXT,
+                    title VARCHAR(500) NOT NULL,
+                    subtitle VARCHAR(500),
+                	body TEXT NOT NULL,
                 	publishStatus enum('published', 'draft'),
                 	shares INT DEFAULT 0, 
                 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -91,6 +92,26 @@
 
 
                 )";
+                
+                //new, delet this comment after you see it
+                $sql = "CREATE TABLE ArticleTags 
+                (
+                tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                articleId INT(20) UNSIGNED,
+                tagId INT(20) UNSIGNED,
+
+                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId)
+		        )";
+		
+		        $sql = "CREATE TABLE ArticleKeywords
+		        (
+		        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+		        articleId INT(20) UNSIGNED,
+		        keywords TEXT,
+		        is_indexed INT DEFAULT 0, 
+		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
+		        )";
+          
                 
                 $stmt5 =  $conn->prepare($sql);
                 $stmt5->execute();

@@ -7,11 +7,11 @@
  * The article properties will be set then the addArticle method will be called which adds the article to the system.
  */
     class Article{
-            private $articleId;
-            private $articeText;
-            private $articleTitle;
-            private $articleSubtitle;
-            private $articleTags = [];
+            private $id;
+            private $body;
+            private $title;
+            private $subtitle;
+            private $tags = [];
             private $publishStatus;
             private $media = [];
             private $dateCreated;
@@ -24,10 +24,10 @@
 
             /**
              * Creates an article with no field set.
-             * @param int $articleId - pass the id if you want the article to be constructed from the database.
+             * @param int $id - pass the id if you want the article to be constructed from the database.
              * @param PDO $conn - pass the connection if you already have a connection to use. 
              */
-            public function __construct($articleId = false, $conn = null){
+            public function __construct($id = false, $conn = null){
                 
             }
 
@@ -46,88 +46,54 @@
             /**
              * This function allows the addition of an article.
              * The article object must have the required field, article title set.
-             *  
+             * The article is saved as a draft
              */
             public function addArticle(&$conn = null){
                 
-                $column_specs = "articleTitle";
+                $column_specs = "title";
                 $values_specs = "?";
                 $values = [];
         
-                if(!isset($this->articleTitle) || empty($this->articleTitle)){
+                if(!isset($this->title) || empty($this->title)){
                     return "ETE";//empty title error
                 }
 
                 //Will be looked at if this were to go live
-                $this->articleTitle = Utility::sanitizeTextEditorInput($this->articleTitle);
+                $this->title = Utility::sanitizeTextEditorInput($this->title);
                 //article title
-                $values = [$this->articleTitle];
+                $values = [$this->title];
 
-                if(isset($this->articleSubtitle) && $this->articleSubtitle !== null){
-                        $this->articleSubtitle = Utility::sanitizeTextEditorInput($this->articleSubtitle);
+                if(isset($this->subtitle) && !empty($this->subtitle)){
+                        $this->subtitle = Utility::sanitizeTextEditorInput($this->subtitle);
+
+                        if(count($values) > 0){
+                            $column_specs .= ", ";
+                            $values_specs .= ", ";
+                        }
+                        $values_specs .= ", ";
                         $column_specs .= "subtitle";
-                        $values[] = $this->firstName;
+                        
+                        $values[] = $this->subtitle;
                 } 
             
-                if(isset($this->lastName) && $this->lastName !== null){
-                        if(!Utility::checkName($this->lastName)){
-                            return "ULNE";
-                        }
-                    
-                        //some columns are before this one.
-                        if(count($values) > 0){
-                            $column_specs .", ";
-                        }
-                        $column_specs .= "lastName = ? ";
-                        $values[] = $this->lastName;
+                //add the article text
+                if(!isset($this->body) || empty($this->body)){
+                         return "EBE";//empty body error
                 }  
-        
-              if(isset($this->email) && $this->email !== null){
-                    if(!Utility::checkEmail($this->email)){
-                        return "UEE";
-                    }
-                    //check if email is being changed.
-                    $currentDetails = Utility::queryTable("users", "email", "userId = ?", [$this->writerId]);
-                    
-                    if($this->email != $currentDetails[0]['email']){
-                        //email is being changed.
-                        //check if the new email already exist in the system
-                        if(Utility::doesEmailExist($this->email)){
-                            return "NEEE";
-                        }
-        
-                        //if this is true, we will set the email verification to 0 to make display the confirm email message at the top of the screen when the user logs in.
-                        $changeEmail = true;
-                         //some columns are before this one.
-                        if(count($values) > 0){
-                            $column_specs .", ";
-                        }
-                        $column_specs .= "email = ? ";
-                        $values[] = $this->email;
-                    }
+
+                //add the article body
+                $this->body = Utility::sanitizeTextEditorInput($this->body);
+
+                if(count($values) > 0){
+                    $column_specs .= ", ";
+                    $values_specs .= ", ";
                 }
+                $values_specs .= ", ";
+                $column_specs .= "body";
         
-                if(isset($this->phoneNumber) && $this->phoneNumber !== null){
-                    if(!Utility::checkPhone($this->phoneNumber)){
-                        return "UPNE";
-                    }
-                    if(count($values) > 0){
-                        $column_specs .", ";
-                    }
-                    $column_specs .= "phone = ? ";
-                    $values[] = $this->phone;
-                } 
-                    
-                if(isset($this->nationality) && $this->nationality !== null)
-                {
-                    if(!Utility::checkCountry($this->nationality)){
-                        return "UNE";
-                    }
-                    if(count($values) > 0){
-                        $column_specs .", ";
-                    }
-                    $column_specs .= "nationality = ? ";
-                    $values[] = $this->nationality;
+                $has_tags = false;
+                if(isset($this->tags) && is_array($this->tags)){
+                    $has_tags = true;
                 }
                     
                     //everything is okay
