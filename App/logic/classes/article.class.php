@@ -43,6 +43,20 @@
             public function addArticle(){
                 
             }
+
+            /**
+             * -------------------------------------------------------------------
+             * These classes are static classes and belong solely to the article management
+             * functionality
+             * --------------------------------------------------------------------
+             */
+
+             /**
+              * This function searches for an article of a particular topic, content, author,
+              */
+            public static function searchArticle(){
+
+            }
     }
 
 ?>

@@ -1,5 +1,6 @@
 <?php
     /**
+     * !!!DO NOT MAKE ANY CHANGES TO THIS FILE!!!
      * Create a file in the root folder (your pangaea folder not APP - outside the APP folder) with one of the following name:
      * 1. levi
      * 2. susan
@@ -40,15 +41,10 @@
          $app = "./App";
 
         $filesToObserve = [
-<<<<<<< HEAD:youall
-            "$app/publishscreen.html",
-            "$app/drafts.html",
-=======
             //"$app/logic/classes/writer.class.php",
            // "$app/logic/classes/reader.class.php",
            // "$app/logic/classes/article.class.php",
            // "$app/logic/classes/utility.class.php",
->>>>>>> 15a1236b14b93ee834cfaeb7b4ab0aa6ebbbf5ed:youall.php
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
         $commitMessage = "Finishing the login function";
