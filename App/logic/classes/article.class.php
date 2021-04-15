@@ -49,29 +49,41 @@
              *  
              */
             public function addArticle(&$conn = null){
-                $column_specs = "";
+                
+                $column_specs = "title";
+                $values_specs = "?";
                 $values = [];
         
-              if(isset($this->firstName) && $this->firstName !== null){
-                    if(!Utility::checkName($this->firstName)){
-                        return "UFNE";
-                    }
-                    $column_specs .= "firstName = ? ";
-                    $values[] = $this->firstName;
-              } 
-        
-              if(isset($this->lastName) && $this->lastName !== null){
-                    if(!Utility::checkName($this->lastName)){
-                        return "ULNE";
-                    }
-                   
-                    //some columns are before this one.
-                    if(count($values) > 0){
-                        $column_specs .", ";
-                    }
-                    $column_specs .= "lastName = ? ";
-                    $values[] = $this->lastName;
-              }  
+                if(!isset($this->articleTitle) || empty($this->articleTitle)){
+                    return "ETE";//empty title error
+                }
+
+
+                $connectionWasPassed = ($conn == null)?false:true;
+               if(!$connectionWasPassed){
+                    $conn = Utility::makeConnection();
+                }
+
+                if(isset($this->firstName) && $this->firstName !== null){
+                        if(!Utility::checkName($this->firstName)){
+                            return "UFNE";
+                        }
+                        $column_specs .= "firstName = ? ";
+                        $values[] = $this->firstName;
+                } 
+            
+                if(isset($this->lastName) && $this->lastName !== null){
+                        if(!Utility::checkName($this->lastName)){
+                            return "ULNE";
+                        }
+                    
+                        //some columns are before this one.
+                        if(count($values) > 0){
+                            $column_specs .", ";
+                        }
+                        $column_specs .= "lastName = ? ";
+                        $values[] = $this->lastName;
+                }  
         
               if(isset($this->email) && $this->email !== null){
                     if(!Utility::checkEmail($this->email)){
