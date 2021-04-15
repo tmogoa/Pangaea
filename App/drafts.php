@@ -126,8 +126,8 @@
                    <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
                 </div>
 
-                 <!--Article 1-->
-                 <div>
+                 <!--Article 5-->
+                 <div class="border border-gray-100 rounded-md">
                     <img src="\App\assets\img\person working.jpg" alt="" srcset="">
                     
                     <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
@@ -140,7 +140,7 @@
                    <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
                 </div>
 
-                 <!--Article 1-->
+                 <!--Article 6-->
                  <div>
                     <img src="\App\assets\img\person working.jpg" alt="" srcset="">
                     
