@@ -46,7 +46,7 @@
             /**
              * This function allows the addition of an article.
              * The article object must have the required field, article title set.
-             *  
+             * The article is saved as a draft
              */
             public function addArticle(&$conn = null){
                 
@@ -76,6 +76,7 @@
                         $values[] = $this->articleSubtitle;
                 } 
             
+                //add the article text
                 if(isset($this->articeText) && $this->articeText !== null){
                         $this->articeText = Utility::sanitizeTextEditorInput($this->articeText);
 
