@@ -1,6 +1,7 @@
 <?php
 
     spl_autoload_register(function($name){
+        $name = strtolower($name);
         require_once("../classes/$name.class.php");
     });
 
