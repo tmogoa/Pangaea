@@ -84,7 +84,7 @@
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
         
         //Todo
-        $tableName = "";
+        $tableName = "users";
         $column_specs = " email, `password` ";
         $values_spec = "?, ?";
         $values = [$this->email, $this->password];
@@ -393,7 +393,7 @@
                 return "UEE";
             }
             //check if email is being changed.
-            $currentDetails = Utility::queryTable("user", "email", "userId = ?", [$this->writerId]);
+            $currentDetails = Utility::queryTable("users", "email", "userId = ?", [$this->writerId]);
             
             if($this->email != $currentDetails[0]['email']){
                 //email is being changed.
