@@ -68,6 +68,7 @@
             <!--<p>Editors picks</p>-->
 
             <!--Articles display-->
+            <div class="grid grid-flow-col grid-cols-3 grid-rows-2 gap-4">
                 
                 <!--Article 1-->
                 <div class="border border-gray-600">
