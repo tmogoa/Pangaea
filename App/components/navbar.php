@@ -43,12 +43,20 @@
     </ul>
 
     <ul class="hidden sm:flex sm:flex-row sm:items-center">
+
+        <?php
+            if(isset($_SESSION['userID'])) {
+        ?>
         <li>
             <div id="searchBox" class="mx-6"></div>
         </li>
+
         <li id="user-drop-down-li">
             <div id="user-drop-down" class="mx-6"></div>
         </li>
+        <?php
+            }else{
+        ?>
         <li class="mb-4 sm:mb-0" id="login-btn">
             <a
                 href="login.html"
@@ -63,6 +71,7 @@
                 >Register</a
             >
         </li>
+        <?php }?>
     </ul>
 </nav>
 <script>

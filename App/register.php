@@ -34,7 +34,7 @@
         <!-- JS file injections-->
         <script>
             $(function () {
-                $("#navbar").load("./components/navbar.html");
+                $("#navbar").load("./components/navbar.php");
             });
         </script>
 
