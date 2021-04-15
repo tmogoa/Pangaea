@@ -51,12 +51,6 @@
              * --------------------------------------------------------------------
              */
 
-             /**
-              * This function searches for an article of a particular topic, content, author,
-              */
-            public static function searchArticle(){
-
-            }
     }
 
 ?>

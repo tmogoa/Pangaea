@@ -1,7 +1,11 @@
 <?php
     /**
+<<<<<<< HEAD
      * !!!DO NOT MAKE ANY CHANGES TO THIS FILE!!!
      * Create a file in the root folder (your pangaea folder not APP - outside the APP folder) with one of the following name:
+=======
+     * Create a file in the root folder with one of the following name:
+>>>>>>> c43e0b59ffb83cc890ec79158d2006951bc80077
      * 1. levi
      * 2. susan
      * 3. tony
