@@ -65,7 +65,16 @@
 
                 if(isset($this->articleSubtitle) && $this->articleSubtitle !== null){
                         $this->articleSubtitle = Utility::sanitizeTextEditorInput($this->articleSubtitle);
+
+                        if(count($values) > 0){
+                            $column_specs .= ", ";
+                            $values_specs .= ", ";
+                        }
+                        $column_specs .= "lastName = ? ";
+                        $values[] = $this->lastName;
+
                         $column_specs .= "subtitle";
+                        
                         $values[] = $this->firstName;
                 } 
             
