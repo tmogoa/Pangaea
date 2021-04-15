@@ -26,7 +26,7 @@ $(function () {
                         case "SQE":
                             break;
                         case "OK":
-                            document.location.href = "login.html";
+                            document.location.href = "login.php";
                             break;
                     }
                 }
@@ -50,7 +50,7 @@ $(function () {
                     case "WPE":
                         break;
                     case "OK":
-                        document.location.href = "index.html";
+                        document.location.href = "index.php";
                         break;
                 }
             }
