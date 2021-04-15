@@ -133,11 +133,6 @@
  
             
             if($details){
-                if(count($details) < 1){
-
-                    //wrong email
-                    return "WEE";//wrong email error
-                }
 
                 $hashed_password = $details[0]['password'];
                 $writerId = $details[0]['userId'];
