@@ -9,6 +9,8 @@
     class Article{
             private $articleId;
             private $articeText;
+            private $articleTitle;
+            private $articleSubtitle;
             private $publishStatus;
             private $media = [];
             private $dateCreated;
