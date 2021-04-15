@@ -441,7 +441,7 @@
             //Todo
             ///-----------------------
             //update the database
-            if(Utility::updateTable('user', $column_specs, "userId = ?", $values, $pdo)){
+            if(Utility::updateTable('users', $column_specs, "userId = ?", $values, $pdo)){
                 return true;
             }
             else{
