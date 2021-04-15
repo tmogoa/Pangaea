@@ -1,7 +1,9 @@
 <?php
-    spl_autoload_register(function($name){
+     spl_autoload_register(function($name){
+        $name = strtolower($name);
         require_once("../classes/$name.class.php");
     });
+
 
  
     //to signup, we need the email and the password
@@ -12,7 +14,7 @@
     $email = isset($_POST['email'])?$_POST['email']:"";
     $password = isset($_POST['password'])?$_POST['password']:"";
 
-    $newUser = new writer();
+    $newUser = new Writer();
 
     $newUser->setEmail($email);
     $newUser->setPassword($password);
