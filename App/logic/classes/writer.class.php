@@ -65,7 +65,7 @@
             return "NPE";
         }
 
-        if(Utility::checkEmail($this->email)){
+        if(!Utility::checkEmail($this->email)){
             return "UEE";
         }
 
