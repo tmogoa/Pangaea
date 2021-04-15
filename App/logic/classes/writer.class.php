@@ -147,7 +147,7 @@
 
             }else{
                 return "WEE";//wrong email error
-            }
+            } 
         }
         catch (Exception $e){
 
