@@ -24,7 +24,7 @@
             if(!$connectionWasPassed){
                 $conn = Utility::makeConnection();
             }
-            //todo
+            //todo 
             $tableName = "user";
             $column_specs = "*";
             $condition = "userId = ?";
@@ -105,7 +105,7 @@
      * WPE Wrong password error  
      * UEE unqualified email error
      */
-
+ 
     public function login(&$conn = null)
     {
 
@@ -134,7 +134,7 @@
             $condition = "email = ?";
 
             $details = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
-
+ 
             
             if($details){
                 if(count($details) < 1){
