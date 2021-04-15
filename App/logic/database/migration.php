@@ -54,8 +54,9 @@
                 (
                 	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED,
-                    articleTitle VARCHAR(500) NOT NULL,
-                	articleText TEXT,
+                    title VARCHAR(500) NOT NULL,
+                    subtitle VARCHAR(500),
+                	body TEXT NOT NULL,
                 	publishStatus enum('published', 'draft'),
                 	shares INT DEFAULT 0, 
                 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
