@@ -50,7 +50,7 @@
              */
             public function addArticle(&$conn = null){
                 
-                $column_specs = "title";
+                $column_specs = "articleTitle";
                 $values_specs = "?";
                 $values = [];
         
@@ -58,17 +58,14 @@
                     return "ETE";//empty title error
                 }
 
+                //Will be looked at if this were to go live
+                $this->articleTitle = Utility::sanitizeTextEditorInput($this->articleTitle);
+                //article title
+                $values = [$this->articleTitle];
 
-                $connectionWasPassed = ($conn == null)?false:true;
-               if(!$connectionWasPassed){
-                    $conn = Utility::makeConnection();
-                }
-
-                if(isset($this->firstName) && $this->firstName !== null){
-                        if(!Utility::checkName($this->firstName)){
-                            return "UFNE";
-                        }
-                        $column_specs .= "firstName = ? ";
+                if(isset($this->articleSubtitle) && $this->articleSubtitle !== null){
+                        $this->articleSubtitle = Utility::sanitizeTextEditorInput($this->articleSubtitle);
+                        $column_specs .= "subtitle";
                         $values[] = $this->firstName;
                 } 
             
@@ -139,6 +136,11 @@
                     //Todo
                     ///-----------------------
                     //update the database
+                $connectionWasPassed = ($conn == null)?false:true;
+                if(!$connectionWasPassed){
+                        $conn = Utility::makeConnection();
+                }
+
                 if(Utility::updateTable('users', $column_specs, "userId = ?", $values, $conn)){
                     return true;
                 }
