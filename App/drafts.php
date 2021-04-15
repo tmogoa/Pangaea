@@ -35,12 +35,12 @@
     <!-- html files will be injected into the divs defined here-->
     <div id="navbar"></div>
 
-<!-- JS file injections-->
-<script>
-    $(function () {
-        $("#navbar").load("./components/navbar.php");
-    });
-</script>
+    <!-- JS file injections-->
+    <script>
+        $(function () {
+            $("#navbar").load("./components/navbar.php");
+        });
+    </script>
 
     <!--Buttons-->
     <div>
