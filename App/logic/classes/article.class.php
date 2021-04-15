@@ -77,10 +77,8 @@
                 } 
             
                 if(isset($this->articeText) && $this->articeText !== null){
-                        if(!Utility::sanitizeTextEditorInput($this->articeText)){
-                            return "ULNE";
-                        }
-                    
+                        $this->articeText = Utility::sanitizeTextEditorInput($this->articeText);
+
                         if(count($values) > 0){
                             $column_specs .= ", ";
                             $values_specs .= ", ";
