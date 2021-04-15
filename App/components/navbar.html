@@ -14,14 +14,14 @@
         </li>
         <li class="mb-4 sm:mb-0">
             <a
-                href=""
+                href="index.html"
                 class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
                 >Home</a
             >
         </li>
         <li class="mb-4 sm:mb-0">
             <a
-                href=""
+                href="write.html"
                 class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
                 >Write</a
             >
@@ -46,12 +46,46 @@
         <li>
             <div id="searchBox" class="mx-6"></div>
         </li>
-        <li>
+        <li id="user-drop-down-li">
             <div id="user-drop-down" class="mx-6"></div>
+        </li>
+        <li class="mb-4 sm:mb-0" id="login-btn">
+            <a
+                href="login.html"
+                class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
+                >Login</a
+            >
+        </li>
+        <li class="mb-4 sm:mb-0" id="register-btn">
+            <a
+                href="register.html"
+                class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
+                >Register</a
+            >
         </li>
     </ul>
 </nav>
 <script>
-    $("#searchBox").load("./components/searchBox.html");
-    $("#user-drop-down").load("./components/userDropDown.html");
+    //Logged in state to update navbar as needed
+    var loggedIn = false;
+
+    //wait till document has fully loaded
+    $(function () {
+        $("#searchBox").load("./components/searchBox.html");
+        const userDropDown = $("#user-drop-down");
+        userDropDown.load("./components/userDropDown.html");
+
+        const loginBtn = $("#login-btn");
+        const registerBtn = $("#register-btn");
+
+        if (loggedIn) {
+            userDropDown.removeClass("sm:hidden");
+            loginBtn.addClass("hidden");
+            registerBtn.addClass("hidden");
+        } else {
+            userDropDown.addClass("sm:hidden");
+            loginBtn.removeClass("hidden");
+            registerBtn.removeClass("hidden");
+        }
+    });
 </script>

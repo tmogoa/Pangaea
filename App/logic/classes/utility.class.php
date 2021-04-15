@@ -9,7 +9,7 @@
          * For database connections
          */
         public static $dbName = "pangaea_db";
-        public static $dbServerName = "localhost";
+        public static $dbServerName = "127.0.0.1";
         public static $dbUserName = "root";
         public static $dbPassword = "";
         /**

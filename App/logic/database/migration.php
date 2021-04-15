@@ -14,7 +14,7 @@
             /**
              * Please make sure to set your database name in the .env file.
              */
-            $conn = Utility::makeConnection();
+            $conn = utility::makeConnection();
 
             try{
                 $conn->beginTransaction();
