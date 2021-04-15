@@ -152,9 +152,7 @@
                     </div>
                     <!--Title-->
                    <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
-                </div>
-                    
-
+                </div>    
             </div>
         </div>
     </div>  
