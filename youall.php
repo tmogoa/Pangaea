@@ -1,6 +1,6 @@
 <?php
     /**
-     * Create a file in the root folder with one of the following name:
+     * Create a file in the root folder (your pangaea folder not APP - outside the APP folder) with one of the following name:
      * 1. levi
      * 2. susan
      * 3. tony
