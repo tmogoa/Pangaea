@@ -85,7 +85,7 @@
                             $values_specs .= ", ";
                         }
                         $values_specs .= ", ";
-                        $column_specs .= "subtitle";
+                        $column_specs .= "articleText";
 
                         
                 }  
