@@ -16,7 +16,7 @@ class Dictionary{
         $this->root_node = new TermNode(null, 0, 0, 0);
         $this->document = $document;
     }
-    
+    //
     //This function works during index construction with and id of -1
     public function insertTerm($term, $id, $docFreq = 1, $termFreq = 1, $termExisted = true){
         $term = strtoupper($term);
