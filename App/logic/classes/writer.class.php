@@ -98,10 +98,14 @@
 
     /**
      * Login a user 
-     * @return EEE|EPE|WPE|WEE|OK
+     * @return EEE|EPE|WPE|WEE|UEE|OK
      * EEE Email Empty error
      * EPE Empty password error
+     * WEE Wrong email error
+     * WPE Wrong password error  
+     * UEE unqualified email error
      */
+
     public function login(&$conn = null)
     {
 
@@ -113,6 +117,10 @@
         //Check email and passsword not empty
         if(!isset($this->email) || empty($this->email)){
             return "EEE";//email empty error
+        }
+
+        if(!Utility::checkEmail($this->email)){
+            return "UEE";//unacceptable email error
         }
 
         if(!isset($this->password) || empty($this->password)){
@@ -144,7 +152,7 @@
 
                 $_SESSION['userId'] = $writerId;
                 $this->writerId = $writerId;
-                return "OK";
+                return "OK"; //Quick comment
 
             }
         }

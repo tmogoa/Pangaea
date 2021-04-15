@@ -11,7 +11,7 @@
             $cmd = "git pull origin develop";
             $output = shell_exec($cmd);
             echo "$output";
-            sleep(30);
+            sleep(1);
         }
        
      }
@@ -23,6 +23,7 @@
         $filesToObserve = [
             "$app/logic/classes/writer.class.php",
             "$app/logic/classes/utility.class.php",
+            "$app/logic/procedures/login.php",
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
         $commitMessage = "Finishing the login function";
@@ -77,7 +78,7 @@
                     }
                 }    
             }
-            sleep(10);
+            //sleep(1);
         }
         
      }
