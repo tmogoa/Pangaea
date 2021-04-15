@@ -33,7 +33,7 @@
     <!-- JS file injections-->
     <script>
         $(function () {
-            $("#navbar").load("./components/navbar.php");
+            $("#navbar").load("./components/navbar.html");
         });
     </script>
 
@@ -58,23 +58,97 @@
             <p class="text-5xl text-center text-black-500 py-2 px-4">You have no Drafts</p>
         </div>
         
-        <!--Articles Display-->
+       
         <div>
-            <!--Article 1-->
-            <div>
-                <!--Add picture-->
-                <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+            <p>Editors picks</p>
+            <!--Articles display-->
+            <div class="grid grid-flow-col grid-cols-3 grid-rows-2 gap-4">
                 
-                <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
-                    <!--Tag-->
-                    <p>Development</p>
-                    <!--Date-->
-                    <p class="text-right">July 2, 2020</p>
-
+                <!--Article 1-->
+                <div>
+                    <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                    
+                    <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
+                        <!--Tag-->
+                        <p>Development</p>
+                        <!--Date-->
+                        <p class="text-right">July 2, 2020</p>
+                    </div>
+                    <!--Title-->
+                   <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
                 </div>
-                
-                <!--Title-->
-                <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
+
+                 <!--Article 1-->
+                 <div>
+                    <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                    
+                    <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
+                        <!--Tag-->
+                        <p>Development</p>
+                        <!--Date-->
+                        <p class="text-right">July 2, 2020</p>
+                    </div>
+                    <!--Title-->
+                   <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
+                </div>
+
+                 <!--Article 1-->
+                 <div>
+                    <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                    
+                    <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
+                        <!--Tag-->
+                        <p>Development</p>
+                        <!--Date-->
+                        <p class="text-right">July 2, 2020</p>
+                    </div>
+                    <!--Title-->
+                   <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
+                </div>
+
+                 <!--Article 1-->
+                 <div>
+                    <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                    
+                    <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
+                        <!--Tag-->
+                        <p>Development</p>
+                        <!--Date-->
+                        <p class="text-right">July 2, 2020</p>
+                    </div>
+                    <!--Title-->
+                   <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
+                </div>
+
+                 <!--Article 1-->
+                 <div>
+                    <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                    
+                    <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
+                        <!--Tag-->
+                        <p>Development</p>
+                        <!--Date-->
+                        <p class="text-right">July 2, 2020</p>
+                    </div>
+                    <!--Title-->
+                   <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
+                </div>
+
+                 <!--Article 1-->
+                 <div>
+                    <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                    
+                    <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
+                        <!--Tag-->
+                        <p>Development</p>
+                        <!--Date-->
+                        <p class="text-right">July 2, 2020</p>
+                    </div>
+                    <!--Title-->
+                   <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
+                </div>
+                    
+
             </div>
 
 
