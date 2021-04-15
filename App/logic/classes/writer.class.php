@@ -150,6 +150,8 @@
                 $this->writerId = $writerId;
                 return "OK"; //Quick comment
 
+            }else{
+                return "WEE";//wrong email error
             }
         }
         catch (Exception $e){
