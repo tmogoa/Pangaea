@@ -41,8 +41,6 @@
          */
         public static function makeConnection($options = false){
 
-            // echo "The database name ". self::$dbName;
-            // echo "The database name is: ";
             $dsn = "mysql:host=". self::$dbServerName. ";dbname=". self::$dbName;
             if(!$options){
                 $options = [ 
