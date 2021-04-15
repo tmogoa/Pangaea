@@ -141,7 +141,7 @@
                 </div>
 
                  <!--Article 6-->
-                 <div>
+                 <div class="border border-gray-100 rounded-md">
                     <img src="\App\assets\img\person working.jpg" alt="" srcset="">
                     
                     <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
