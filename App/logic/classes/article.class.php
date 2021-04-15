@@ -25,7 +25,7 @@
              * @param PDO $conn - pass the connection if you already have a connection to use. 
              */
             public function __construct($articleId = false, $conn = null){
-
+                
             }
 
             public function applaud($readerId){
