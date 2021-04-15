@@ -45,7 +45,8 @@
 
             /**
              * This function allows the addition of an article.
-             * The article object must have the required fields set. These fields are 
+             * The article object must have the required field, article title set.
+             *  
              */
             public function addArticle(){
                 
