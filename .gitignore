@@ -5,11 +5,13 @@ bin-release/
 [Bb]in/
 vendor/
 node_modules/
+
 # Other files and folders
 .settings/
 test.php
 .env
 youall
+
 # Executables
 *.swf
 *.air

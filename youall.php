@@ -7,10 +7,16 @@
 
      function kmu(){
         set_time_limit(0);
+        $output = [];
+        $prev_output = [];
         while(true){   
             $cmd = "git pull origin develop";
-            $output = shell_exec($cmd);
-            echo "$output";
+            exec($cmd, $output);
+            if($prev_output != $output){
+                print_r($output);
+                $prev_output = $output;
+            }
+             $output = [];
             sleep(1);
         }
        
@@ -22,8 +28,9 @@
 
         $filesToObserve = [
             "$app/logic/classes/writer.class.php",
+            "$app/logic/classes/reader.class.php",
+            "$app/logic/classes/article.class.php",
             "$app/logic/classes/utility.class.php",
-            "$app/logic/procedures/login.php",
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
         $commitMessage = "Finishing the login function";
