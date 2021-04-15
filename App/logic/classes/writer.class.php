@@ -25,7 +25,7 @@
                 $conn = Utility::makeConnection();
             }
             //todo 
-            $tableName = "user";
+            $tableName = "users";
             $column_specs = "*";
             $condition = "userId = ?";
             $values = [$writerId];
@@ -299,7 +299,7 @@
         }
 
         //save to the database
-        $tableName = "user";
+        $tableName = "users";
         $column_specs = "`password` = ?";
         $condition = "userId = ?";
         $values = [password_hash($this->password, PASSWORD_DEFAULT), $this->writerId];
