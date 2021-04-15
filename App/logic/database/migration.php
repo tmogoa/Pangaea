@@ -52,13 +52,13 @@
                 (
                 	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED,
+                    articleTitle VARCHAR(500) NOT NULL,
                 	articleText TEXT,
                 	publishStatus enum('published', 'draft'),
                 	shares INT DEFAULT 0, 
                 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 	published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
                 	FOREIGN KEY (writerId) REFERENCES users(userId)
 
                 )";
