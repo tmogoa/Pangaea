@@ -11,7 +11,12 @@ node_modules/
 test.php
 .env
 youall.php
+
+#please create a file with your name in the below list. Then copy the code from youall.php in to the new file.
 levi
+susan
+emmanuel
+tony
 
 # Executables
 *.swf
