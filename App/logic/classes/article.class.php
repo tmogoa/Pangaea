@@ -70,9 +70,6 @@
                             $column_specs .= ", ";
                             $values_specs .= ", ";
                         }
-                        $column_specs .= "lastName = ? ";
-                        $values[] = $this->lastName;
-
                         $column_specs .= "subtitle";
                         
                         $values[] = $this->firstName;
