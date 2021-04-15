@@ -5,7 +5,7 @@
     });
 
 
-    $writer = new Writer();
+    $writer = new writer();
 
     $email = isset($_POST['email'])?filter_var($_POST['email'], FILTER_SANITIZE_STRING):"";
     $password = isset($_POST['email'])?filter_var($_POST['password'], FILTER_SANITIZE_STRING):"";
