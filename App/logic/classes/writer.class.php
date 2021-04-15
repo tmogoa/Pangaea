@@ -98,12 +98,13 @@
 
     /**
      * Login a user 
-     * @return EEE|EPE|WPE|WEE|OK
+     * @return EEE|EPE|WPE|WEE|OK|SQE
      * EEE Email Empty error
      * EPE Empty password error
      * WEE Wrong email error
      * WPE Wrong password error  
      * UEE unqualified email error
+     * SQE Sql Error occurred
      */ 
  
     public function login(&$conn = null)
@@ -149,10 +150,11 @@
                 return "WEE";//wrong email error
             } 
         }
-        catch (Exception $e){
 
+        catch (Exception $e)
+        {
+            echo "SQE"; //SQL Error
         }
-      
     }
 
     /**
