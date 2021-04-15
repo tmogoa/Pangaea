@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <nav
     class="flex flex-col sm:flex-row sm:justify-between p-3 bg-white shadow-sm border-b items-center"
 >
@@ -14,7 +17,7 @@
         </li>
         <li class="mb-4 sm:mb-0">
             <a
-                href="index.html"
+                href="index.php"
                 class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
                 >Home</a
             >
@@ -45,7 +48,7 @@
     <ul class="hidden sm:flex sm:flex-row sm:items-center">
 
         <?php
-            if(isset($_SESSION['userID'])) {
+            if(isset($_SESSION['userId'])) {
         ?>
         <li>
             <div id="searchBox" class="mx-6"></div>
@@ -59,14 +62,14 @@
         ?>
         <li class="mb-4 sm:mb-0" id="login-btn">
             <a
-                href="login.html"
+                href="login.php"
                 class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
                 >Login</a
             >
         </li>
         <li class="mb-4 sm:mb-0" id="register-btn">
             <a
-                href="register.html"
+                href="register.php"
                 class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
                 >Register</a
             >
@@ -75,26 +78,9 @@
     </ul>
 </nav>
 <script>
-    //Logged in state to update navbar as needed
-    var loggedIn = false;
-
     //wait till document has fully loaded
     $(function () {
         $("#searchBox").load("./components/searchBox.html");
-        const userDropDown = $("#user-drop-down");
-        userDropDown.load("./components/userDropDown.html");
-
-        const loginBtn = $("#login-btn");
-        const registerBtn = $("#register-btn");
-
-        if (loggedIn) {
-            userDropDown.removeClass("sm:hidden");
-            loginBtn.addClass("hidden");
-            registerBtn.addClass("hidden");
-        } else {
-            userDropDown.addClass("sm:hidden");
-            loginBtn.removeClass("hidden");
-            registerBtn.removeClass("hidden");
-        }
+        $("#user-drop-down").load("./components/userDropDown.html");
     });
 </script>
