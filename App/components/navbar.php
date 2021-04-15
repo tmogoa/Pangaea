@@ -6,7 +6,7 @@
 >
     <ul class="flex flex-col sm:flex-row items-center">
         <li class="pl-3 pr-6 mb-4 sm:mb-0">
-            <a href="index.html" class="flex items-center">
+            <a href="index.php" class="flex items-center">
                 <img
                     src="./assets/img/logo.svg"
                     alt="logo"
@@ -47,12 +47,13 @@
 
     <ul class="hidden sm:flex sm:flex-row sm:items-center">
 
-        <?php
-            if(isset($_SESSION['userId'])) {
-        ?>
         <li>
             <div id="searchBox" class="mx-6"></div>
         </li>
+
+        <?php
+            if(isset($_SESSION['userId'])) {
+        ?>
 
         <li id="user-drop-down-li">
             <div id="user-drop-down" class="mx-6"></div>
