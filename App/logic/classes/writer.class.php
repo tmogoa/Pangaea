@@ -25,7 +25,7 @@
                 $conn = Utility::makeConnection();
             }
             //todo 
-            $tableName = "users";
+            $tableName = "user";
             $column_specs = "*";
             $condition = "userId = ?";
             $values = [$writerId];
@@ -98,7 +98,7 @@
 
     /**
      * Login a user 
-     * @return EEE|EPE|WPE|WEE|UEE|OK
+     * @return EEE|EPE|WPE|WEE|OK
      * EEE Email Empty error
      * EPE Empty password error
      * WEE Wrong email error
@@ -117,10 +117,6 @@
         //Check email and passsword not empty
         if(!isset($this->email) || empty($this->email)){
             return "EEE";//email empty error
-        }
-
-        if(!Utility::checkEmail($this->email)){
-            return "UEE";//unacceptable email error
         }
 
         if(!isset($this->password) || empty($this->password)){
@@ -365,7 +361,6 @@
         $changeEmail = false;
         $column_specs = "";
         $values = [];
-        $reassign_val = [];
 
       if(isset($this->firstName) && $this->firstName !== null){
             if(!Utility::checkName($this->firstName)){
