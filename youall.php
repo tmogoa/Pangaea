@@ -1,16 +1,35 @@
 <?php
     /**
-     * This script runs in a loop to pull changes from git
+     * Create a file in the root folder with one of the following name:
+     * 1. levi
+     * 2. susan
+     * 3. tony
+     * 4. abart
+     * 5. emmanuel
+     * 
+     * Copy the code from this file into the created file.
+     * Set the files you want to observe in the listenAndPush function.
+     * for the commands: --kmu, --help, --migrate, --pta, use the name of the file you created.
+     * for example `php levi --kmu` if your file name is levi.
+     * 
+     * further changes will be made to this file and you will receive them if you have --kmu pulling
+     * and --pta pushing in continously
      */
 
      
 
      function kmu(){
         set_time_limit(0);
+        $output = [];
+        $prev_output = [];
         while(true){   
             $cmd = "git pull origin develop";
-            $output = shell_exec($cmd);
-            echo "$output";
+            exec($cmd, $output);
+            if($prev_output != $output){
+                print_r($output);
+                $prev_output = $output;
+            }
+             $output = [];
             sleep(1);
         }
        
@@ -21,9 +40,10 @@
          $app = "./App";
 
         $filesToObserve = [
-            "$app/logic/classes/writer.class.php",
-            "$app/logic/classes/utility.class.php",
-            "$app/logic/procedures/login.php",
+            //"$app/logic/classes/writer.class.php",
+           // "$app/logic/classes/reader.class.php",
+           // "$app/logic/classes/article.class.php",
+           // "$app/logic/classes/utility.class.php",
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
         $commitMessage = "Finishing the login function";
