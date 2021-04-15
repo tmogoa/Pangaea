@@ -10,7 +10,8 @@ node_modules/
 .settings/
 test.php
 .env
-youall
+youall.php
+levi
 
 # Executables
 *.swf

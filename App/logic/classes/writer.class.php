@@ -134,7 +134,7 @@
             $condition = "email = ?";
 
             $details = Utility::queryTable($tableName, $columns, $condition, $values, $conn);
-
+ 
             
             if($details){
                 if(count($details) < 1){
