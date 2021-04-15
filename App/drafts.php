@@ -38,8 +38,8 @@
     </script>
 
     <!--Buttons-->
-    <div >
-        <div class="">
+    <div>
+        <div class="flex p-10 ml-8">
             <button
                 class="rounded-md text-white bg-blue-500 w-full py-4 px-7 text-xs font-bold"
             >
@@ -57,18 +57,24 @@
         <div>
             <p class="text-5xl text-center text-black-500 py-2 px-4">You have no Drafts</p>
         </div>
+        
         <!--Articles Display-->
         <div>
             <!--Article 1-->
             <div>
                 <!--Add picture-->
-                <img src="" alt="" srcset="">
-                <!--Tag-->
-                <p>Development</p>
-                <!--Date-->
-                <p>July 2, 2020</p>
+                <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                
+                <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold">
+                    <!--Tag-->
+                    <p>Development</p>
+                    <!--Date-->
+                    <p class="text-right">July 2, 2020</p>
+
+                </div>
+                
                 <!--Title-->
-                <p>Hybrid vs Nature - Here is how you can chose one over the other</p>
+                <p clas>Hybrid vs Nature - Here is how you can chose one over the other</p>
             </div>
 
 
