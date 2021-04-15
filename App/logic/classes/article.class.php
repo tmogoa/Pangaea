@@ -70,22 +70,25 @@
                             $column_specs .= ", ";
                             $values_specs .= ", ";
                         }
+                        $values_specs .= ", ";
                         $column_specs .= "subtitle";
                         
-                        $values[] = $this->firstName;
+                        $values[] = $this->articleSubtitle;
                 } 
             
-                if(isset($this->lastName) && $this->lastName !== null){
-                        if(!Utility::checkName($this->lastName)){
+                if(isset($this->articeText) && $this->articeText !== null){
+                        if(!Utility::sanitizeTextEditorInput($this->articeText)){
                             return "ULNE";
                         }
                     
-                        //some columns are before this one.
                         if(count($values) > 0){
-                            $column_specs .", ";
+                            $column_specs .= ", ";
+                            $values_specs .= ", ";
                         }
-                        $column_specs .= "lastName = ? ";
-                        $values[] = $this->lastName;
+                        $values_specs .= ", ";
+                        $column_specs .= "subtitle";
+
+                        
                 }  
         
               if(isset($this->email) && $this->email !== null){
