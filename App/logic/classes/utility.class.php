@@ -197,9 +197,9 @@
           * Checks if an email exist already
           */
           public static function doesEmailExist($email){
-              $table = "";
-              $columns = "";
-              $condition = "";
+              $table = "users";
+              $columns = "email";
+              $condition = "email = ?";
               $values = [$email];
               $connection = self::makeConnection();
 
