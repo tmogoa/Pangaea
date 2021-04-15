@@ -93,6 +93,26 @@
 
                 )";
                 
+                //new, delet this comment after you see it
+                $sql = "CREATE TABLE ArticleTags 
+                (
+                tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                articleId INT(20) UNSIGNED,
+                tagId INT(20) UNSIGNED,
+
+                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId)
+		        )";
+		
+		        $sql = "CREATE TABLE ArticleKeywords
+		        (
+		        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+		        articleId INT(20) UNSIGNED,
+		        keywords TEXT,
+		        is_indexed INT DEFAULT 0, 
+		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
+		        )";
+          
+                
                 $stmt5 =  $conn->prepare($sql);
                 $stmt5->execute();
 
