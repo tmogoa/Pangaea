@@ -43,6 +43,10 @@
 
             }
 
+            /**
+             * This function allows the addition of an article.
+             * The article object must have the required fields set. These fields are 
+             */
             public function addArticle(){
                 
             }
