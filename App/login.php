@@ -124,7 +124,7 @@
                         <span class="mb-3"
                             >Dont have an account?
                             <a
-                                href="register.html"
+                                href="register.php"
                                 class="text-blue-500 hover:underline"
                                 >Sign up</a
                             ></span
