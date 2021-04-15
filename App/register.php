@@ -56,9 +56,9 @@
                 <p class="mt-4 text-gray-500">Binge-worthy reads.</p>
             </div>
 
-            <div class="flex flex-col flex-grow items-center">
+            <div class="flex flex-col flex-grow items-center p-6">
                 <div
-                    class="w-full p-4 flex flex-row justify-start items-center"
+                    class="w-full p-4 flex flex-row justify-start items-center mb-4"
                 >
                     <img src="./assets/img/logo.svg" alt="logo" class="w-12" />
                     <span class="text-xs font-bold text-gray-500"
@@ -99,7 +99,11 @@
                         />
                     </div> -->
 
-                    <div class="flex flex-col mb-4">
+                    <div class="mb-4 text-red-500 text-xs ml-2" id="error">
+
+                    </div>
+
+                    <div class="flex flex-col mb-6">
                         <label
                             for="email"
                             class="text-gray-500 text-xs font-bold mb-2 ml-2"
@@ -111,7 +115,8 @@
                             id="email"
                             class="text-sm text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none"
                             placeholder="Your email address"
-                            required
+                            required 
+                            autocomplete="email"
                         />
                         <span
                             id="email_error"
@@ -119,7 +124,7 @@
                         ></span>
                     </div>
 
-                    <div class="flex flex-col mb-4">
+                    <div class="flex flex-col mb-6">
                         <label
                             for="password"
                             class="text-gray-500 text-xs font-bold mb-2 ml-2"
@@ -140,7 +145,7 @@
                         ></span>
                     </div>
 
-                    <div class="flex flex-col mb-4">
+                    <div class="flex flex-col mb-6">
                         <label
                             for="password_confirmation"
                             class="text-gray-500 text-xs font-bold mb-2 ml-2"
@@ -151,7 +156,7 @@
                             name="password_confirmation"
                             id="password_confirmation"
                             class="text-sm text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none"
-                            placeholder="password_confirmation"
+                            placeholder="Repeat your password"
                             required
                             autocomplete="new-password"
                         />
@@ -177,7 +182,7 @@
                         />
                     </div> -->
 
-                    <div class="flex flex-col mb-4">
+                    <div class="flex flex-col mb-6">
                         <button
                             class="rounded-md text-white bg-blue-500 w-full py-2 px-4"
                         >

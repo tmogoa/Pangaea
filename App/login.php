@@ -42,7 +42,7 @@
         </script>
 
         <div
-            class="flex flex-col sm:flex sm:flex-row-reverse bg-gray-50 rounded-md w-full sm:w-6/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10"
+            class="flex flex-col sm:flex sm:flex-row-reverse bg-gray-50 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-20 shadow overflow-hidden mb-10"
         >
             <div
                 class="flex flex-col justify-center items-center bg-white p-6 m-0 sm:w-6/12 w-full"
@@ -56,7 +56,7 @@
                 <p class="my-4 text-gray-500">Binge-worthy reads.</p>
             </div>
 
-            <div class="flex flex-col flex-grow items-center">
+            <div class="flex flex-col flex-grow items-center p-6">
                 <div
                     class="w-full p-4 flex flex-row justify-start items-center"
                 >
@@ -73,32 +73,41 @@
                         <label
                             for="email"
                             class="text-gray-500 text-xs font-bold mb-2 ml-2"
-                            >email</label
+                            >Email address</label
                         >
                         <input
                             type="email"
                             name="email"
                             id="email"
                             class="text-sm text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none"
-                            placeholder="email"
+                            placeholder="Your email address"
                             required
+                            autocomplete="email"
                         />
+                        <span
+                            id="email_error"
+                            class="text-red-500 text-xs ml-2"
+                        ></span>
                     </div>
 
                     <div class="flex flex-col mb-6">
                         <label
                             for="password"
                             class="text-gray-500 text-xs font-bold mb-2 ml-2"
-                            >password</label
+                            >Password</label
                         >
                         <input
                             type="password"
                             name="password"
                             id="password"
                             class="text-sm text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none"
-                            placeholder="password"
+                            placeholder="Enter your password"
                             required
                         />
+                        <span
+                            id="password_error"
+                            class="text-red-500 text-xs ml-2"
+                        ></span>
                     </div>
 
                     <div class="flex flex-col mb-4">
