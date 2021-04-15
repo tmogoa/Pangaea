@@ -91,52 +91,9 @@
                 $values_specs .= ", ";
                 $column_specs .= "body";
         
-              if(isset($this->email) && $this->email !== null){
-                    if(!Utility::checkEmail($this->email)){
-                        return "UEE";
-                    }
-                    //check if email is being changed.
-                    $currentDetails = Utility::queryTable("users", "email", "userId = ?", [$this->writerId]);
-                    
-                    if($this->email != $currentDetails[0]['email']){
-                        //email is being changed.
-                        //check if the new email already exist in the system
-                        if(Utility::doesEmailExist($this->email)){
-                            return "NEEE";
-                        }
-        
-                        //if this is true, we will set the email verification to 0 to make display the confirm email message at the top of the screen when the user logs in.
-                        $changeEmail = true;
-                         //some columns are before this one.
-                        if(count($values) > 0){
-                            $column_specs .", ";
-                        }
-                        $column_specs .= "email = ? ";
-                        $values[] = $this->email;
-                    }
-                }
-        
-                if(isset($this->phoneNumber) && $this->phoneNumber !== null){
-                    if(!Utility::checkPhone($this->phoneNumber)){
-                        return "UPNE";
-                    }
-                    if(count($values) > 0){
-                        $column_specs .", ";
-                    }
-                    $column_specs .= "phone = ? ";
-                    $values[] = $this->phone;
-                } 
-                    
-                if(isset($this->nationality) && $this->nationality !== null)
-                {
-                    if(!Utility::checkCountry($this->nationality)){
-                        return "UNE";
-                    }
-                    if(count($values) > 0){
-                        $column_specs .", ";
-                    }
-                    $column_specs .= "nationality = ? ";
-                    $values[] = $this->nationality;
+                $has_tags = false;
+                if(isset($this->tags) && is_array($this->tags)){
+                    $has_tags = true;
                 }
                     
                     //everything is okay
