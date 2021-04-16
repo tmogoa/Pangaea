@@ -40,16 +40,22 @@
     <body>
         <!-- html files will be injected into the divs defined here-->
         <div id="navbar"></div>
-        <div class="flex flex-col-reverse sm:flex-col">
+        <div class="flex flex-col">
             <div
-                class="flex flex-col sm:flex-row sm:justify-end w-full sm:w-8/12 sm:mx-auto mt-3 p-6"
+                class="flex sticky top-0 flex-row justify-between w-full mt-3 py-6 px-10"
             >
+                <div class="flex flex-row items-center">
+                    <img src="assets/img/grid.svg" width="16" alt="..." class="mr-3">
+                    <p class="text-gray-500">Saving</p>
+                </div>
+                <div>
                 <button
                     class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                     onclick="saveArticle()"
                 >
                     Publish
                 </button>
+                </div>
             </div>
             <div class="mt-3 flex flex-col">
                 <div

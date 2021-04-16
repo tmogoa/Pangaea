@@ -52,13 +52,13 @@
             </button>
 
             <button
-                class="rounded-md text-white bg-white-500 text-blue-500 w-full py-4 px-7 text-xs font-bold border border-gray-100 hover:bg-blue-300"
+                class="rounded-md bg-white-500 text-blue-500 w-full py-4 px-7 text-xs font-bold border border-gray-100 hover:bg-blue-300"
             >
                 Saved
             </button>
 
             <button
-                class="rounded-md text-white bg-blue-500 text-white-500 w-full py-4 px-7 text-xs font-bold border border-gray-100 hover:bg-blue-300"
+                class="rounded-md text-white bg-blue-500 w-full py-4 px-7 text-xs font-bold border border-gray-100 hover:bg-blue-300"
             >
                 Published
             </button>
