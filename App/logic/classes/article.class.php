@@ -46,9 +46,10 @@
             /**
              * This function allows the addition of an article.
              * The article object must have the required field, article title set.
-             * The article is saved as a draft
+             * The article is saved as a draft.
+             * The writer ID must be set for the article class. It is a static property.
              */
-            public function addArticle(&$conn = null){
+            public function addArticle($writerId, &$conn = null){
                 
                 $column_specs = "title";
                 $values_specs = "?";
@@ -99,13 +100,26 @@
                 //initializing the system set variables
                 $this->publishStatus = "draft";
                 
-                    
-                    //everything is okay
-                    //update the database
-                    //If the email is to be changed, then save it in the temporary table until it is verified.
-                    //Todo
-                    ///-----------------------
-                    //update the database
+                /*
+                    $sql = "CREATE TABLE Article
+                (
+                	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                	writerId INT(20) UNSIGNED,
+                    title VARCHAR(500) NOT NULL,
+                    subtitle VARCHAR(500),
+                	body TEXT NOT NULL,
+                	publishStatus enum('published', 'draft'),
+                	shares INT DEFAULT 0, 
+                	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                	published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                	FOREIGN KEY (writerId) REFERENCES users(userId)
+
+                )";
+                */
+                
+                //firstly dealing with the Article table
+
                 $connectionWasPassed = ($conn == null)?false:true;
                 if(!$connectionWasPassed){
                         $conn = Utility::makeConnection();
