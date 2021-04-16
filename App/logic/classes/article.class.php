@@ -71,7 +71,7 @@
                             $column_specs .= ", ";
                             $values_specs .= ", ";
                         }
-                        $values_specs .= ", ";
+                        $values_specs .= "?";
                         $column_specs .= "subtitle";
                         
                         $values[] = $this->subtitle;
@@ -89,7 +89,7 @@
                     $column_specs .= ", ";
                     $values_specs .= ", ";
                 }
-                $values_specs .= ", ";
+                $values_specs .= "?";
                 $column_specs .= "body";
         
                 $has_tags = false;
@@ -99,7 +99,12 @@
 
                 //initializing the system set variables
                 $this->publishStatus = "draft";
-                
+                if(count($values) > 0){
+                    $column_specs .= ", ";
+                    $values_specs .= ", ";
+                }
+                $values_specs .= ", ";
+                $column_specs .= "publishStatus";
                 /*
                     $sql = "CREATE TABLE Article
                 (
@@ -117,7 +122,7 @@
 
                 )";
                 */
-                
+
                 //firstly dealing with the Article table
 
                 $connectionWasPassed = ($conn == null)?false:true;

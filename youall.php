@@ -11,7 +11,7 @@
      * Set the files you want to observe in the listenAndPush function.
      * for the commands: --kmu, --help, --migrate, --pta, use the name of the file you created.
      * for example `php levi --kmu` if your file name is levi.
-     * 
+     * Change the $commitMessage the message
      * further changes will be made to this file and you will receive them if you have --kmu pulling
      * and --pta pushing in continously
      */
@@ -46,7 +46,7 @@
            // "$app/logic/classes/utility.class.php",
         ]; //including their directories for example ./APP/logic/classes/writer.class.php
         $filesModificationTime = [];
-        $commitMessage = "Finishing the login function";
+        $commitMessage = "Working";
 
     
         echo "Listening to these files for changes:
