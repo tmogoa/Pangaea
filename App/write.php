@@ -40,16 +40,25 @@
     <body>
         <!-- html files will be injected into the divs defined here-->
         <div id="navbar"></div>
-        <div class="flex flex-col-reverse sm:flex-col">
-            <div
-                class="flex flex-col sm:flex-row sm:justify-end w-full sm:w-8/12 sm:mx-auto mt-3 p-6"
+        <div class="flex flex-col">
+            <div 
+                id = "loaderContainer"
+                class="flex sticky top-0 flex-row justify-end w-full mt-3 py-6 px-6 sm:px-36"
             >
+                <div class="hidden" id="loader">
+                    <div class="flex flex-row items-center">
+                        <img src="assets/img/grid.svg" width="16" alt="..." class="mr-3">
+                        <p class="text-gray-500">Saving</p>
+                    </div>
+                </div>
+                <div>
                 <button
                     class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                     onclick="saveArticle()"
                 >
                     Publish
                 </button>
+                </div>
             </div>
             <div class="mt-3 flex flex-col">
                 <div
@@ -93,6 +102,7 @@
         <!-- JS file injections-->
         <script>
             let editor;
+            let timeoutId;
             $(function () {
                 $("#title").change(function () {
                     if ($("#title").val() != "") {
@@ -131,7 +141,10 @@
                                     "OK, write something binge-worthy...",
                             },
                         },
-                        embed: Embed,
+                        embed:{
+                            class: Embed,
+                            inlineToolbar: true
+                        },
                         // image: SimpleImage,
                         image: {
                             class: ImageTool,
@@ -151,17 +164,56 @@
                     data: {},
                 });
             });
+
             function saveArticle() {
                 editor
                     .save()
                     .then((output) => {
                         //getting json from the editor
+
+                        //test code
+                        showLoader(true);
+                        setTimeout(() => {
+                            showLoader(false);  
+                        }, 3000);
+                        //end of test code
+
                         console.log("data:" + output);
+
                     })
                     .catch((error) => {
                         console.log("error:" + error);
                     });
             }
+
+            function showLoader(visible) {
+
+                if(visible){
+                    $("#loaderContainer").removeClass("justify-end");
+                    $("#loaderContainer").addClass("justify-between");
+                    $("#loader").removeClass("hidden");
+                }else{
+                    $("#loaderContainer").removeClass("justify-between");
+                    $("#loaderContainer").addClass("justify-end");
+                    $("#loader").addClass("hidden");
+                }
+                
+            }
+
+            function autosave(){
+                $("#editorjs").keypress(function() {
+                    if(timeoutId){
+                        clearTimeout(timeoutId);
+                    }
+
+                    timeoutId = setTimeout(() => {
+                        //save article to db after 1s inactivity
+                        saveArticle();
+                    }, 1000);
+                });
+            }
+
+            autosave();
         </script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
