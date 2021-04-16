@@ -13,7 +13,7 @@
             private $subtitle;
             private $tags = [];
             private $publishStatus;
-            private $media = [];
+            private $featuredImage;
             private $dateCreated;
             private $dateUpdated;
             private $datePublished;
@@ -95,6 +95,10 @@
                 if(isset($this->tags) && is_array($this->tags)){
                     $has_tags = true;
                 }
+
+                //initializing the system set variables
+                $this->publishStatus = "draft";
+                
                     
                     //everything is okay
                     //update the database
