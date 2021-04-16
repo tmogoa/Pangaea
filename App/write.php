@@ -42,7 +42,7 @@
         <div id="navbar"></div>
         <div class="flex flex-col">
             <div
-                class="flex sticky top-0 flex-row justify-between w-full mt-3 py-6 px-10"
+                class="flex sticky top-0 flex-row justify-between w-full mt-3 py-6 px-6 sm:px-36"
             >
                 <div class="flex flex-row items-center">
                     <img src="assets/img/grid.svg" width="16" alt="..." class="mr-3">
@@ -137,7 +137,10 @@
                                     "OK, write something binge-worthy...",
                             },
                         },
-                        embed: Embed,
+                        embed:{
+                            class: Embed,
+                            inlineToolbar: true
+                        },
                         // image: SimpleImage,
                         image: {
                             class: ImageTool,
