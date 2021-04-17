@@ -24,3 +24,6 @@ Tables needed
 
 7. ArticleKeywords
  -keywordId, articleId, keywords, is_indexed default = 0
+
+8. index 
+   -termId, term (varchar(255)), docfreq (int unsigned)

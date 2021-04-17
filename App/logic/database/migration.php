@@ -99,7 +99,8 @@
                 articleId INT(20) UNSIGNED,
                 tagId INT(20) UNSIGNED,
 
-                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId)
+                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId),
+                FOREIGN KEY (articleId) REFERENCES Article(articleId)
 		        )";
 		
                 $stmt5 =  $conn->prepare($sql);
