@@ -53,7 +53,7 @@
                 $sql = "CREATE TABLE Article
                 (
                 	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-                	writerId INT(20) UNSIGNED,
+                	writerId INT(20) UNSIGNED NOT NULL,
                     title VARCHAR(500) NOT NULL,
                     subtitle VARCHAR(500),
                 	body TEXT NOT NULL,
