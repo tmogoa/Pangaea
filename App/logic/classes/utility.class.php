@@ -155,6 +155,33 @@
                 return $return;
           }
 
+          /**
+           * Delete from table. 
+           */
+          public static function deleteFromTable($tableName, $condition, array $values, PDO $connection = null){
+            $connectionWasPassed = ($connection == null)?false:true;
+            if(!$connectionWasPassed){
+                $connection = self::makeConnection();
+            }
+            
+            $sql = "DELETE FROM `$tableName` where $condition";
+            $stmt = $connection->prepare($sql);
+
+            if($stmt->execute($values)){
+                $return = true;
+            }else{
+                $return = false;
+            }
+
+            if(!$connectionWasPassed){
+                $connection = null;
+            }
+
+            return $return;
+            
+         }
+
+
         /**
          * checks names to ensure that they meet policy
          */

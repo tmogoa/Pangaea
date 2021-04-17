@@ -1,5 +1,7 @@
 <?php
 
+use GuzzleHttp\Promise\Utils;
+
 /**
  * This is the article class.
  * It contains methods that allows the creation and uploading of articles.
@@ -20,7 +22,7 @@
             private $datePublished;
             private $applauds;
             private $shares;
-            private $reaTime;
+            private $readTime;
             private $numberOfReaders;
 
             /**
@@ -28,8 +30,77 @@
              * @param int $id - pass the id if you want the article to be constructed from the database.
              * @param PDO $conn - pass the connection if you already have a connection to use. 
              */
-            public function __construct($id = false, $conn = null){
-                
+            public function __construct($id = false, &$conn = null){
+                if($id != false){
+                    $connectionWasPassed = ($conn == null)?false:true;
+                    if(!$connectionWasPassed){
+                            $conn = Utility::makeConnection();
+                    }
+                    $tableName = "article";
+                    $column_specs = "*";
+                    $condition = "articleId = ?";
+                    $values = [$id];
+                    $result = Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
+
+                    if($result){
+
+                        $result = $result[0];
+                        $this->id = $id;
+                        $this->title = $result['title'];
+                        $this->subtitle = $result['subtitle'];
+                        $this->body = $result['body'];
+                        $this->writerId = $result['writerId'];
+                        $this->publishStatus = $result['publishStatus'];
+                        $this->featuredImage = $result['featuredImage'];
+                        $this->dateUpdated = $result['updated_at'];
+                        $this->dateCreated = $result['created_at'];
+                        $this->datePublished = $result['published_at'];
+                        $this->shares = $result['shares'];
+                        
+                        //getting applauds
+                        $applauds = Utility::queryTable("ArticleReaction", "Count(aReactionId) as applauds", "articleId = ?", [$this->id], $conn);
+                        if($applauds){
+                            if(count($applauds) > 0){
+                                $this->applauds = $applauds[0]['applauds'];
+                            }
+                            else{
+                                $this->applauds = 0;
+                            }
+                        }
+
+                        //readTime
+                        $this->readTime = round(count(preg_split("/\s+/", $this->body, 0))/200);
+                       
+                        //calculating the number of readers
+                        $numberOfReaders = Utility::queryTable("Reading", "count(readingId) as numOfReaders", "articleId = ?", [$this->id], $conn);
+
+                        if($numberOfReaders && count($numberOfReaders) > 0){
+                            $this->numberOfReaders = $numberOfReaders[0]['numberOfReaders'];
+                        }else{
+                            $this->numberOfReaders = 0;
+                        }
+
+                        //setting the tags
+                        $tags = Utility::queryTable("ArticleTags", "tagId", "articleId = ?", [$this->id], $conn);
+
+                        if($tags && count($tags) > 0){
+                            foreach($tags as $tag){
+                                array_push($this->tags, $tag['tagId']);
+                            }
+                        }
+
+                        //tags set
+
+                    }else{
+                        throw new Exception("Could not construct the object of type Article");
+                    }
+
+                    if(!$connectionWasPassed){
+                        $conn = null;
+                    }
+                }
+
+
             }
 
             /**
@@ -42,7 +113,7 @@
                 if($status != null){
                     //set the status and return the new status
                     $tableName = "article";
-                    $column_specs = "publishStatus = ?";
+                    $column_specs = "publishStatus = ?, published_at = CURRENT_TIMESTAMP";
                     $condition = "articleId = ?";
                     if($status == true){
                         $isPublished = "published";
@@ -64,7 +135,104 @@
                 return false;
             }
 
-            public function persist(){
+            /**
+             * Updates changes made to an article. 
+             * This function requires that the article id be set.
+             * Only the ones that should be updated should be set. All others should remain null.
+             * Only title, tags, subtitle, body, and featured image can be updated
+             * the setters will sanitize the inputs
+             */
+            public function persist(&$conn = null){
+                $connectionWasPassed = ($conn == null)?false:true;
+                if(!$connectionWasPassed){
+                    $conn = Utility::makeConnection();
+                }
+
+                if(!isset($this->articleId)){
+                    return "NIE";//Null ID Error;
+                }
+
+                $column_specs = "";
+                $values = [];
+
+                if(isset($this->title) && !empty($this->title)){
+                    $column_specs = "title = ?";
+                    $values[] = $this->title;
+                }
+
+                if(isset($this->subtitle) && !empty($this->subtitle)){
+                    if(count($values) > 0){
+                        $column_specs .=", ";
+                    }
+                    $column_specs = "subtitle = ?";
+                    $values[] = $this->subtitle;
+                }
+
+                if(isset($this->body) && !empty($this->body)){
+                    if(count($values) > 0){
+                        $column_specs .=", ";
+                    }
+                    $column_specs = "body = ?";
+                    $values[] = $this->body;
+                }
+
+                //update the tags first (No return value)
+                //update the tags table
+                $numOfTags =  count($this->tags);
+                if($numOfTags > 0){
+                    $t_values = [];
+                    $_t = "ArticleTags";
+                    $t_columns_spec = "articleId, tagId";
+                    $t_values_specs = "";
+
+                    $_c = "articleId = ?";
+                    $_v[] = $this->id;
+                
+                    //clearing the database
+                    if(Utility::deleteFromTable($_t, $_c, $_v, $conn)){
+
+                        for($i = 0; $i < $numOfTags; $i++){
+                            if($i == 0){
+                                $t_values_specs = "?, ?";
+                            }
+                            else {
+                                $t_values_specs .= "), (?, ?";
+                            }
+                            array_push($t_values, $this->id, $this->tags[$i]);
+                        }
+    
+                        //insert the rows
+                        //Error might occur here
+                        Utility::insertIntoTable($_t, $t_columns_spec, $t_values_specs, $t_values,$conn);
+                    }
+                }
+
+                //update the actual table
+                $tableName = "article";
+                $condition = "articleId = ?";
+                if(count($values) > 0){
+                    $column_specs .= ", ";
+                }
+                $column_specs .= "updated_at = CURRENT_TIMESTAMP";
+                $values[] = $this->id;
+
+                if(Utility::updateTable($tableName, $column_specs, $condition, $values, $conn)){
+                    return "OK";
+                }
+                else{
+                    return "SQE";//sql error
+                }
+                
+                
+
+                //update the article
+                $tableName = "article";
+                $condition = "articleId = ?";
+                $values[] = $this->id;
+
+                if(Utility::updateTable($tableName, $column_specs, $condition, $values, $conn)){
+
+                }
 
             }
 
@@ -147,6 +315,7 @@
                 $numOfTags =  count($this->tags);
                 if($numOfTags > 0){
                     $t_values = [];
+                    $tableName = "ArticleTags";
                     $t_columns_spec = "articleId, tagId";
                     $t_values_specs = "";
                     
@@ -196,9 +365,10 @@
                 $keywords = $this->title + " "+$this->subtitle+" "+$this->body;
 
                 //dealing with tags
+                if(count($this->tags) > 0){
+                
                 $tags = json_encode($this->tags);
                 //tags are now in [1, 2, 3] therefore, can be used in a query
-        
                 $tags = substr($tags, 1, strlen($tags) - 2); //getting raid of the [] brackets
                 //getting the PDO accepted format
                 $tags = preg_replace("/^(\d+)/", "?", $tags); //now in ?,?, ?, format
@@ -214,6 +384,8 @@
                     $keywords .= " $tagName ";
                 }
 
+                }
+                
                 //get the author's name and email
                 $tableName = "users";
                 $column_specs = "firstname, lastname, email ";

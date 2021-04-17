@@ -428,7 +428,8 @@
                 $column_specs .= "nationality = ? ";
                 $values[] = $this->nationality;
             }
-            
+      
+            $values[] = $this->writerId;
             //everything is okay
             //update the database
             //If the email is to be changed, then save it in the temporary table until it is verified.
