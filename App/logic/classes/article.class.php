@@ -92,6 +92,7 @@
                 $values_specs .= "?";
                 $column_specs .= "body";
         
+                //Tags are IDs sent along with the data in the form of a json format
                 $has_tags = false;
                 if(isset($this->tags) && is_array($this->tags)){
                     $has_tags = true;
