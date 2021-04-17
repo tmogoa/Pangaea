@@ -93,7 +93,6 @@
 
                 )";
                 
-                //new, delet this comment after you see it
                 $sql = "CREATE TABLE ArticleTags 
                 (
                 tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -113,8 +112,7 @@
 		        )";
           
                 
-                $stmt5 =  $conn->prepare($sql);
-                $stmt5->execute();
+                
 
 
                 $conn->commit();
