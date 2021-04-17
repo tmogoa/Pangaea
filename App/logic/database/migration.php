@@ -102,6 +102,9 @@
                 FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId)
 		        )";
 		
+                $stmt5 =  $conn->prepare($sql);
+                $stmt5->execute();
+
 		        $sql = "CREATE TABLE ArticleKeywords
 		        (
 		        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -111,7 +114,8 @@
 		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
 		        )";
           
-                
+                $stmt6 =  $conn->prepare($sql);
+                $stmt6->execute();
                 
 
 
