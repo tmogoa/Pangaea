@@ -58,14 +58,14 @@
 
             <div class="flex flex-col flex-grow items-center p-6">
                 <div
-                    class="w-full p-4 flex flex-row justify-start items-center"
+                    class="w-full p-4 flex flex-row justify-start items-center mb-6"
                 >
                     <img src="./assets/img/logo.svg" alt="logo" class="w-12" />
                     <span class="text-xs font-bold text-gray-500">Login</span>
                 </div>
 
                 <form
-                    class="flex justify-around flex-col"
+                    class="flex justify-around flex-col p-4"
                     id="loginForm"
                     method="POST"
                 >
