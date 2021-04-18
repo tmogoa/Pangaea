@@ -56,7 +56,7 @@
             </div>
             <!--Profile Details-->
             <div class="">
-                <div class="rounded-md shadow-lg bg-white m-1">
+                <div class="rounded-md shadow-lg bg-white m-2">
                     <p class="text-sm text-gray-500 font-bold">NAME</p>
                     <p>Susan Ng'ang'a</p>
                 </div>
