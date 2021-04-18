@@ -1,14 +1,6 @@
 <?php
-    session_start();
-
-    if(!isset($_SESSION['user_id'])){
-        header("Location: ../../login.php");
-    }
-
-    spl_autoload_register(function($name){
-        $name = strtolower($name);
-        require_once("../classes/$name.class.php");
-    });
+    
+    require_once("utility.inc.php");
 
     /**
      * Editing a user profile

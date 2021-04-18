@@ -27,3 +27,6 @@ Tables needed
 
 8. index 
    -termId, term (varchar(255)), docfreq (int unsigned)
+
+9. temporaryImages
+    -tmpImgId, imagePath, created_at
