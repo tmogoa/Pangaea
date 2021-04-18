@@ -67,12 +67,12 @@
                 </div>
 
                 <div class="rounded-md shadow-lg bg-white m-1">
-                    <p>BIO</p>
+                    <p class="text-sm text-gray-500 font-bold">BIO</p>
                     <p>Susan is a young creative lady that believes in the power that a pen and open mind hold.</p>
                 </div>
 
                 <div class="rounded-md shadow-lg bg-white m-1">
-                    <p>MPESA NUMBER</p>
+                    <p class="text-sm text-gray-500 font-bold">MPESA NUMBER</p>
                     <p>+254 708-502-805</p>
                 </div>
 
