@@ -107,17 +107,41 @@
                 $stmt5 =  $conn->prepare($sql);
                 $stmt5->execute();
 
-		        $sql = "CREATE TABLE ArticleKeywords
-		        (
+		$sql = "CREATE TABLE ArticleKeywords
+		(
 		        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 		        articleId INT(20) UNSIGNED,
 		        keywords TEXT,
 		        is_indexed INT DEFAULT 0, 
 		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
-		        )";
+		 )";
           
                 $stmt6 =  $conn->prepare($sql);
                 $stmt6->execute();
+		    
+		 $sql = "CREATE TABLE Index
+		(
+			termId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+			term VARCHAR(255),
+			docfreq INT UNSIGNED
+		)";
+          
+                $stmt7 =  $conn->prepare($sql);
+                $stmt7->execute();
+
+ 		$sql = "CREATE TABLE temporaryImage
+		(
+			tmpImgId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+			imagePath TEXT,
+			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+		)";
+          
+                $stmt8 =  $conn->prepare($sql);
+                $stmt8->execute();
+		
+		    
+		    
+		   
                 
 
 
