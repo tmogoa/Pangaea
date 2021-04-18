@@ -61,12 +61,12 @@
                     <p>Susan Ng'ang'a</p>
                 </div>
 
-                <div class="rounded-md shadow-lg bg-white m-1">
+                <div class="rounded-md shadow-lg bg-white m-2">
                     <p class="text-sm text-gray-500 font-bold">USERNAME</p>
                     <p>snganga@pangaea</p>
                 </div>
 
-                <div class="rounded-md shadow-lg bg-white m-1">
+                <div class="rounded-md shadow-lg bg-white m-2">
                     <p class="text-sm text-gray-500 font-bold">BIO</p>
                     <p>Susan is a young creative lady that believes in the power that a pen and open mind hold.</p>
                 </div>
