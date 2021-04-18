@@ -42,7 +42,7 @@
             });
         </script>
 
-        <div class="flex flex-col sm:flex bg-gray-50 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10">
+        <div class="flex flex-col sm:flex bg-gray-100 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10">
             <!--Profile picture. *REMEMBER TO CENTRE*-->
             <div class="mx-20 m-12">
                 <img src="\App\assets\img\profile.jpeg" alt="" srcset="" class="rounded-full h-24 w-24">
