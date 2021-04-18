@@ -308,6 +308,15 @@ use GuzzleHttp\Promise\Utils;
                         $conn = Utility::makeConnection();
                 }
 
+                //adding the writer id
+                if(count($values) > 0){
+                    $column_specs .= ", ";
+                }
+
+                $column_specs .= "writerId";
+                $values[] = $writerId;
+
+
                 $tableName = "article";
                 $this->id = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
         
@@ -429,11 +438,347 @@ use GuzzleHttp\Promise\Utils;
             }
             /**
              * -------------------------------------------------------------------
-             * These classes are static classes and belong solely to the article management
-             * functionality
+             * Getters and setters
              * --------------------------------------------------------------------
              */
+            
 
+            /**
+             * Get the value of id
+             */ 
+            public function getId()
+            {
+                        return $this->id;
+            }
+
+            /**
+             * Set the value of id
+             *
+             * @return  self
+             */ 
+            public function setId($id)
+            {
+                        $this->id = $id;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of writerId
+             */ 
+            public function getWriterId()
+            {
+                        return $this->writerId;
+            }
+
+            /**
+             * Set the value of writerId
+             *
+             * @return  self
+             */ 
+            public function setWriterId($writerId)
+            {
+                        $this->writerId = $writerId;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of body
+             */ 
+            public function getBody()
+            {
+                        return $this->body;
+            }
+
+            /**
+             * Set the value of body
+             *
+             * @return  self
+             */ 
+            public function setBody($body)
+            {
+                //sanitize the body
+                        $body = Utility::sanitizeTextEditorInput($body);
+                        $this->body = $body;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of title
+             */ 
+            public function getTitle()
+            {
+                        return $this->title;
+            }
+
+            /**
+             * Set the value of title
+             *
+             * @return  self
+             */ 
+            public function setTitle($title)
+            {
+                        $title = Utility::sanitizeTextEditorInput($title);
+                        $this->title = $title;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of subtitle
+             */ 
+            public function getSubtitle()
+            {
+                        return $this->subtitle;
+            }
+
+            /**
+             * Set the value of subtitle
+             *
+             * @return  self
+             */ 
+            public function setSubtitle($subtitle)
+            {
+                        $subtitle = Utility::sanitizeTextEditorInput($subtitle);
+                        $this->subtitle = $subtitle;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of tags
+             */ 
+            public function getTags()
+            {
+                        return $this->tags;
+            }
+
+            /**
+             * Set the value of tags
+             * @return false on failure
+             * @return  self
+             */ 
+            public function setTags(array $tags)
+            {
+                        if(!is_array($tags)){
+                            return false;
+                        }
+
+                        $this->tags = $tags;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of publishStatus
+             */ 
+            public function getPublishStatus()
+            {
+                        return $this->publishStatus;
+            }
+
+            /**
+             * Set the value of publishStatus
+             *
+             * @return  self
+             */ 
+            public function setPublishStatus($publishStatus)
+            {
+                        $publishStatus = strtolower($publishStatus);
+                        if($publishStatus != "published"){
+                            $publishStatus = "draft";
+                        }
+                        $this->publishStatus = $publishStatus;
+                        return $this;
+            }
+
+            /**
+             * Get the value of featuredImage
+             */ 
+            public function getFeaturedImage()
+            {
+                        return $this->featuredImage;
+            }
+
+            /**
+             * Set the value of featuredImage
+             * @param $featuredImage - The name of the image, not the path
+             * This takes the Id of the featureImage and converts the image name to a unique name
+             * for the article. This is not a critical operation and hence is void.
+             * Feature images are titled feat-img-articleId-uniqueid 
+             * @return  self
+             */ 
+            public function setFeaturedImage($featuredImage, $tmpImgId)
+            {
+                $in_directory = "../../storage/images";
+                //The id of the article must be set
+                if(file_exists("$in_directory/$featuredImage")){
+                    switch (exif_imagetype($featuredImage)) {
+                        case IMAGETYPE_PNG:
+                            $imageTmp=imagecreatefrompng($featuredImage);
+                            break;
+                        case IMAGETYPE_JPEG:
+                            $imageTmp=imagecreatefromjpeg($featuredImage);
+                            break;
+                        case IMAGETYPE_GIF:
+                            $imageTmp=imagecreatefromgif($featuredImage);
+                            break;
+                        case IMAGETYPE_BMP:
+                            $imageTmp=imagecreatefrombmp($featuredImage);
+                            break;
+                        // Defaults to JPG
+                        default:
+                            $imageTmp=imagecreatefromjpeg($featuredImage);
+                            break;
+                    }
+    
+                    $new_img_name = "feat-img-$this->id"."-".uniqid(). ".jpeg";
+                    if(imagejpeg($imageTmp, "$in_directory/$new_img_name", 70)){
+                        
+                        unlink("$in_directory/$featuredImage");
+
+                        if(Utility::updateTable("article", "featuredImage = ?", "articleId = ?", [$new_img_name, $this->id])){
+                            //delete if from the temporaryImage table
+                            Utility::deleteFromTable("temporaryImage", "tmpImgId = ?", [$tmpImgId]);
+                            $this->featuredImage = $new_img_name;
+                        }      
+                    }    
+                }
+                        return $this;
+            }
+
+            /**
+             * Get the value of dateCreated
+             */ 
+            public function getDateCreated()
+            {
+                        return $this->dateCreated;
+            }
+
+            /**
+             * Get the value of dateUpdated
+             */ 
+            public function getDateUpdated()
+            {
+                        return $this->dateUpdated;
+            }
+
+            /**
+             * Get the value of datePublished
+             */ 
+            public function getDatePublished()
+            {
+                        return $this->datePublished;
+            }
+
+            /**
+             * Set the value of datePublished
+             *
+             * @return  self
+             */ 
+            public function setDatePublished($datePublished)
+            {
+                        $this->datePublished = $datePublished;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of applauds
+             */ 
+            public function getApplauds()
+            {
+                        return $this->applauds;
+            }
+
+            /**
+             * Set the value of applauds
+             * Decrease the applauds by 1. The reader Id must be passed
+             * @return  self
+             */ 
+            public function decreaseApplauds($readerId, &$conn = null)
+            {
+                        $connectionWasPassed = ($conn != null)?true:false;
+                        if(!$connectionWasPassed){
+                            $conn = Utility::makeConnection();
+                        }
+
+                        if(Utility::deleteFromTable("ArticleReaction", "applaudedBy = ? and articleId = ?", [$readerId, $this->id], $conn)){
+                            $this->applauds = $this->applauds - 1;
+                        }
+                       
+                        if(!$connectionWasPassed){
+                            $conn = null;
+                        }
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of shares
+             */ 
+            public function getShares()
+            {
+                        return $this->shares;
+            }
+
+            /**
+             * Set the value of shares
+             *
+             * @return  self
+             */ 
+            public function setShares($shares)
+            {
+                        $this->shares = $shares;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of readTime
+             */ 
+            public function getReadTime()
+            {
+                        return $this->readTime;
+            }
+
+            /**
+             * Set the value of readTime
+             *
+             * @return  self
+             */ 
+            public function setReadTime()
+            {
+                        $this->readTime = round(count(preg_split("/\s+/",$this->body, 0))/200);
+                        return $this;
+            }
+
+            /**
+             * Get the value of numberOfReaders
+             */ 
+            public function getNumberOfReaders()
+            {
+                        return $this->numberOfReaders;
+            }
+
+            /**
+             * Set the value of numberOfReaders
+             * This function is only called when the threshold for reading is met.
+             * It is only called by the reader object. 
+             * There can be duplicate rows in the Reading table. A reader can read an article and 
+             * reads it again.
+             * @return  self
+             */ 
+            public function increaseNumberOfReaders($readerId, &$conn = null)
+            {
+                        if(Utility::insertIntoTable("Reading", "readerId, articleId", "?, ?", [$readerId, $this], $conn)){
+                            $this->numberOfReaders = $this->numberOfReaders + 1;
+                        }
+                        
+                        return $this;
+            }
     }
 
 ?>
