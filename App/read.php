@@ -41,7 +41,7 @@ session_start();
             </div>
 
             <div>
-            <i class="fas fa-comments"></i>
+                <i class="fas fa-comments"></i>
                 <p class="text-gray-500">18</p>
             </div>
         </div>
