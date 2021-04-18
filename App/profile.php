@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="rounded-md shadow-lg bg-white m-1">
-                    <p>USERNAME</p>
+                    <p class="text-sm text-gray-500 font-bold">USERNAME</p>
                     <p>snganga@pangaea</p>
                 </div>
 
