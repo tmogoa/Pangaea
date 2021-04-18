@@ -49,7 +49,7 @@
             </div>
             <div class="text-right m-2">
                 <button
-                        class="bg-blue-400 hover:bg-green-700 text-white font-bold py-2 px-4 border border-red-400 rounded"
+                        class="bg-red-400 hover:bg-green-700 text-white font-bold py-2 px-4 border border-red-400 rounded"
                     >
                         Edit
                 </button>
