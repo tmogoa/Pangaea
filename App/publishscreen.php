@@ -60,9 +60,7 @@
                 </div>
 
                 <!--Suggestions-->
-                <div
-                    class="flex items-center p-6 m-0 sm:w-8/12 w-full space-x-2 "
-                >
+                <div class="flex items-center p-6 m-0 sm:w-8/12 w-full space-x-2 ">
                     <div class="border p-4">Software Engineering</div>
                     <div class="border p-4">Best Practices</div>
                     <div class="border p-4">Web Development</div>
