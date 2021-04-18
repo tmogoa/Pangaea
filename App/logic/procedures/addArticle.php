@@ -24,6 +24,12 @@
     $article->setTags(json_decode($tags));
 
     echo $article->addArticle($_SESSION['userId']);
+
+    //feature image should be sent here as the [path, id] JSON ofcourse
+    $featureImage = isset($_POST['featureImg-data'])?filter_var($_POST['img'], FILTER_SANITIZE_STRING):"";
+    $tmpImgId = json_decode($featureImage)[1];
+    $featureImage = json_decode($featureImage)[1];
+    $article->setFeaturedImage($featureImage, $tmpImgId);
     
 
 ?>

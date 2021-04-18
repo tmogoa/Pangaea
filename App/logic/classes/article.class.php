@@ -316,7 +316,7 @@ use GuzzleHttp\Promise\Utils;
                 $column_specs .= "writerId";
                 $values[] = $writerId;
 
-                
+
                 $tableName = "article";
                 $this->id = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
         
@@ -604,13 +604,48 @@ use GuzzleHttp\Promise\Utils;
 
             /**
              * Set the value of featuredImage
-             *
+             * @param $featuredImage - The name of the image, not the path
+             * This takes the Id of the featureImage and converts the image name to a unique name
+             * for the article. This is not a critical operation and hence is void.
+             * Feature images are titled feat-img-articleId-uniqueid 
              * @return  self
              */ 
-            public function setFeaturedImage($featuredImage)
+            public function setFeaturedImage($featuredImage, $tmpImgId)
             {
-                        $this->featuredImage = $featuredImage;
+                $in_directory = "../../storage/images";
+                //The id of the article must be set
+                if(file_exists("$in_directory/$featuredImage")){
+                    switch (exif_imagetype($featuredImage)) {
+                        case IMAGETYPE_PNG:
+                            $imageTmp=imagecreatefrompng($featuredImage);
+                            break;
+                        case IMAGETYPE_JPEG:
+                            $imageTmp=imagecreatefromjpeg($featuredImage);
+                            break;
+                        case IMAGETYPE_GIF:
+                            $imageTmp=imagecreatefromgif($featuredImage);
+                            break;
+                        case IMAGETYPE_BMP:
+                            $imageTmp=imagecreatefrombmp($featuredImage);
+                            break;
+                        // Defaults to JPG
+                        default:
+                            $imageTmp=imagecreatefromjpeg($featuredImage);
+                            break;
+                    }
+    
+                    $new_img_name = "feat-img-$this->id"."-".uniqid(). ".jpeg";
+                    if(imagejpeg($imageTmp, "$in_directory/$new_img_name", 70)){
+                        
+                        unlink("$in_directory/$featuredImage");
 
+                        if(Utility::updateTable("article", "featuredImage = ?", "articleId = ?", [$new_img_name, $this->id])){
+                            //delete if from the temporaryImage table
+                            Utility::deleteFromTable("temporaryImage", "tmpImgId = ?", [$tmpImgId]);
+                            $this->featuredImage = $new_img_name;
+                        }      
+                    }    
+                }
                         return $this;
             }
 
