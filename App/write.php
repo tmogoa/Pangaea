@@ -97,13 +97,20 @@
                     id="editorjs"
                     class="w-full shadow-sm border rounded sm:w-8/12 sm:mx-auto p-6 font-serif text-lg prose lg:prose-xl"
                 ></div>
+
+                <div id="parsedText" class="w-full shadow-sm border rounded sm:w-8/12 sm:mx-auto p-6 font-serif text-lg prose lg:prose-xl mt-6">
+
+                </div>
             </div>
         </div>
         <!-- JS file injections-->
         <script>
             let editor;
             let timeoutId;
+            let parser;
             $(function () {
+                parser = edjsHTML();
+
                 $("#title").change(function () {
                     if ($("#title").val() != "") {
                         $("#title_label").css("display", "block");
@@ -178,7 +185,9 @@
                         }, 3000);
                         //end of test code
 
-                        console.log("data:" + output);
+                        $("#parsedText").html(parser.parse(output));
+
+                        //console.log("data:" + output);
 
                     })
                     .catch((error) => {
@@ -222,5 +231,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/editorjs-html@3.0.3/build/edjsHTML.js"></script>
     </body>
 </html>

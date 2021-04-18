@@ -53,12 +53,13 @@
                 $sql = "CREATE TABLE Article
                 (
                 	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-                	writerId INT(20) UNSIGNED,
+                	writerId INT(20) UNSIGNED NOT NULL,
                     title VARCHAR(500) NOT NULL,
                     subtitle VARCHAR(500),
                 	body TEXT NOT NULL,
                 	publishStatus enum('published', 'draft'),
-                	shares INT DEFAULT 0, 
+                	shares INT DEFAULT 0,
+                    featured_image VARCHAR(1000), 
                 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 	published_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -93,16 +94,19 @@
 
                 )";
                 
-                //new, delet this comment after you see it
                 $sql = "CREATE TABLE ArticleTags 
                 (
                 tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 articleId INT(20) UNSIGNED,
                 tagId INT(20) UNSIGNED,
 
-                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId)
+                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId),
+                FOREIGN KEY (articleId) REFERENCES Article(articleId)
 		        )";
 		
+                $stmt5 =  $conn->prepare($sql);
+                $stmt5->execute();
+
 		        $sql = "CREATE TABLE ArticleKeywords
 		        (
 		        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -112,9 +116,9 @@
 		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
 		        )";
           
+                $stmt6 =  $conn->prepare($sql);
+                $stmt6->execute();
                 
-                $stmt5 =  $conn->prepare($sql);
-                $stmt5->execute();
 
 
                 $conn->commit();
