@@ -49,8 +49,7 @@ $(function () {
                 class: ImageTool,
                 config: {
                     endpoints: {
-                        byFile:
-                            "http://localhost/pangaea/App/logic/procedures/uploadImage.php", //Your backend file uploader endpoint
+                        byFile: "logic/procedures/uploadImage.php", //Your backend file uploader endpoint
                         byUrl: "http://localhost:8008/fetchUrl", // Your endpoint that provides uploading by Url
                     },
                 },
@@ -66,6 +65,7 @@ $(function () {
 });
 
 function saveArticle(elem) {
+    const urlToAutoSaver = "logic/procedures/editArticle.php";
     switch (elem.attr("id")) {
         case "editorjs":
             editor
@@ -73,14 +73,16 @@ function saveArticle(elem) {
                 .then((output) => {
                     //getting json from the editor
 
-                    //test code
-                    showLoader(true);
-                    setTimeout(() => {
-                        showLoader(false);
-                    }, 3000);
-                    //end of test code
+                    $.post(
+                        "test.php",
+                        { articleBody: elem.val() },
+                        function (data) {
+                            showLoader(false);
+                        },
+                        "json"
+                    );
 
-                    $("#parsedText").html(parser.parse(output));
+                    //$("#parsedText").html(parser.parse(output));
 
                     //console.log("data:" + output);
                 })
@@ -90,17 +92,29 @@ function saveArticle(elem) {
             break;
         case "title":
             showLoader(true);
-            setTimeout(() => {
-                showLoader(false);
-            }, 3000);
-            console.log("title");
+
+            $.post(
+                "test.php",
+                { title: elem.val() },
+                function (data) {
+                    showLoader(false);
+                },
+                "json"
+            );
+
             break;
         case "subtitle":
             showLoader(true);
-            setTimeout(() => {
-                showLoader(false);
-            }, 3000);
-            console.log("subtitle");
+
+            $.post(
+                "test.php",
+                { subtitle: elem.val() },
+                function (data) {
+                    showLoader(false);
+                },
+                "json"
+            );
+
             break;
     }
 }
