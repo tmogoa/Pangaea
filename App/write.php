@@ -2,6 +2,8 @@
     session_start();
     if(!isset($_SESSION['userId'])){
         header("Location: login.php");
+    }else{
+        require_once "logic/procedures/addArticle.php";
     }
 
 ?>
@@ -107,6 +109,7 @@
 
 
         <input type="text" name="user-id" id="user-id" value="<?php echo $_SESSION['userId'] ?>" hidden>
+        <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
 
         <!-- JS file injections-->
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>

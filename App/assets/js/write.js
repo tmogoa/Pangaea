@@ -66,6 +66,9 @@ $(function () {
 
 function saveArticle(elem) {
     const urlToAutoSaver = "logic/procedures/editArticle.php";
+    const articleId = $("#article-id").val();
+    console.log(articleId);
+
     switch (elem.attr("id")) {
         case "editorjs":
             editor
@@ -74,8 +77,8 @@ function saveArticle(elem) {
                     //getting json from the editor
 
                     $.post(
-                        "test.php",
-                        { articleBody: elem.val() },
+                        urlToAutoSaver,
+                        { id: articleId, body: elem.val() },
                         function (data) {
                             showLoader(false);
                         },
@@ -94,8 +97,8 @@ function saveArticle(elem) {
             showLoader(true);
 
             $.post(
-                "test.php",
-                { title: elem.val() },
+                urlToAutoSaver,
+                { id: articleId, title: elem.val() },
                 function (data) {
                     showLoader(false);
                 },
@@ -107,8 +110,8 @@ function saveArticle(elem) {
             showLoader(true);
 
             $.post(
-                "test.php",
-                { subtitle: elem.val() },
+                urlToAutoSaver,
+                { id: articleId, subtitle: elem.val() },
                 function (data) {
                     showLoader(false);
                 },
