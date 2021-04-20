@@ -33,7 +33,7 @@
     echo "{
         \"success\" : 1,
         \"file\": {
-            \"url\" : \"http://localhost/pangaea_swe/App/storage/images/$newImage\"
+            \"url\" : \"http://localhost/pangaea/App/storage/images/$newImage\"
         }
     }"
 
