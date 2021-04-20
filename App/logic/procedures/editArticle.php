@@ -7,6 +7,7 @@
      * article to be the featured image.
      */
 
+    $articleId = 
 
     $article = new Article();
 

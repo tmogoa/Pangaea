@@ -52,11 +52,11 @@
                 //I already made some updates
                 $sql = "CREATE TABLE Article
                 (
-                	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                	articleId INT(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED NOT NULL,
-                    title VARCHAR(500) NOT NULL,
+                    title VARCHAR(500),
                     subtitle VARCHAR(500),
-                	body TEXT NOT NULL,
+                	body TEXT,
                 	publishStatus enum('published', 'draft'),
                 	shares INT DEFAULT 0,
                     featured_image VARCHAR(1000), 
