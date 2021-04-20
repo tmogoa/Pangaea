@@ -7,9 +7,15 @@
      * article to be the featured image.
      */
 
-    $articleId = 
+    $articleId = isset($_POST['id'])?(int)$_POST['id']:"";
+
+    if($articleId == 0 || !is_int($articleId)){
+        echo "NIE";//no id error
+        exit;
+    }
 
     $article = new Article();
+    $article->setId($articleId);
 
     //get the article title
     //Most of the validation of the input is done in the setters and getters
@@ -20,18 +26,19 @@
     $article->setSubtitle($subtitle);
 
     $body = isset($_POST['body'])?$_POST['body']:"";
-
+    $article->setBody($body);
+    
     //we expect the tags to be a JSON array
-    $tags = isset($_POST['tags'])?$_POST['tags']:"";
-    $article->setTags(json_decode($tags));
+    // $tags = isset($_POST['tags'])?$_POST['tags']:"";
+    // $article->setTags(json_decode($tags));
 
-    echo $article->addArticle($_SESSION['userId']);
+    echo $article->persist();
 
     //feature image should be sent here as the [path, id] JSON ofcourse
-    $featureImage = isset($_POST['featureImg-data'])?filter_var($_POST['img'], FILTER_SANITIZE_STRING):"";
+    // $featureImage = isset($_POST['featureImg-data'])?filter_var($_POST['img'], FILTER_SANITIZE_STRING):"";
     
-    $tmpImgId = json_decode($featureImage)[1];
-    $featureImage = json_decode($featureImage)[1];
-    $article->setFeaturedImage($featureImage, $tmpImgId);
+    // $tmpImgId = json_decode($featureImage)[1];
+    // $featureImage = json_decode($featureImage)[1];
+    // $article->setFeaturedImage($featureImage, $tmpImgId);
     
 ?>
