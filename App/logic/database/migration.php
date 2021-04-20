@@ -76,7 +76,7 @@
                 	articleId INT (20) UNSIGNED,
                 	applaudedBy INT(20) UNSIGNED,
                 	FOREIGN KEY (applaudedBy) REFERENCES users(userId),
-                	FOREIGN KEY (articleId) REFERENCES Article(articleId)
+                	FOREIGN KEY (articleId) REFERENCES article(articleId)
 
                 )";
 
@@ -89,7 +89,7 @@
                 	readerId INT(20) UNSIGNED,
                 	FOREIGN KEY (readerId) REFERENCES users(userId),
                 	articleId INT(20) UNSIGNED, timeReading INT,  
-                	FOREIGN KEY (articleId) REFERENCES Article(articleId)
+                	FOREIGN KEY (articleId) REFERENCES article(articleId)
 
 
                 )";
@@ -103,8 +103,8 @@
                 articleId INT(20) UNSIGNED,
                 tagId INT(20) UNSIGNED,
 
-                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId),
-                FOREIGN KEY (articleId) REFERENCES Article(articleId)
+                FOREIGN KEY (tagId) REFERENCES articleTopics(aTopicId),
+                FOREIGN KEY (articleId) REFERENCES article(articleId)
 		        )";
 		
                 $stmt6 =  $conn->prepare($sql);
@@ -116,7 +116,7 @@
 		        articleId INT(20) UNSIGNED,
 		        keywords TEXT,
 		        is_indexed INT DEFAULT 0, 
-		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
+		        FOREIGN KEY (articleId) REFERENCES article(articleId)
 		 )";
           
                 $stmt7 =  $conn->prepare($sql);
