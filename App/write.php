@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if(!isset($_SESSION['userId'])){
-        header("Location: login.php");
-    }
+    // session_start();
+    // if(!isset($_SESSION['userId'])){
+    //     header("Location: login.php");
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -157,9 +157,11 @@
                             class: ImageTool,
                             config: {
                                 endpoints: {
-                                    byFile: "http://localhost:8008/uploadFile", // Your backend file uploader endpoint
-                                    byUrl: "http://localhost:8008/fetchUrl", // Your endpoint that provides uploading by Url
+                                    byFile: "http://localhost/pangaea_swe/App/logic/procedures/uploadImage.php", // Your backend file uploader endpoint
+                                    byUrl: "http://localhost:8008/fetchUrl", // Your endpoint that provides uploading by Url (will be done later);
                                 },
+                                field: "image",
+                                accept: "image/*"
                             },
                         },
                     },
