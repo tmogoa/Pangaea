@@ -94,6 +94,9 @@
 
                 )";
                 
+                $stmt5 =  $conn->prepare($sql);
+                $stmt5->execute();
+
                 $sql = "CREATE TABLE ArticleTags 
                 (
                 tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -104,8 +107,8 @@
                 FOREIGN KEY (articleId) REFERENCES Article(articleId)
 		        )";
 		
-                $stmt5 =  $conn->prepare($sql);
-                $stmt5->execute();
+                $stmt6 =  $conn->prepare($sql);
+                $stmt6->execute();
 
 		$sql = "CREATE TABLE ArticleKeywords
 		(
@@ -116,18 +119,18 @@
 		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
 		 )";
           
-                $stmt6 =  $conn->prepare($sql);
-                $stmt6->execute();
+                $stmt7 =  $conn->prepare($sql);
+                $stmt7->execute();
 		    
-		 $sql = "CREATE TABLE Index
+		 $sql = "CREATE TABLE `index`
 		(
 			termId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 			term VARCHAR(255),
 			docfreq INT UNSIGNED
 		)";
           
-                $stmt7 =  $conn->prepare($sql);
-                $stmt7->execute();
+                $stmt8 =  $conn->prepare($sql);
+                $stmt8->execute();
 
  		$sql = "CREATE TABLE temporaryImage
 		(
@@ -136,8 +139,8 @@
 			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 		)";
           
-                $stmt8 =  $conn->prepare($sql);
-                $stmt8->execute();
+                $stmt9 =  $conn->prepare($sql);
+                $stmt9->execute();
 		
 		    
 		    
