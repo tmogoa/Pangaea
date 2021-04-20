@@ -148,7 +148,7 @@ use GuzzleHttp\Promise\Utils;
                     $conn = Utility::makeConnection();
                 }
 
-                if(!isset($this->articleId)){
+                if(!isset($this->id)){ // found a bug here changed it from $this->articleId
                     return "NIE";//Null ID Error;
                 }
 

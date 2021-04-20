@@ -100,10 +100,6 @@
                     id="editorjs"
                     class="w-full shadow-sm border rounded sm:w-8/12 sm:mx-auto p-6 font-serif text-lg prose lg:prose-xl"
                 ></div>
-
-                <div id="parsedText" class="w-full shadow-sm border rounded sm:w-8/12 sm:mx-auto p-6 font-serif text-lg prose lg:prose-xl mt-6">
-
-                </div>
             </div>
         </div>
 

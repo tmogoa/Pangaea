@@ -67,27 +67,20 @@ $(function () {
 function saveArticle(elem) {
     const urlToAutoSaver = "logic/procedures/editArticle.php";
     const articleId = $("#article-id").val();
-    console.log(articleId);
 
     switch (elem.attr("id")) {
         case "editorjs":
             editor
-                .save()
+                .save() //getting json from the editor
                 .then((output) => {
-                    //getting json from the editor
-
+                    showLoader(true);
                     $.post(
                         urlToAutoSaver,
-                        { id: articleId, body: elem.val() },
+                        { id: articleId, body: output },
                         function (data) {
                             showLoader(false);
-                        },
-                        "json"
+                        }
                     );
-
-                    //$("#parsedText").html(parser.parse(output));
-
-                    //console.log("data:" + output);
                 })
                 .catch((error) => {
                     console.log("error:" + error);
@@ -101,8 +94,7 @@ function saveArticle(elem) {
                 { id: articleId, title: elem.val() },
                 function (data) {
                     showLoader(false);
-                },
-                "json"
+                }
             );
 
             break;
@@ -114,8 +106,7 @@ function saveArticle(elem) {
                 { id: articleId, subtitle: elem.val() },
                 function (data) {
                     showLoader(false);
-                },
-                "json"
+                }
             );
 
             break;
@@ -142,7 +133,7 @@ function listenForChanges() {
     timeoutId = setTimeout(() => {
         //save article to db after 1s inactivity
         saveArticle($(this));
-    }, 1000);
+    }, 3000);
 }
 
 function autosave() {

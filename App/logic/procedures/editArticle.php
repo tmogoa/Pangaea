@@ -1,4 +1,5 @@
 <?php
+    
     require_once("utility.inc.php");
     /**
      * Feature images are stored in the database tmporary-feature image table. 
@@ -6,10 +7,9 @@
      * be sent. If the feature image url is not sent, then we proceed to take the first image in the
      * article to be the featured image.
      */
-
-    $articleId = isset($_POST['id'])?(int)$_POST['id']:"";
-
-    if($articleId == 0 || !is_int($articleId)){
+    $articleId = isset($_POST['id']) ? (int)$_POST['id'] :"";
+    
+    if( $articleId == 0 || !is_int($articleId) ){
         echo "NIE";//no id error
         exit;
     }
@@ -25,7 +25,7 @@
     $subtitle = isset($_POST['subtitle'])?filter_var($_POST['subtitle'], FILTER_SANITIZE_STRING):"";
     $article->setSubtitle($subtitle);
 
-    $body = isset($_POST['body'])?$_POST['body']:"";
+    $body = isset($_POST['body']) ? json_encode($_POST['body']) : "";
     $article->setBody($body);
     
     //we expect the tags to be a JSON array
