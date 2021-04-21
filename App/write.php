@@ -3,7 +3,7 @@
     if(!isset($_SESSION['userId'])){
         header("Location: login.php");
     }else{
-        require_once "logic/procedures/addArticle.php";
+        //require_once "logic/procedures/addArticle.php";
     }
 
 ?>
@@ -106,6 +106,74 @@
 
         <input type="text" name="user-id" id="user-id" value="<?php echo $_SESSION['userId'] ?>" hidden>
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
+
+
+
+
+
+
+        <!-- Modal -->
+
+
+        <div class="fixed left-0 top-0 w-full h-full bg-opacity-50 bg-black z-50 scale-110">
+            <div
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col sm:flex bg-gray-50 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10"
+            >
+                <!--Subtitle-->
+                <div class="py-2 px-2">
+                    <label for="headertag">Add tags to your article</label>
+                </div>
+
+                <div class="m-2">
+                    <!--Input-->
+                    <div class="text-sm text-gray-500 py-2 px-4 rounded-3xl border">
+                        <input
+                            type="text"
+                            class="block w-full border-0 focus:outline-none bg-gray-50"
+                            placeholder="Enter tags here"
+                        />
+                    </div>
+
+                    <!--Suggestions-->
+                    <div class="flex items-center p-6 m-0 sm:w-8/12 w-full space-x-2 ">
+                        <div class="border p-4">Software Engineering</div>
+                        <div class="border p-4">Best Practices</div>
+                        <div class="border p-4">Web Development</div>
+                    </div>
+                    <!--Checkbox-->
+                    <div
+                        class="text-xs max-w-none text-gray-500 text-justify border: outline-none"
+                    >
+                        <input
+                            type="checkbox"
+                            name="permission"
+                            id="permission"
+                            value="Granted"
+                        />
+                        <label for="permission"
+                            >Allow Pangaea curators to curate my article to reach a
+                            bigger audience. Without checking this your article
+                            won’t earn money.</label
+                        >
+                    </div>
+
+                    <!--Button-->
+                    <div class="text-right m-2">
+                        <button
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                        >
+                            Go Live
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
 
         <!-- JS file injections-->
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
