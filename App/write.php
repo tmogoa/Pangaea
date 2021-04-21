@@ -56,8 +56,7 @@
                 </div>
                 <div>
                 <button
-                    class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
-                    onclick="saveArticle()"
+                    class="trigger rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                 >
                     Publish
                 </button>
@@ -115,34 +114,48 @@
         <!-- Modal -->
 
 
-        <div class="fixed left-0 top-0 w-full h-full bg-opacity-50 bg-black z-50 scale-110">
+        <div class="modal">
             <div
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col sm:flex bg-gray-50 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10"
+                class="modal-content flex flex-col sm:flex bg-gray-50 rounded-md w-10/12 sm:w-6/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10"
             >
-                <!--Subtitle-->
-                <div class="py-2 px-2">
-                    <label for="headertag">Add tags to your article</label>
+            <div class="flex justify-between p-2">
+                <div class="m-2 py-1 px-2 text-gray-500 text-lg">Add tags to your article</div>
+                <div class="flex justify-center items-center rounded-full hover:bg-gray-200 m-2 p-2">
+                    <span class="text-gray-500 close-button flex justify-center items-center my-auto">&times;</span>
                 </div>
+            </div>
+                <!--Subtitle-->
+                <!-- <div class="py-2 px-2">
+                    <label for="headertag">Add tags to your article</label>
+                </div> -->
 
                 <div class="m-2">
                     <!--Input-->
-                    <div class="text-sm text-gray-500 py-2 px-4 rounded-3xl border">
+                    <div class="text-sm text-gray-500 py-2 px-4  flex justify-start">
                         <input
                             type="text"
-                            class="block w-full border-0 focus:outline-none bg-gray-50"
+                            name="tag" 
+                            id="tag"
+                            class="text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none w-2/3"
                             placeholder="Enter tags here"
                         />
                     </div>
 
                     <!--Suggestions-->
-                    <div class="flex items-center p-6 m-0 sm:w-8/12 w-full space-x-2 ">
-                        <div class="border p-4">Software Engineering</div>
-                        <div class="border p-4">Best Practices</div>
-                        <div class="border p-4">Web Development</div>
+                    <div class="flex flex-col md:flex-wrap md:flex-row md:items-center p-6 w-full space-x-2 space-y-2" id="tags">
+                        <span class="border p-2 text-gray-500 inline-flex items-center justify-between">
+                            <span class="text-xs mr-2">
+                                Software Engineering
+                            </span>
+                            <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
+                                <span class="x-button inline-flex justify-center items-center">&times;</span>
+                            </span>
+                        </span>
+                        
                     </div>
                     <!--Checkbox-->
                     <div
-                        class="text-xs max-w-none text-gray-500 text-justify border: outline-none"
+                        class="text-xs max-w-none text-gray-500 text-justify flex items-start p-6"
                     >
                         <input
                             type="checkbox"
@@ -150,7 +163,7 @@
                             id="permission"
                             value="Granted"
                         />
-                        <label for="permission"
+                        <label for="permission" class="ml-2"
                             >Allow Pangaea curators to curate my article to reach a
                             bigger audience. Without checking this your article
                             won’t earn money.</label
@@ -160,7 +173,7 @@
                     <!--Button-->
                     <div class="text-right m-2">
                         <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
                             Go Live
                         </button>
@@ -168,8 +181,6 @@
                 </div>
             </div>
         </div>
-
-
 
 
 

@@ -144,5 +144,38 @@ function autosave() {
 
 autosave();
 
-// article id
-//console.log($("#user-id").val());
+const modal = document.querySelector(".modal");
+const trigger = document.querySelector(".trigger");
+const closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+
+//Handle adding tags
+const tagInput = $("#tag");
+tagInput.keydown(function (event) {
+    if (event.keyCode == 13 && tagInput.val() != "") {
+        $("#tags").append(
+            ` <span class="border p-2 text-gray-500 inline-flex items-center justify-between">
+            <span class="text-xs mr-2">
+            ${tagInput.val()}
+            </span>
+            <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
+                <span class="x-button inline-flex justify-center items-center">&times;</span>
+            </span>
+        </span>`
+        );
+        return false;
+    }
+});
