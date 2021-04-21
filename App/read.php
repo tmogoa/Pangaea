@@ -32,7 +32,7 @@ session_start();
         });
     </script>
 
-    <div class="flex flex row items-center p-12 ">
+    <div class="flex flex-row items-center p-12 ">
         <!--Left-->
         <div>
             <div>

@@ -1,8 +1,9 @@
 let editor;
 let timeoutId;
 let parser;
+const ImageTool = window.ImageTool;
 $(function () {
-    parser = edjsHTML();
+    parser = new Parser();
 
     $("#title").change(function () {
         if ($("#title").val() != "") {
@@ -55,12 +56,6 @@ $(function () {
                 },
             },
         },
-        embed: Embed,
-        image: SimpleImage,
-        /**
-         * Previously saved data that should be rendered
-         */
-        data: {},
     });
 });
 
@@ -73,6 +68,9 @@ function saveArticle(elem) {
             editor
                 .save() //getting json from the editor
                 .then((output) => {
+                    parser.renderable = "";
+                    parser.parse(output);
+                    $("#output").html(parser.renderable);
                     showLoader(true);
                     $.post(
                         urlToAutoSaver,
@@ -133,7 +131,7 @@ function listenForChanges() {
     timeoutId = setTimeout(() => {
         //save article to db after 1s inactivity
         saveArticle($(this));
-    }, 3000);
+    }, 1000);
 }
 
 function autosave() {

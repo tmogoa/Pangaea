@@ -3,7 +3,7 @@
     if(!isset($_SESSION['userId'])){
         header("Location: login.php");
     }else{
-        //require_once "logic/procedures/addArticle.php";
+        require_once "logic/procedures/addArticle.php";
     }
 
 ?>
@@ -107,7 +107,7 @@
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
 
 
-
+        <div class="w-8/12 border p-6 text-lg prose lg:prose-xl font-serif mx-auto m-1" id="output"></div>
 
 
 
@@ -184,7 +184,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/editorjs-html@3.0.3/build/edjsHTML.js"></script>
         <script src="./assets/js/write.js"></script>
+        <script src="./assets/js/parser.js"></script>
     </body>
 </html>
