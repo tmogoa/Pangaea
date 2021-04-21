@@ -164,18 +164,51 @@ window.addEventListener("click", windowOnClick);
 
 //Handle adding tags
 const tagInput = $("#tag");
+const tags = [];
 tagInput.keydown(function (event) {
     if (event.keyCode == 13 && tagInput.val() != "") {
+        tags.push(tagInput.val());
+        const tagIndex = tags.length - 1;
         $("#tags").append(
-            ` <span class="border p-2 text-gray-500 inline-flex items-center justify-between">
+            ` <span id="${tagIndex}" class="m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
             <span class="text-xs mr-2">
             ${tagInput.val()}
             </span>
             <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
-                <span class="x-button inline-flex justify-center items-center">&times;</span>
+                <button class="x-button inline-flex justify-center items-center focus:outline-none" onclick="removeTag(this)">&times;</button>
             </span>
         </span>`
         );
+        tagInput.val("");
         return false;
     }
 });
+
+function removeTag(elem) {
+    //get parent node
+    const tagElem = elem.parentNode.parentNode;
+    //hide the tag
+    tagElem.classList.add("hidden");
+    //get array index of tag
+    const index = tagElem.getAttribute("id");
+    //remove tag from array by assigning null
+    tags[index] = null;
+}
+
+$("#go-live").click(function () {
+    //Removing null elems from the array
+    const finalTags = [];
+    tags.forEach((element) => {
+        if (element !== null) {
+            finalTags.push(element);
+        }
+    });
+    sendTags(finalTags);
+});
+
+function sendTags(finalTags) {
+    const url = "";
+    $.post(url, { tags: JSON.stringify(finalTags) }, function (data) {
+        //check if publish was okay
+    });
+}
