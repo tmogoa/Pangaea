@@ -147,16 +147,6 @@
           
                 $stmt9 =  $conn->prepare($sql);
                 $stmt9->execute();
-		
-                $sql = "CREATE TABLE 
-                (
-                    tmpImgId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-                    imagePath TEXT,
-                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-                )";
-		    
-		   
-                
 
 
                 $conn->commit();

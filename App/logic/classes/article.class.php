@@ -200,7 +200,7 @@ use GuzzleHttp\Promise\Utils;
                 $numOfTags =  count($this->tags);
                 if($numOfTags > 0){
                     $t_values = [];
-                    $_t = "ArticleTags";
+                    $_t = "articleTags";
                     $t_columns_spec = "articleId, tagId";
                     $t_values_specs = "";
 
@@ -343,7 +343,7 @@ use GuzzleHttp\Promise\Utils;
                 $numOfTags =  count($this->tags);
                 if($numOfTags > 0){
                     $t_values = [];
-                    $tableName = "ArticleTags";
+                    $tableName = "articleTags";
                     $t_columns_spec = "articleId, tagId";
                     $t_values_specs = "";
                     
@@ -813,7 +813,7 @@ use GuzzleHttp\Promise\Utils;
              * Set the value of numberOfReaders
              * This function is only called when the threshold for reading is met.
              * It is only called by the reader object. 
-             * There can be duplicate rows in the Reading table. A reader can read an article and 
+             * There can be duplicate rows in the reading table. A reader can read an article and 
              * reads it again.
              * @return  self
              */ 
