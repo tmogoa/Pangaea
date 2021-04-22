@@ -26,6 +26,7 @@ use GuzzleHttp\Promise\Utils;
             private $numberOfReaders;
             private $numberOfComments;
             private $comments = [];//will be fetched from the database when called. we don't want a heavy object. 
+
             /**
              * Creates an article with no field set.
              * @param int $id - pass the id if you want the article to be constructed from the database.
@@ -615,7 +616,30 @@ use GuzzleHttp\Promise\Utils;
                             return false;
                         }
 
-                        $this->tags = $tags;
+                        $tableName = "articleTopics";
+
+                        //loop through the tags.
+                        //we will only put id in the tags array
+                        $_tags = json_decode($tags);
+                        $finalTags = [];
+                        foreach($_tags as $tag){
+                            if(isset($tag->id) && !empty($tag->id)){
+                                $finalTags[] = $tag->id;
+                            }
+                            else if($result = Utility::queryTable($tableName, "aTopicId", "topic Like ? ", [$tag->text])){
+                                $finalTags[] = $result[0]['aTopicId'];
+                            }
+                            else{
+                                $column_specs = "topic";
+                                $values_specs = "?";
+                                $tagId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, [$tag->text]);
+                                if($tagId){
+                                    $finalTags[] = $tagId;
+                                }
+                            }
+                        }
+
+                        $this->tags = array_unique($finalTags);
 
                         return $this;
             }
