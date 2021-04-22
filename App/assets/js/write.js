@@ -69,6 +69,7 @@ function saveArticle(elem) {
                 .save() //getting json from the editor
                 .then((output) => {
                     showLoader(true);
+                    console.log(parser.getFeaturedImg(output));
                     $.post(
                         urlToAutoSaver,
                         {
@@ -77,6 +78,7 @@ function saveArticle(elem) {
                             featuredImg: parser.getFeaturedImg(output),
                         },
                         function (data) {
+                            console.log(data);
                             showLoader(false);
                         }
                     );
