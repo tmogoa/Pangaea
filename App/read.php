@@ -38,6 +38,7 @@ session_start();
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 
     <link rel="icon" href="assets/img/logo.svg" type="image/svg" sizes="16x16" />
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -47,7 +48,7 @@ session_start();
     <title>Pangaea</title>
 </head>
 
-<body>
+<body class="bg-gray-50 bg-opacity-30">
     <!-- html files will be injected into the divs defined here-->
     <div id="navbar"></div>
 
@@ -58,24 +59,25 @@ session_start();
         });
     </script>
 
-    <div class="flex flex-row items-center p-12 ">
+    <div class="flex flex-row p-12">
         <!--Left-->
-        <div>
-            <div>
-                <i class="far fa-thumbs-up text-gray-400"></i>
-                <p class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></p>
+        <div class="flex flex-col fixed top-2/4">
+            <div class="flex flex-row items-center text-red-500 mb-4">
+                <img src="assets/img/clap.svg" class="w-7" alt="clapping">
+                <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+                <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
             </div>
 
-            <div>
-                <i class="fas fa-comments"></i>
-                <p class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></p>
+            <div class="flex flex-row items-center">
+                <i class="far fa-comment-dots text-3xl text-gray-300"></i>
+                <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
             </div>
         </div>
 
         <!--Right-->
-        <div class="p-10 m-2">
-            <p class="text-2xl font-bold text-center mb-8"><?php echo $article->getTitle() ?></p>
-            <div class="w-8/12 border p-6 text-lg prose lg:prose-xl font-serif mx-auto m-1" id="output">
+        <div class="w-8/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
+            <h2><?php echo $article->getTitle() ?></h2>
+            <div id="output">
             </div>
         </div>
             
@@ -85,9 +87,9 @@ session_start();
     <script>
         console.log(<?php echo htmlspecialchars_decode($article->getBody()) ?>);
         parser = new Parser();
-        parser.parse(<?php
+        const renderable = parser.parse(<?php
         echo  htmlspecialchars_decode($article->getBody());
     ?>);
-    document.getElementById("output").innerHTML = parser.renderable;
+    document.getElementById("output").innerHTML = renderable;
     </script>
 </html>

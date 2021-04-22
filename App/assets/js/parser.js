@@ -2,12 +2,12 @@ class Parser {
     renderable = "";
     hasFeaturedImage = false;
 
-    getFeaturedImageJSON(data) {
+    getFeaturedImg(data) {
         data.blocks.forEach((block) => {
             if (block.type === "image") {
                 if (!this.hasFeaturedImage) {
                     this.hasFeaturedImage = true;
-                    return block.data;
+                    return block.data.file.url;
                 } else {
                     return null;
                 }
@@ -40,6 +40,8 @@ class Parser {
                     break;
             }
         });
+
+        return this.renderable;
     }
 
     parseHeader(data) {

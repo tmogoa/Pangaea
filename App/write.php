@@ -107,9 +107,6 @@
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
 
 
-        <div class="w-8/12 border p-6 text-lg prose lg:prose-xl font-serif mx-auto m-1" id="output"></div>
-
-
 
         <!-- Modal -->
 
