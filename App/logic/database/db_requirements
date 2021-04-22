@@ -3,6 +3,8 @@ Abart please check this file regularly and update the database using the migrati
 
 All ids should be unsigned int.
 
+**New** All table names should be cammelcase. we have made some changes in the migration file. Check them out.
+
 Tables needed
 1. users table
    -userId, firstname, lastname, phone, email, password, preferredArticleTopics (should be a varchar), isSubscribed (integer)
@@ -30,3 +32,6 @@ Tables needed
 
 9. temporaryImage
     -tmpImgId, imagePath, created_at
+
+10. comment
+     -commentId, articleId, readerId, comment, created_at, updated_at

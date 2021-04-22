@@ -19,6 +19,7 @@
             try{
                 $conn->beginTransaction();
 
+                
                 //Abart, please write the db creation statement in here. Make sure to add drop if exist or something to check if the table already exist if you only want to update it.
 
                 //We reomoved the not null from on some columns
@@ -110,39 +111,49 @@
                 $stmt6 =  $conn->prepare($sql);
                 $stmt6->execute();
 
-		$sql = "CREATE TABLE articleKeywords
-		(
-		        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-		        articleId INT(20) UNSIGNED,
-		        keywords TEXT,
-		        is_indexed INT DEFAULT 0, 
-		        FOREIGN KEY (articleId) REFERENCES article(articleId)
-		 )";
+                $sql = "CREATE TABLE articleKeywords
+                (
+                        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                        articleId INT(20) UNSIGNED,
+                        keywords TEXT,
+                        is_indexed INT DEFAULT 0, 
+                        FOREIGN KEY (articleId) REFERENCES article(articleId)
+                )";
           
                 $stmt7 =  $conn->prepare($sql);
                 $stmt7->execute();
 		    
-		 $sql = "CREATE TABLE `index`
-		(
-			termId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-			term VARCHAR(255),
-			docfreq INT UNSIGNED
-		)";
+                $sql = "CREATE TABLE `index`
+                (
+                    termId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                    term VARCHAR(255),
+                    docfreq INT UNSIGNED
+                )";
           
                 $stmt8 =  $conn->prepare($sql);
                 $stmt8->execute();
 
- 		$sql = "CREATE TABLE temporaryImage
-		(
-			tmpImgId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-			imagePath TEXT,
-			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-		)";
+                $sql = "CREATE TABLE comment
+                (
+                    commentId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                    readerId INT unsigned not null,
+                    articleId INT unsigned not null,
+                    comment text not null,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    foreign key(readerId) references users(userId),
+                    foreign Key(articleId) references article(articleId)
+                )";
           
                 $stmt9 =  $conn->prepare($sql);
                 $stmt9->execute();
 		
-		    
+                $sql = "CREATE TABLE 
+                (
+                    tmpImgId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                    imagePath TEXT,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                )";
 		    
 		   
                 

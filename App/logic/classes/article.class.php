@@ -24,7 +24,8 @@ use GuzzleHttp\Promise\Utils;
             private $shares;
             private $readTime;
             private $numberOfReaders;
-
+            private $numberOfComments;
+            private $comments = [];//will be fetched from the database when called. we don't want a heavy object. 
             /**
              * Creates an article with no field set.
              * @param int $id - pass the id if you want the article to be constructed from the database.
@@ -51,14 +52,14 @@ use GuzzleHttp\Promise\Utils;
                         $this->body = $result['body'];
                         $this->writerId = $result['writerId'];
                         $this->publishStatus = $result['publishStatus'];
-                        $this->featuredImage = $result['featuredImage'];
+                        $this->featuredImage = $result['featured_image'];
                         $this->dateUpdated = $result['updated_at'];
                         $this->dateCreated = $result['created_at'];
                         $this->datePublished = $result['published_at'];
                         $this->shares = $result['shares'];
                         
                         //getting applauds
-                        $applauds = Utility::queryTable("ArticleReaction", "Count(aReactionId) as applauds", "articleId = ?", [$this->id], $conn);
+                        $applauds = Utility::queryTable("articleReaction", "Count(aReactionId) as applauds", "articleId = ?", [$this->id], $conn);
                         if($applauds){
                             if(count($applauds) > 0){
                                 $this->applauds = $applauds[0]['applauds'];
@@ -72,7 +73,7 @@ use GuzzleHttp\Promise\Utils;
                         $this->readTime = round(count(preg_split("/\s+/", $this->body, 0))/200);
                        
                         //calculating the number of readers
-                        $numberOfReaders = Utility::queryTable("Reading", "count(readingId) as numOfReaders", "articleId = ?", [$this->id], $conn);
+                        $numberOfReaders = Utility::queryTable("reading", "count(readingId) as numberOfReaders", "articleId = ?", [$this->id], $conn);
 
                         if($numberOfReaders && count($numberOfReaders) > 0){
                             $this->numberOfReaders = $numberOfReaders[0]['numberOfReaders'];
@@ -80,8 +81,17 @@ use GuzzleHttp\Promise\Utils;
                             $this->numberOfReaders = 0;
                         }
 
+                        //calculating the number of comments
+                        $numberOfComments = Utility::queryTable("comment", "count(commentId) as numberOfComments", "articleId = ?", [$this->id], $conn);
+
+                        if($numberOfComments && count($numberOfComments) > 0){
+                            $this->numberOfComments = $numberOfComments[0]['numberOfComments'];
+                        }else{
+                            $this->numberOfComments = 0;
+                        }
+
                         //setting the tags
-                        $tags = Utility::queryTable("ArticleTags", "tagId", "articleId = ?", [$this->id], $conn);
+                        $tags = Utility::queryTable("articleTags", "tagId", "articleId = ?", [$this->id], $conn);
 
                         if($tags && count($tags) > 0){
                             foreach($tags as $tag){
@@ -639,7 +649,7 @@ use GuzzleHttp\Promise\Utils;
                         
                         unlink("$in_directory/$featuredImage");
 
-                        if(Utility::updateTable("article", "featuredImage = ?", "articleId = ?", [$new_img_name, $this->id])){
+                        if(Utility::updateTable("article", "featured_image = ?", "articleId = ?", [$new_img_name, $this->id])){
                             //delete if from the temporaryImage table
                             Utility::deleteFromTable("temporaryImage", "tmpImgId = ?", [$tmpImgId]);
                             $this->featuredImage = $new_img_name;
@@ -773,10 +783,66 @@ use GuzzleHttp\Promise\Utils;
              */ 
             public function increaseNumberOfReaders($readerId, &$conn = null)
             {
-                        if(Utility::insertIntoTable("Reading", "readerId, articleId", "?, ?", [$readerId, $this], $conn)){
+                        if(Utility::insertIntoTable("reading", "readerId, articleId", "?, ?", [$readerId, $this], $conn)){
                             $this->numberOfReaders = $this->numberOfReaders + 1;
                         }
                         
+                        return $this;
+            }
+
+            /**
+             * Get the value of numberOfComments
+             */ 
+            public function getNumberOfComments()
+            {
+                        return $this->numberOfComments;
+            }
+
+            /**
+             * Set the value of numberOfComments
+             *
+             * @return  self
+             */ 
+            public function setNumberOfComments($numberOfComments)
+            {
+                        $this->numberOfComments = $numberOfComments;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of comments
+             * This fetches the comments from the database and returns them.
+             */ 
+            public function getComments()
+            {
+                        if(!isset($this->id)){
+                            return "NIE";//Null Id error
+                        }
+
+                        $tableName = "comment";
+                        $column_specs = "*";
+                        $condition = "articleId = ? order by created_at";
+                        $values = [$this->id];
+
+                        $comments = Utility::queryTable($tableName, $column_specs, $condition, $values);
+
+                        if($comments){
+                            return $comments;
+                        }
+                        
+                        return $this->comments;
+            }
+
+            /**
+             * Set the value of comments
+             *
+             * @return  self
+             */ 
+            public function setComments($comments)
+            {
+                        $this->comments = $comments;
+
                         return $this;
             }
     }
