@@ -35,10 +35,8 @@
     echo $article->persist();
 
     //feature image should be sent here as the [path, id] JSON ofcourse
-    // $featureImage = isset($_POST['featureImg-data'])?filter_var($_POST['img'], FILTER_SANITIZE_STRING):"";
+    $featureImage = isset($_POST['featureImg'])?filter_var($_POST['featureImg'], FILTER_SANITIZE_STRING):"";
     
-    // $tmpImgId = json_decode($featureImage)[1];
-    // $featureImage = json_decode($featureImage)[1];
-    // $article->setFeaturedImage($featureImage, $tmpImgId);
+    $article->setFeaturedImage($featureImage, $tmpImgId);
     
 ?>

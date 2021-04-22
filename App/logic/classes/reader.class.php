@@ -60,12 +60,9 @@
             $conn = Utility::makeConnection();
         }
 
-        $tableName = "articleReaction";
-        $column_specs = "articleId, applaudedBy";
-        $values_specs = "?, ?";
-        $values = [$articleId, $this->writerId];
-
-        Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
+        $article = new Article();
+        $article->setId($articleId);
+        return $article->applaud($this->writerId);
     }
 
     /**

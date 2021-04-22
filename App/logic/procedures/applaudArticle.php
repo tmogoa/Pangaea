@@ -11,12 +11,9 @@
         exit;
     }
 
-    $article = new Article();
-    $article->setId($articleId);
+    $reader = new Reader($_SESSION['userId']);
 
-    $response = $article->applaud($_SESSION['userId']);
-
-    if($response){
+    if($reader->applaudArticle($articleId)){
         echo "OK";
     }else{
         echo "UE";//unknown error occurred

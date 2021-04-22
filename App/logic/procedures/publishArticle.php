@@ -32,8 +32,12 @@
     $article->setTags(json_decode($tags));
 
     //This changes the publish status of the article in the database
-    $article->isPublished("published");
+    $article->persist();
 
-    echo $article->persist();
+    if($article->publish()){
+        echo "OK";
+    }else{
+        echo "UE";//unknown error occurred
+    }
 
 ?>

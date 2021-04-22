@@ -83,6 +83,7 @@ session_start();
 </body>
     <script src="./assets/js/parser.js"></script>
     <script>
+        console.log(<?php echo htmlspecialchars_decode($article->getBody()) ?>);
         parser = new Parser();
         parser.parse(<?php
         echo  htmlspecialchars_decode($article->getBody());

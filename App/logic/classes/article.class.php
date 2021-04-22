@@ -226,6 +226,15 @@ use GuzzleHttp\Promise\Utils;
                     }
                 }
 
+                //updating the feature image link
+                if(isset($this->featuredImage) && !empty($this->featuredImage)){
+                    if(count($values) > 0){
+                        $column_specs .=", ";
+                    }
+                    $column_specs = "featured_image = ?";
+                    $values[] = $this->featuredImage;
+                }
+
                 //update the actual table
                 $tableName = "article";
                 $condition = "articleId = ?";
@@ -390,7 +399,16 @@ use GuzzleHttp\Promise\Utils;
                         $conn = Utility::makeConnection();
                 }
 
-                $keywords = $this->title + " "+$this->subtitle+" "+$this->body;
+                $body = htmlspecialchars_decode($this->body);
+                $body = json_decode($body);
+
+                $str_body = "";
+                foreach($body->blocks as $block){
+                    $str_body .= $block->data;
+                }
+
+
+                $keywords = $this->title + " "+$this->subtitle+" "+$str_body;
 
                 //dealing with tags
                 if(count($this->tags) > 0){
@@ -455,6 +473,7 @@ use GuzzleHttp\Promise\Utils;
 
                 return false;
             }
+
             /**
              * -------------------------------------------------------------------
              * Getters and setters
@@ -629,43 +648,11 @@ use GuzzleHttp\Promise\Utils;
              * Feature images are titled feat-img-articleId-uniqueid 
              * @return  self
              */ 
-            public function setFeaturedImage($featuredImage, $tmpImgId)
+            public function setFeaturedImage($featuredImageLink)
             {
-                $in_directory = "../../storage/images";
+                $this->featuredImage = $featuredImageLink;
                 //The id of the article must be set
-                if(file_exists("$in_directory/$featuredImage")){
-                    switch (exif_imagetype($featuredImage)) {
-                        case IMAGETYPE_PNG:
-                            $imageTmp=imagecreatefrompng($featuredImage);
-                            break;
-                        case IMAGETYPE_JPEG:
-                            $imageTmp=imagecreatefromjpeg($featuredImage);
-                            break;
-                        case IMAGETYPE_GIF:
-                            $imageTmp=imagecreatefromgif($featuredImage);
-                            break;
-                        case IMAGETYPE_BMP:
-                            $imageTmp=imagecreatefrombmp($featuredImage);
-                            break;
-                        // Defaults to JPG
-                        default:
-                            $imageTmp=imagecreatefromjpeg($featuredImage);
-                            break;
-                    }
-    
-                    $new_img_name = "feat-img-$this->id"."-".uniqid(). ".jpeg";
-                    if(imagejpeg($imageTmp, "$in_directory/$new_img_name", 70)){
-                        
-                        unlink("$in_directory/$featuredImage");
-
-                        if(Utility::updateTable("article", "featured_image = ?", "articleId = ?", [$new_img_name, $this->id])){
-                            //delete if from the temporaryImage table
-                            Utility::deleteFromTable("temporaryImage", "tmpImgId = ?", [$tmpImgId]);
-                            $this->featuredImage = $new_img_name;
-                        }      
-                    }    
-                }
-                        return $this;
+                return $this;
             }
 
             /**
@@ -734,7 +721,7 @@ use GuzzleHttp\Promise\Utils;
                             $conn = null;
                         }
 
-                        return $this;
+                        return true;
             }
 
              /**
