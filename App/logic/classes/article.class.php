@@ -175,7 +175,7 @@ use GuzzleHttp\Promise\Utils;
                 $values = [];
 
                 if(isset($this->title) && !empty($this->title)){
-                    $column_specs = "title = ?";
+                    $column_specs .= "title = ?";
                     $values[] = $this->title;
                 }
 
@@ -183,7 +183,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "subtitle = ?";
+                    $column_specs .= "subtitle = ?";
                     $values[] = $this->subtitle;
                 }
 
@@ -191,7 +191,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "body = ?";
+                    $column_specs .= "body = ?";
                     $values[] = $this->body;
                 }
 
@@ -231,7 +231,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "featured_image = ?";
+                    $column_specs .= "featured_image = ?";
                     $values[] = $this->featuredImage;
                 }
 

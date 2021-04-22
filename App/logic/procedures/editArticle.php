@@ -34,8 +34,10 @@
 
     
     //feature image should be sent here as the [path, id] JSON ofcourse
-    $featureImage = isset($_POST['featureImg'])?filter_var($_POST['featureImg'], FILTER_SANITIZE_STRING):"";
+    $featureImage = isset($_POST['featuredImg'])?filter_var($_POST['featuredImg'], FILTER_SANITIZE_STRING):"";
     
+    echo $_POST['featuredImg'];
+
     $article->setFeaturedImage($featureImage);
 
     echo $article->persist();
