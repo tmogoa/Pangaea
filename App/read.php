@@ -72,15 +72,11 @@ session_start();
         </div>
 
         <!--Right-->
-        <div>
-            <div class="p-10 m-2">
-                <p class="text-2xl font-bold text-center mb-8"><?php echo $article->getTitle() ?></p>
-            </div>
+        <div class="p-10 m-2">
+            <p class="text-2xl font-bold text-center mb-8"><?php echo $article->getTitle() ?></p>
             <div class="w-8/12 border p-6 text-lg prose lg:prose-xl font-serif mx-auto m-1" id="output">
             </div>
         </div>
-        
-        
             
     </div>
 </body>

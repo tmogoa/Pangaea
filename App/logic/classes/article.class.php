@@ -141,7 +141,16 @@ use GuzzleHttp\Promise\Utils;
                 return ($this->publishStatus == "published")?true:false;
             }
 
+            /**
+             * This function applauds an article or remove the applaud.
+             */
             public function applaud($readerId){
+
+                if(Utility::queryTable("articleReaction", "aReactionId", "articleId = ? and readerId = ?", [$this->id, $readerId])){
+                   return $this->decreaseApplauds($readerId);
+                }else{
+                   return $this->increaseApplauds($readerId);
+                }
                 return false;
             }
 
@@ -715,8 +724,10 @@ use GuzzleHttp\Promise\Utils;
                             $conn = Utility::makeConnection();
                         }
 
-                        if(Utility::deleteFromTable("ArticleReaction", "applaudedBy = ? and articleId = ?", [$readerId, $this->id], $conn)){
+                        if(Utility::deleteFromTable("articleReaction", "applaudedBy = ? and articleId = ?", [$readerId, $this->id], $conn)){
                             $this->applauds = $this->applauds - 1;
+                        }else{
+                            return false;
                         }
                        
                         if(!$connectionWasPassed){
@@ -724,6 +735,31 @@ use GuzzleHttp\Promise\Utils;
                         }
 
                         return $this;
+            }
+
+             /**
+             * Set the value of applauds
+             * Decrease the applauds by 1. The reader Id must be passed
+             * @return  self
+             */ 
+            public function increaseApplauds($readerId, &$conn = null)
+            {
+                        $connectionWasPassed = ($conn != null)?true:false;
+                        if(!$connectionWasPassed){
+                            $conn = Utility::makeConnection();
+                        }
+
+                        if(Utility::insertIntoTable("articleReaction", "articleId, applaudedBy", "?, ?", [$this->id, $readerId], $conn)){
+                            $this->applauds = $this->applauds + 1;
+                        }else{
+                            return false;
+                        }
+                       
+                        if(!$connectionWasPassed){
+                            $conn = null;
+                        }
+
+                        return true;
             }
 
             /**
