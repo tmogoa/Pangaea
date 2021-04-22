@@ -138,9 +138,9 @@ function listenForChanges() {
 }
 
 function autosave() {
-    $("#editorjs").keypress(listenForChanges);
-    $("#title").keypress(listenForChanges);
-    $("#subtitle").keypress(listenForChanges);
+    $("#editorjs").keydown(listenForChanges);
+    $("#title").keydown(listenForChanges);
+    $("#subtitle").keydown(listenForChanges);
 }
 
 autosave();
@@ -219,3 +219,14 @@ function sendTags(finalTags) {
         }
     );
 }
+
+///on tag input change
+$("input#tag").keydown(function () {
+    $.get(
+        "logic/procedures/listTags.php",
+        { tagInput: $(this).val() },
+        function (data) {
+            console.log(data);
+        }
+    );
+});

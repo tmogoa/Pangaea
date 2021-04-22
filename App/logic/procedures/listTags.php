@@ -9,7 +9,7 @@
 
    //suggest 10 tags
 
-   $suggestedTags = Utility::queryTable("articleTopics", "aTopicId, topic", "topic LIKE '%?%' LIMIT 0, 10 order by topic", [$input]);
+   $suggestedTags = Utility::queryTable("articleTopics", "aTopicId, topic", "topic LIKE ? order by topic LIMIT 0, 10", ["%$input%"]);// removed bug here
 
   $suggestions = [];
   if($suggestedTags){
@@ -17,7 +17,7 @@
       $tag = new Tag();
       $tag->id = $suggestedTag['aTopicId'];
       $tag->text = $suggestedTag['topic'];
-      $suggestions += [$tag];
+      $suggestions[] = $tag;//removed bug here
     }
   }else{
     echo json_encode([]);
