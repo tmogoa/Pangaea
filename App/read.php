@@ -38,6 +38,7 @@ session_start();
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 
     <link rel="icon" href="assets/img/logo.svg" type="image/svg" sizes="16x16" />
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -47,7 +48,7 @@ session_start();
     <title>Pangaea</title>
 </head>
 
-<body>
+<body class="bg-gray-50">
     <!-- html files will be injected into the divs defined here-->
     <div id="navbar"></div>
 
@@ -73,9 +74,9 @@ session_start();
         </div>
 
         <!--Right-->
-        <div class="p-10 m-2">
-            <p class="text-2xl font-bold text-center mb-8"><?php echo $article->getTitle() ?></p>
-            <div class="w-8/12 border p-6 text-lg prose lg:prose-xl font-serif mx-auto m-1" id="output">
+        <div class="w-8/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
+            <h1><?php echo $article->getTitle() ?></h1>
+            <div id="output">
             </div>
         </div>
             
@@ -84,9 +85,9 @@ session_start();
     <script src="./assets/js/parser.js"></script>
     <script>
         parser = new Parser();
-        parser.parse(<?php
+        const renderable = parser.parse(<?php
         echo  htmlspecialchars_decode($article->getBody());
     ?>);
-    document.getElementById("output").innerHTML = parser.renderable;
+    document.getElementById("output").innerHTML = renderable;
     </script>
 </html>

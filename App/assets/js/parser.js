@@ -40,6 +40,8 @@ class Parser {
                     break;
             }
         });
+
+        return this.renderable;
     }
 
     parseHeader(data) {
