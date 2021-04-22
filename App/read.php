@@ -2,6 +2,7 @@
 session_start();
 /**
  * If sign up is needed to read the article, please indicate it here.
+ * @Levi no signup needed
  * We will check if the user has reached his/her number of free reads. If yes, then redirect to
  * payment page. However, this logic is not implemented yet.
  */
