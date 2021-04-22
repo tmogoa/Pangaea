@@ -82,6 +82,6 @@
     //wait till document has fully loaded
     $(function () {
         $("#searchBox").load("./components/searchBox.html");
-        $("#user-drop-down").load("./components/userDropDown.html");
+        $("#user-drop-down").load("./components/userDropDown.php");
     });
 </script>

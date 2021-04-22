@@ -205,8 +205,10 @@ $("#go-live").click(function () {
 });
 
 function sendTags(finalTags) {
-    const url = "";
-    $.post(url, { tags: JSON.stringify(finalTags) }, function (data) {
+    const articleId = $("#article-id").val();
+    const url = "logic/procedures/publishArticle.php";
+    $.post(url, { id: articleId, tags: JSON.stringify(finalTags) }, function (data) {
         //check if publish was okay
+        console.log(data);
     });
 }

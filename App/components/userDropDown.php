@@ -1,11 +1,29 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['userId'])){
+    header("Location: login.php");
+}
+
+spl_autoload_register(function($name){
+ $name = strtolower($name);
+ require_once (getcwd()."/../logic/classes/$name.class.php");
+});
+
+$user = new Writer($_SESSION['userId']);
+
+$firstname = empty($user->getFirstName())?"edit first name":$user->getFirstName();
+$lastname = empty($user->getLastName())?$user->getEmail():$user->getLastName();
+?>
+
 <div class="relative">
     <div
         class="flex flex-row border border-gray-200 rounded-md p-1 items-center"
     >
         <i class="fas fa-user-circle m-2 text-blue-400 text-3xl mx-2"></i>
         <span class="flex flex-col items-center mx-2">
-            <span class="text-gray-500 text-xs">Emmanuel</span>
-            <span class="text-gray-500 text-xs">Ooko</span>
+            <span class="text-gray-500 text-xs"><?php echo $firstname ?></span>
+            <span class="text-gray-500 text-xs"><?php echo $lastname ?></span>
         </span>
         <div
             class="mx-2 w-6 h-6 rounded-full hover:bg-gray-200 flex justify-center items-center"

@@ -25,13 +25,13 @@
                 $conn = Utility::makeConnection();
             }
             //todo 
-            $tableName = "user";
+            $tableName = "users";
             $column_specs = "*";
             $condition = "userId = ?";
             $values = [$writerId];
             $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
-            $this->firstName = $details[0]['firstName'];
-            $this->lastName = $details[0]['lastName'];
+            $this->firstName = $details[0]['firstname'];
+            $this->lastName = $details[0]['lastname'];
             $this->email = $details[0]['email'];
             $this->password = $details[0]['password'];
 

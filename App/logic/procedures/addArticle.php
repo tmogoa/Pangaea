@@ -9,10 +9,10 @@
   $userId = $_SESSION['userId'];
   
   $tableName = "article";
-  $column_spec = "writerId";
-  $values_spec = "?";
+  $column_spec = "writerId, publishStatus";
+  $values_spec = "?, ?";
 
-  $articleId = Utility::insertIntoTable($tableName, $column_spec, $values_spec, [$userId]);
+  $articleId = Utility::insertIntoTable($tableName, $column_spec, $values_spec, [$userId, "draft"]);
 
   if($articleId == false){
       //and error occurred
