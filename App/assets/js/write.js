@@ -201,7 +201,7 @@ $("#go-live").click(function () {
     const finalTags = [];
     tags.forEach((element) => {
         if (element !== null) {
-            finalTags.push(element);
+            finalTags.push({ id: null, text: element });
         }
     });
     sendTags(finalTags);
