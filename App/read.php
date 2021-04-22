@@ -59,17 +59,18 @@ session_start();
         });
     </script>
 
-    <div class="flex flex-row items-center p-12 ">
+    <div class="flex flex-row p-12">
         <!--Left-->
-        <div>
-            <div>
-                <i class="far fa-thumbs-up text-gray-400"></i>
-                <p class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></p>
+        <div class="flex flex-col fixed top-2/4">
+            <div class="flex flex-row items-center text-red-500 mb-4">
+                <img src="assets/img/clap.svg" class="w-7" alt="clapping">
+                <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+                <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
             </div>
 
-            <div>
-                <i class="fas fa-comments"></i>
-                <p class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></p>
+            <div class="flex flex-row items-center">
+                <i class="far fa-comment-dots text-3xl text-gray-300"></i>
+                <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
             </div>
         </div>
 

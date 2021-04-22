@@ -68,13 +68,14 @@ function saveArticle(elem) {
             editor
                 .save() //getting json from the editor
                 .then((output) => {
-                    parser.renderable = "";
-                    parser.parse(output);
-                    $("#output").html(parser.renderable);
                     showLoader(true);
                     $.post(
                         urlToAutoSaver,
-                        { id: articleId, body: output },
+                        {
+                            id: articleId,
+                            body: output,
+                            featuredImg: parser.getFeaturedImg(output),
+                        },
                         function (data) {
                             showLoader(false);
                         }
