@@ -29,14 +29,15 @@
     $article->setBody($body);
     
     //we expect the tags to be a JSON array
-    // $tags = isset($_POST['tags'])?$_POST['tags']:"";
-    // $article->setTags(json_decode($tags));
+    $tags = isset($_POST['tags'])?$_POST['tags']:"";
+    $article->setTags(json_decode($tags));
 
-    echo $article->persist();
-
+    
     //feature image should be sent here as the [path, id] JSON ofcourse
     $featureImage = isset($_POST['featureImg'])?filter_var($_POST['featureImg'], FILTER_SANITIZE_STRING):"";
     
     $article->setFeaturedImage($featureImage, $tmpImgId);
-    
+
+    echo $article->persist();
+
 ?>

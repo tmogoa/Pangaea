@@ -31,6 +31,11 @@
     $tags = isset($_POST['tags'])?$_POST['tags']:"";
     $article->setTags(json_decode($tags));
 
+    //feature image should be sent here as the [path, id] JSON ofcourse
+    $featureImage = isset($_POST['featureImg'])?filter_var($_POST['featureImg'], FILTER_SANITIZE_STRING):"";
+
+    $article->setFeaturedImage($featureImage, $tmpImgId);
+    
     //This changes the publish status of the article in the database
     $article->persist();
 
