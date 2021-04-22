@@ -48,7 +48,7 @@ session_start();
     <title>Pangaea</title>
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-gray-50 bg-opacity-30">
     <!-- html files will be injected into the divs defined here-->
     <div id="navbar"></div>
 
@@ -75,7 +75,7 @@ session_start();
 
         <!--Right-->
         <div class="w-8/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
-            <h1><?php echo $article->getTitle() ?></h1>
+            <h2><?php echo $article->getTitle() ?></h2>
             <div id="output">
             </div>
         </div>

@@ -13,6 +13,7 @@
   $values_spec = "?, ?";
 
   $articleId = Utility::insertIntoTable($tableName, $column_spec, $values_spec, [$userId, "draft"]);
+  $_GET['id'] = $articleId;
 
   if($articleId == false){
       //and error occurred

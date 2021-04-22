@@ -168,7 +168,7 @@ tagInput.keydown(function (event) {
         tags.push(tagInput.val());
         const tagIndex = tags.length - 1;
         $("#tags").append(
-            ` <span id="${tagIndex}" class="m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
+            ` <span id="${tagIndex}" class="rounded m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
             <span class="text-xs mr-2">
             ${tagInput.val()}
             </span>
@@ -207,8 +207,12 @@ $("#go-live").click(function () {
 function sendTags(finalTags) {
     const articleId = $("#article-id").val();
     const url = "logic/procedures/publishArticle.php";
-    $.post(url, { id: articleId, tags: JSON.stringify(finalTags) }, function (data) {
-        //check if publish was okay
-        console.log(data);
-    });
+    $.post(
+        url,
+        { id: articleId, tags: JSON.stringify(finalTags) },
+        function (data) {
+            //check if publish was okay
+            console.log(data);
+        }
+    );
 }
