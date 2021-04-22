@@ -401,14 +401,18 @@ use GuzzleHttp\Promise\Utils;
 
                 $body = htmlspecialchars_decode($this->body);
                 $body = json_decode($body);
-
+                // var_dump($body);
                 $str_body = "";
                 foreach($body->blocks as $block){
-                    $str_body .= $block->data;
+                    if($block->type == "image"){
+                        $str_body .= $block->data->caption;
+                        continue;
+                    }
+                    $str_body .= " ". $block->data->text;
                 }
 
 
-                $keywords = $this->title + " "+$this->subtitle+" "+$str_body;
+                $keywords = $this->title . " ".$this->subtitle." ".$str_body;
 
                 //dealing with tags
                 if(count($this->tags) > 0){
@@ -452,7 +456,9 @@ use GuzzleHttp\Promise\Utils;
                 }
                 //the keywords is are now ready to be stemmed
 
-                $keywords = preg_split("/\s+/", $keywords, 0);
+                //echo $keywords;
+
+                $keywords = preg_split("/\W+/", $keywords, 0);
                 $keywords = Utility::removeStopwords($keywords);
                 $keywords = array_map("PorterStemmer::Stem", $keywords);
 
@@ -464,9 +470,14 @@ use GuzzleHttp\Promise\Utils;
                 $values_specs = "?, ?, ?";
                 $values = [$this->id, $keywords, 0];
 
-                $keywordsId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
-
-                if(is_int($keywordsId)){
+                //test if the article is already in the database
+                if(Utility::queryTable($tableName, "keywordId", "articleId = ?", [$this->id], $conn)){
+                    $keywordsId = Utility::updateTable($tableName, "keywords = ?, is_indexed = ?", "articleId = ?", [$keywords, 0, $this->id], $conn);
+                }else{
+                    $keywordsId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
+                }
+               
+                if($keywordsId){
                     $this->isPublished(true);
                     return true;
                 }
