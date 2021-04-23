@@ -222,11 +222,13 @@ function sendTags(finalTags) {
 
 ///on tag input change
 $("input#tag").keydown(function () {
+    $("#suggestions").removeClass("hidden");
     $.get(
         "logic/procedures/listTags.php",
         { tagInput: $(this).val() },
         function (data) {
-            console.log(data);
+            const suggestedTags = JSON.parse(data);
+            console.log(suggestedTags);
         }
     );
 });

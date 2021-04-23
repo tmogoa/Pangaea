@@ -125,7 +125,7 @@
 
                 <div class="m-2">
                     <!--Input-->
-                    <div class="text-sm text-gray-500 py-2 px-4  flex justify-start">
+                    <div class="text-sm text-gray-500 py-2 px-4 relative flex justify-start">
                         <input
                             type="text"
                             name="tag" 
@@ -133,9 +133,16 @@
                             class="text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none w-2/3"
                             placeholder="Enter tags here"
                         />
+                        <div class="hidden absolute top-16 p-2 border shadow z-50" id="suggestions">
+                            <ul>
+                                <li>Tet</li>
+                                <li>Tet</li>
+                                <li>Tet</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <!--Suggestions-->
+
                     <div class="flex flex-col md:flex-wrap md:flex-row md:items-center p-6 w-full" id="tags">
                         
                     </div>

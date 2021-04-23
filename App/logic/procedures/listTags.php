@@ -19,9 +19,7 @@
       $tag->text = $suggestedTag['topic'];
       $suggestions[] = $tag;//removed bug here
     }
-  }else{
-    echo json_encode([]);
-  }
+  }// removed else block
 
   echo json_encode($suggestions);
   
