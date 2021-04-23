@@ -4,14 +4,21 @@
         require_once("../classes/$name.class.php");
     });
     
+
+$query = isset($_GET['q'])?filter_var($_GET['q'], FILTER_SANITIZE_STRING):"";
+if(empty($query)){
+    exit;
+}
+
 $conn = Utility::makeConnection();
+$stmt = $conn->prepare("SELECT count(articleId) as num_of_articles from product");
+$stmt->execute();
+$numberOfArticles =  $stmt->fetchAll();
 
-$numberOfProd =  $conn->query("SELECT count(product_id) as num_of_products from product");
-
-if($numberOfProd->num_rows > 0 && $numberOfProd = $numberOfProd->fetch_assoc()){
+if(count($numberOfArticles) > 0 && $numberOfArticles = $numberOfArticles[0]){
   
- $numberOfProd = $numberOfProd['num_of_products'];
- if($numberOfProd > 0){
+ $numberOfArticles = $numberOfArticles['num_of_articles'];
+ if($numberOfArticles > 0){
    
     //for displaying the query when no product is found
     $real_query = $query;
@@ -19,7 +26,7 @@ if($numberOfProd->num_rows > 0 && $numberOfProd = $numberOfProd->fetch_assoc()){
     $query = preg_split('/\W/', $query, 0);
     $query = array_filter($query);
     $tempQuery = $query;
-    $query = array_values(array_unique(remove_stop_words($query)));
+    $query = array_values(array_unique(Utility::removeStopwords($query)));
     if(count($query) == 0){
       $query = $tempQuery;
     }
@@ -27,20 +34,20 @@ if($numberOfProd->num_rows > 0 && $numberOfProd = $numberOfProd->fetch_assoc()){
     $query = array_map('strtoupper', $query);
     
     //get all products with atleast one of the query terms
+    $terms = [];
     $strForSql = "keywords LIKE ";
     foreach($query as $key => $term){
       if($key == 0){
-        $strForSql .= "'% $term %' ";
+        $strForSql .= "'% ? %' ";
+        $terms[] = $term;
       }else{
-        $strForSql .= " OR keywords LIKE '% $term %'";
+        $strForSql .= " OR keywords LIKE '% ? %'";
+        $terms[] = $term;
       }
     }
     
     $strForSql = "($strForSql)";
 
-    if(!empty($category) && $category > 1){
-      $strForSql .= " AND prd_category = $category";
-    }
     //get the docfreq of every term in the query
     $jsonQuery = json_encode($query);
     $jsonQuery = preg_replace("/[\[\]]/", "", $jsonQuery);
@@ -51,47 +58,48 @@ if($numberOfProd->num_rows > 0 && $numberOfProd = $numberOfProd->fetch_assoc()){
     $scores = [];
 
     //proceed, else nothing was found
-    //get all products that satisfy the query
-    $qualifiedProducts = queryTable("product", "*", "hide_product = 0 and ($strForSql)", $conn);
+    //get all articles that satisfy the query
+    $terms[] = 'published';
+    $qualifiedArticles = Utility::queryTable("articleKeywords", "*", "publishStatus= ? and($strForSql)", $terms, $conn);
 
-    //building the SQL to obtain qualified products
+    //building the SQL to obtain qualified articles
     $sqlStr = "SELECT term, docfreq ";
-    if($qualifiedProducts){
-      foreach($qualifiedProducts as $product){
-        $product_id = $product['product_id'];
-        $hyp = queryTable("inverted_index", "SUM(`$product_id` * `$product_id`) as square_sum ", "`$product_id` > 0", $conn);
+    if($qualifiedArticles){
+      foreach($qualifiedArticles as $article){
+        $articleId = $article['articleId'];
+        $hyp = Utility::queryTable("index", "SUM(`$articleId` * `$articleId`) as square_sum ", "`$articleId` > ?",[0], $conn);
         $hyp = $hyp[0]['square_sum'];
-        $magnitudeArray += ["$product_id" => sqrt($hyp)];
-        $scores += ["$product_id" => 0];
-        $sqlStr .= ", `$product_id` ";
+        $magnitudeArray += ["$articleId" => sqrt($hyp)];
+        $scores += ["$articleId" => 0];
+        $sqlStr .= ", `$articleId` ";
       }
   
-      $sqlStr .= " from inverted_index where term in $jsonQuery";
+      $sqlStr .= " from `index` where term in $jsonQuery";
     
       $termDetail = $conn->query($sqlStr);
       
       
       if($termDetail->num_rows > 0){
-        while($_termDetail = $termDetail->fetch_assoc()){
+          foreach($termDetail as $_termDetail){
+            $currentDocFreq = $_termDetail['docfreq'];
 
-          $currentDocFreq = $_termDetail['docfreq'];
-
-          $idf = log10($numberOfProd/$currentDocFreq);
-
-          foreach($scores as $product_id => $score){
-            $denonminator = ($queryMagnitude * $magnitudeArray[$product_id]);
-            $score = acos(($idf * $_termDetail[$product_id]/$magnitudeArray[$product_id])/$denonminator);
-            $scores[$product_id] += $score;
+            $idf = log10($numberOfArticles/$currentDocFreq);
+  
+            foreach($scores as $articleId => $score){
+              $denonminator = ($queryMagnitude * $magnitudeArray[$articleId]);
+              $score = acos(($idf * $_termDetail[$articleId]/$magnitudeArray[$articleId])/$denonminator);
+              $scores[$articleId] += $score;
+            }    
           }
-        }
      }
       asort($scores);
       $scores = array_keys($scores);
       
       //printing out the products
-      echo "<p style='display:none' id='ids'>". json_encode($scores) ."</p>";
-      $sql = "SELECT * from product where product_id = ? AND hide_product = 0";
+      //echo "<p style='display:none' id='ids'>". json_encode($scores) ."</p>";
+      $sql = "SELECT * from article where articleId = ? AND publishStatus = ?";
       $stmt = $conn->prepare($sql);
+      
       $sql2 = "SELECT category_name from product_category where category_id = ?";
       $stmt2 = $conn->prepare($sql2);
       
@@ -108,15 +116,15 @@ if($numberOfProd->num_rows > 0 && $numberOfProd = $numberOfProd->fetch_assoc()){
     
     
     for($i = $startPos; $i < $endPos; $i++){
-        $product_id = $scores[$i];
+        $articleId = $scores[$i];
       
-        $stmt->bind_param('i', $product_id);
+        $stmt->bind_param('i', $articleId);
         $stmt->execute();
         $result = $stmt->get_result();
         $num_rows = $result->num_rows;
         $rows = $result->fetch_assoc();
 
-        $product_id = $rows['product_id'];
+        $articleId = $rows['articleId'];
         $prd_name = $rows['prd_name'];
         $prod_price = $rows['prd_price'];
         $prd_cat = $rows['prd_category'];
@@ -128,34 +136,34 @@ if($numberOfProd->num_rows > 0 && $numberOfProd = $numberOfProd->fetch_assoc()){
         $category_name = $category_name->fetch_assoc()['category_name'];
 
         if(empty($imgSrc) || !file_exists("../uploads/$imgSrc")){
-          $imgSrc = returnImageSrc($product_id);
+          $imgSrc = returnImageSrc($articleId);
         }else{
           $imgSrc ="./uploads/$imgSrc";
         }
 
         //check if the product is in the cart
-      $addToCartText = "<button  class='order__btn' onclick = 'add_to_cart(this,$product_id, 1)'>Add to Cart</button>";
+      $addToCartText = "<button  class='order__btn' onclick = 'add_to_cart(this,$articleId, 1)'>Add to Cart</button>";
 
-      $cartDetail = isInCart($product_id);
+      $cartDetail = isInCart($articleId);
       if($cartDetail != false){
         $index = $cartDetail[0];
         $qty = $cartDetail[1];
         $addToCartText = "<div class='srch__cart' id='cart-idx-$index'>
-        <i class='fas fa-minus-circle' onclick=\"changeQty('-', $product_id)\"></i>
-        <input type='number' id='qty-$product_id' min='0' value='$qty'>
-        <i class='fas fa-plus-circle' onclick=\"changeQty('+', $product_id)\"></i>
+        <i class='fas fa-minus-circle' onclick=\"changeQty('-', $articleId)\"></i>
+        <input type='number' id='qty-$articleId' min='0' value='$qty'>
+        <i class='fas fa-plus-circle' onclick=\"changeQty('+', $articleId)\"></i>
       </div>";
       }
 
-      echo "<div class='res__item' id = \"$product_id\" >
+      echo "<div class='res__item' id = \"$articleId\" >
       <img src='$imgSrc' loading='lazy' class='res__img' alt='$prd_name image'>
       <div class='res__item__wrapper'>
-      <div id='v-$product_id' onclick='display_details(this)'>
+      <div id='v-$articleId' onclick='display_details(this)'>
       <h2>$prd_name</h2>
       <p class=\"item__price item__price__search\">Price: <span class=\"amount\">$prod_price</span> Ksh.</p>
       </div>
-      <div class='flex_btn_container' id='prd-$product_id'>
-      <button  class='order__btn view__btn' id='view-$product_id' onclick = 'display_details(this)'>View</button>
+      <div class='flex_btn_container' id='prd-$articleId'>
+      <button  class='order__btn view__btn' id='view-$articleId' onclick = 'display_details(this)'>View</button>
       $addToCartText
       </div>
       </div>
