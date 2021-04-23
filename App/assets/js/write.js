@@ -235,10 +235,29 @@ function sendTags(finalTags) {
         function (data) {
             //check if publish was okay
             console.log(data);
+            if (data == "OK") {
+                routeTo("read", [{ id: articleId }]);
+            }
         }
     );
 }
 
+/**
+ *
+ * @param {sectionName} dest e.g write, read
+ * @param {array} params array of objects with query string params as key-value pairs
+ */
+function routeTo(dest, params) {
+    let url = "read.php?";
+    params.forEach((param, index) => {
+        for (const [key, value] of Object.entries(param)) {
+            url += `${key}=${value}`;
+            //${index + 1 == params.length ? "" : "&"}`;
+        }
+        url += `${index + 1 == params.length ? "" : "&"}`;
+    });
+    document.location.href = url;
+}
 ///on tag input change
 $("input#tag").keyup(function () {
     if ($(this).val().trim().length != 0) {
