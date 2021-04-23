@@ -107,7 +107,7 @@ class Dictionary{
         $term = strtoupper($term);
         $termNode = $this->getTermNode($term);
         if($termNode){
-            return $termNode->getTerm_id();
+            return $termNode->getTermId();
         }else{
             return -1;
         }
@@ -117,7 +117,7 @@ class Dictionary{
         $term = strtoupper($term);
         $termNode = $this->getTermNode($term);
         if($termNode){
-            $termNode->setTerm_id($id);
+            $termNode->setTermId($id);
         }else{
             $this->insertTerm($term, $id);
         }
@@ -230,7 +230,7 @@ class Dictionary{
     {  
              $this->performInOrder(function($currentNode){
                  if($currentNode->getTerm() !== null){
-                    $this->vocabulary += array($currentNode->getTerm() => [$currentNode->getTerm_id(), $currentNode->getDocFreq(), $currentNode->getTermFreq()]);
+                    $this->vocabulary += array($currentNode->getTerm() => [$currentNode->getTermId(), $currentNode->getDocFreq(), $currentNode->getTermFreq()]);
                  }
                 
             }, $this->root_node, $this->root_node);

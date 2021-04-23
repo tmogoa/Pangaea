@@ -25,7 +25,9 @@ session_start();
  });
 
  $article = new Article($articleId);
-
+ if(!$article->isPublished()){
+     header("Location: index.php");
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">

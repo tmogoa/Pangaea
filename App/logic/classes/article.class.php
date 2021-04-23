@@ -1,7 +1,5 @@
 <?php
 
-use GuzzleHttp\Promise\Utils;
-
 /**
  * This is the article class.
  * It contains methods that allows the creation and uploading of articles.
@@ -621,7 +619,7 @@ use GuzzleHttp\Promise\Utils;
                         //loop through the tags.
                         //we will only put id in the tags array
                         $_tags = $tags;
-                        //$_tags = json_decode($tags); //double decoding unnecessary decoding
+                        var_dump($_tags);
                         $finalTags = [];
                         foreach($_tags as $tag){
                             if(isset($tag->id) && !empty($tag->id)){
