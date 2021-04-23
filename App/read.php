@@ -59,40 +59,81 @@ session_start();
         });
     </script>
 
-    <div class="flex flex-row p-12">
-        <div class="flex flex-col fixed top-2/4">
-            <div class="flex flex-row items-center text-red-500 mb-4">
-                <img src="assets/img/clap.svg" class="w-12 mr-2 border rounded-full p-1" alt="clapping" id="clapper">
-                <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
-                <span class="text-gray-500 text-sm" id="applauds"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
-            </div>
-
-            <div class="flex flex-row items-center">
-                <span class="w-12 border rounded-full p-2 inline-flex items-center justify-center mr-2">
-                    <img src="assets/img/conversation.svg" class="w-10" alt="clapping">
-                </span>
-                <!-- <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
-                <span class="text-gray-500 text-sm" id="num-comments"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
-            </div>
+    
+    
+    <div class="w-full sm:w-8/12 p-12 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
+        <h2><?php echo $article->getTitle() ?></h2>
+        <div id="output">
         </div>
-        <!--Left-->
-
-        <!--Right-->
-        <div class="w-8/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
-            <h2><?php echo $article->getTitle() ?></h2>
-            <div id="output">
-            </div>
+    </div>
+    
+    <div class="flex flex-row items-center justify-evenly sm:flex-col sm:fixed sm:top-2/4 sm:left-10">
+        <div class="flex flex-row items-center text-red-500 mb-2 sm:mb-4">
+            <img src="assets/img/clap.svg" class="w-12 mr-2 border rounded-full p-1" alt="clapping" id="clapper">
+            <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <span class="text-gray-500 text-sm" id="applauds"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
         </div>
-            
+
+        <div class="flex flex-row items-center mb-2">
+            <span class="trigger w-12 border rounded-full p-2 inline-flex items-center justify-center mr-2">
+                <img src="assets/img/conversation.svg" class="w-10" alt="clapping">
+            </span>
+            <!-- <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <span class="text-gray-500 text-sm" id="num-comments"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
+        </div>
     </div>
 
     <input type="text" name="article-id" id="article-id" value="<?php echo $articleId?>" hidden/>
+
+
+    <!-- Modal -->
+    <div class="modal overflow-hidden">
+            <div
+                class="modal-content flex flex-col sm:flex bg-gray-50 rounded-md w-10/12 sm:w-6/12 sm:mx-auto sm:mt-6 shadow mb-10 p-1 overflow-hidden"
+            >
+                 <!--Header-->
+                 <div class="flex flex-col">
+                    <div class="flex justify-between p-2">
+                        <div class="mx-2 my-1 py-1 px-2 text-gray-500 text-lg">Comments</div>
+                        <div class="flex justify-center items-center rounded-full hover:bg-gray-200 mx-2 my-1 px-2">
+                            <span class="text-gray-500 close-button flex justify-center items-center my-auto">&times;</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col">
+                        <div class="mb-1 flex flex-row justify-end">
+                            <button class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold">Post</button>
+                        </div>
+                        <textarea name="comment-input" id="comment-input" class="border focus:outline-none resize-none rounded p-4 h-15 w-full" placeholder="Write comment here.."></textarea>
+                    </div>
+                 </div>
+
+                <!--Body-->
+                <div class="overflow-y-scroll w-full flex flex-col h-80">
+                    <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
+                        <div class="mx-2">
+                            <div class="w-10 h-10 rounded-full overflow-hidden">
+                                <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex flex-col sm:flex-row sm:items-center text-sm mb-1">
+                                <span class="pr-1">Larry Page</span>
+                                <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
+                                <span class="text-xs">9 April, 2021 3:53pm</span>
+                            </div>
+                            <div class="text-xs ml-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Risus ultricies tristique nulla aliquet. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in dictum.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
 
 </body>
     <script src="./assets/js/parser.js"></script>
     <script src="./assets/js/read.js"></script>
     <script>
-        console.log(<?php echo htmlspecialchars_decode($article->getBody()) ?>);
         parser = new Parser();
         const renderable = parser.parse(<?php
         echo  htmlspecialchars_decode($article->getBody());
