@@ -113,7 +113,7 @@
 
         <div class="modal">
             <div
-                class="modal-content flex flex-col sm:flex bg-gray-50 rounded-md w-10/12 sm:w-6/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10"
+                class="modal-content flex flex-col sm:flex bg-gray-50 rounded-md w-10/12 sm:w-6/12 sm:mx-auto sm:mt-6 shadow  mb-10"
             >
             <div class="flex justify-between p-2">
                  <!--Subtitle-->
@@ -133,11 +133,8 @@
                             class="text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none w-2/3"
                             placeholder="Enter tags here"
                         />
-                        <div class="hidden absolute top-16 p-2 border shadow z-50" id="suggestions">
-                            <ul>
-                                <li>Tet</li>
-                                <li>Tet</li>
-                                <li>Tet</li>
+                        <div class="rounded w-1/2 hidden absolute top-12 left-6 py-2 border shadow z-50 bg-white overflow-y-hidden" id="suggestions">
+                            <ul id="suggested-tags-list" class="overflow-y-scroll h-48">
                             </ul>
                         </div>
                     </div>

@@ -45,21 +45,19 @@
     });
 
     //listing articles by tags
-    $tags = Utility::queryTable("articleTopics", "*", "1 = ?", [1]);
-    $sql = "SELECT articleId, title, subtitle from article inner join (select * from articleTopics inner join articleTags on aTopicId = tagId) as tagsTable on tagsTable.articleId = article.articleId Group by tagsTable.tagId";
-    if($tags){
-        $conn = Utility::makeConnection();
-        $sql = "SELECT articleId from articleTags where tagId = ?";
-        $stmt = $conn->prepare($sql);
 
-        foreach($tags as $tag){
-            $tagName = $tag['topic'];
-            $articles = $stmt->execute([$tags['aTopicId']]);
-            if($articles){
+    
+    // $sql = "SELECT articleId, title, subtitle, featured_image, updated_at, tagsTable.* from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId) as tagsTable on tagsTable.articleId = article.articleId Group by tagsTable.tagId";
 
-            }    
+    $articles = Utility::queryTable("article", "articleId, title, subtitle, featured_image, updated_at, tagsTable.* from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId LIMIT 1) as tagsTable on tagsTable.articleId = article.articleId Group by tagsTable.tagId", "1 = ?", [1]);
+
+    if($articles){
+        foreach($articles as $article){
+            
         }
     }
+
+
  ?>
 
         <!--Articles Display 1-->

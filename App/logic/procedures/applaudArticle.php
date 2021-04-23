@@ -14,9 +14,10 @@
     $reader = new Reader($_SESSION['userId']);
 
     if($reader->applaudArticle($articleId)){
-        echo "OK";
+        $article = new Article($articleId);
+        echo json_encode(["status" => "OK", "applauds" => $article->getApplauds()]);
     }else{
-        echo "UE";//unknown error occurred
+        echo json_encode(["status" => "UE"]);;//unknown error occurred
     }
 
 ?>
