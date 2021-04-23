@@ -46,7 +46,7 @@
         <div class="flex flex-col">
             <div 
                 id = "loaderContainer"
-                class="flex sticky top-0 flex-row justify-end w-full mt-3 py-6 px-6 sm:px-36"
+                class="flex lg:sticky lg:top-0 flex-row justify-end w-full mt-3 py-6 px-6 sm:px-36"
             >
                 <div class="hidden" id="loader">
                     <div class="flex flex-row items-center">

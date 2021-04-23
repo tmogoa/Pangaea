@@ -1,18 +1,14 @@
 class Parser {
     renderable = "";
-    hasFeaturedImage = false;
 
     getFeaturedImg(data) {
+        let url = null;
         data.blocks.forEach((block) => {
             if (block.type === "image") {
-                if (!this.hasFeaturedImage) {
-                    this.hasFeaturedImage = true;
-                    return block.data.file.url;
-                } else {
-                    return null;
-                }
+                url = block.data.file.url;
             }
         });
+        return url;
     }
 
     parse(data) {

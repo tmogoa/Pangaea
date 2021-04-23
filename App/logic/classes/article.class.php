@@ -26,6 +26,7 @@ use GuzzleHttp\Promise\Utils;
             private $numberOfReaders;
             private $numberOfComments;
             private $comments = [];//will be fetched from the database when called. we don't want a heavy object. 
+
             /**
              * Creates an article with no field set.
              * @param int $id - pass the id if you want the article to be constructed from the database.
@@ -175,7 +176,7 @@ use GuzzleHttp\Promise\Utils;
                 $values = [];
 
                 if(isset($this->title) && !empty($this->title)){
-                    $column_specs = "title = ?";
+                    $column_specs .= "title = ?";
                     $values[] = $this->title;
                 }
 
@@ -183,7 +184,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "subtitle = ?";
+                    $column_specs .= "subtitle = ?";
                     $values[] = $this->subtitle;
                 }
 
@@ -191,7 +192,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "body = ?";
+                    $column_specs .= "body = ?";
                     $values[] = $this->body;
                 }
 
@@ -231,7 +232,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "featured_image = ?";
+                    $column_specs .= "featured_image = ?";
                     $values[] = $this->featuredImage;
                 }
 
@@ -401,14 +402,18 @@ use GuzzleHttp\Promise\Utils;
 
                 $body = htmlspecialchars_decode($this->body);
                 $body = json_decode($body);
-
+                // var_dump($body);
                 $str_body = "";
                 foreach($body->blocks as $block){
-                    $str_body .= $block->data;
+                    if($block->type == "image"){
+                        $str_body .= $block->data->caption;
+                        continue;
+                    }
+                    $str_body .= " ". $block->data->text;
                 }
 
 
-                $keywords = $this->title + " "+$this->subtitle+" "+$str_body;
+                $keywords = $this->title . " ".$this->subtitle." ".$str_body;
 
                 //dealing with tags
                 if(count($this->tags) > 0){
@@ -452,7 +457,9 @@ use GuzzleHttp\Promise\Utils;
                 }
                 //the keywords is are now ready to be stemmed
 
-                $keywords = preg_split("/\s+/", $keywords, 0);
+                //echo $keywords;
+
+                $keywords = preg_split("/\W+/", $keywords, 0);
                 $keywords = Utility::removeStopwords($keywords);
                 $keywords = array_map("PorterStemmer::Stem", $keywords);
 
@@ -464,9 +471,14 @@ use GuzzleHttp\Promise\Utils;
                 $values_specs = "?, ?, ?";
                 $values = [$this->id, $keywords, 0];
 
-                $keywordsId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
-
-                if(is_int($keywordsId)){
+                //test if the article is already in the database
+                if(Utility::queryTable($tableName, "keywordId", "articleId = ?", [$this->id], $conn)){
+                    $keywordsId = Utility::updateTable($tableName, "keywords = ?, is_indexed = ?", "articleId = ?", [$keywords, 0, $this->id], $conn);
+                }else{
+                    $keywordsId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
+                }
+               
+                if($keywordsId){
                     $this->isPublished(true);
                     return true;
                 }
@@ -604,7 +616,30 @@ use GuzzleHttp\Promise\Utils;
                             return false;
                         }
 
-                        $this->tags = $tags;
+                        $tableName = "articleTopics";
+
+                        //loop through the tags.
+                        //we will only put id in the tags array
+                        $_tags = json_decode($tags);
+                        $finalTags = [];
+                        foreach($_tags as $tag){
+                            if(isset($tag->id) && !empty($tag->id)){
+                                $finalTags[] = $tag->id;
+                            }
+                            else if($result = Utility::queryTable($tableName, "aTopicId", "topic Like ? ", [$tag->text])){
+                                $finalTags[] = $result[0]['aTopicId'];
+                            }
+                            else{
+                                $column_specs = "topic";
+                                $values_specs = "?";
+                                $tagId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, [$tag->text]);
+                                if($tagId){
+                                    $finalTags[] = $tagId;
+                                }
+                            }
+                        }
+
+                        $this->tags = array_unique($finalTags);
 
                         return $this;
             }
