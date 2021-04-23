@@ -1,7 +1,3 @@
-<?php
-    session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -41,6 +37,30 @@
             $("#navbar").load("./components/navbar.php");
         });
     </script>
+
+ <?php
+    spl_autoload_register(function($name){
+        $name = strtolower($name);
+        require_once("logic/classes/$name.class.php");
+    });
+
+    //listing articles by tags
+    $tags = Utility::queryTable("articleTopics", "*", "1 = ?", [1]);
+    $sql = "SELECT articleId, title, subtitle from article inner join (select * from articleTopics inner join articleTags on aTopicId = tagId) as tagsTable on tagsTable.articleId = article.articleId Group by tagsTable.tagId";
+    if($tags){
+        $conn = Utility::makeConnection();
+        $sql = "SELECT articleId from articleTags where tagId = ?";
+        $stmt = $conn->prepare($sql);
+
+        foreach($tags as $tag){
+            $tagName = $tag['topic'];
+            $articles = $stmt->execute([$tags['aTopicId']]);
+            if($articles){
+
+            }    
+        }
+    }
+ ?>
 
         <!--Articles Display 1-->
         <div class="p-12 ">
