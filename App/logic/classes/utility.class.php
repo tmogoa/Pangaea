@@ -45,7 +45,8 @@
             $dsn = "mysql:host=". self::$dbServerName. ";dbname=". self::$dbName;
             if(!$options){
                 $options = [ 
-                    PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
+                    PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false
              ];
             }
 
@@ -181,6 +182,31 @@
             
          }
 
+         /**
+          * adds a column to a table if the column doesn't exist 
+          */
+        public static function addColumn($columnToAdd, $column_spec, $table, &$conn = false){
+            $was_passed = ($conn !== false)?true:false;
+            $sql = "SHOW COLUMNS FROM `$table` LIKE '$columnToAdd'";
+            if(!$was_passed){
+            $conn = self::makeConnection();
+            }
+
+            //column already exist
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            $return = ($stmt->fetchAll())?true:false;
+
+            if(!$return){
+                $sql = "ALTER TABLE `$table` ADD `$columnToAdd` $column_spec";
+                $stmt = $conn->prepare($sql);
+                $return = ($stmt->execute())?true:false;
+            }
+
+            return $return;
+        }
+        
 
         /**
          * checks names to ensure that they meet policy

@@ -620,7 +620,8 @@ use GuzzleHttp\Promise\Utils;
 
                         //loop through the tags.
                         //we will only put id in the tags array
-                        $_tags = json_decode($tags);
+                        $_tags = $tags;
+                        var_dump($_tags);
                         $finalTags = [];
                         foreach($_tags as $tag){
                             if(isset($tag->id) && !empty($tag->id)){
