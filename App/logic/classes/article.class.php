@@ -429,10 +429,10 @@ use GuzzleHttp\Promise\Utils;
                 $condition = "aTopicId in $tags";
                 
                 $tagNames = Utility::queryTable($tableName, $column_specs, $condition, $this->tags);
-
+        
                 //appending tag names to the keywords
                 foreach($tagNames as $tagName){
-                    $keywords .= " $tagName ";
+                    $keywords .= " ". $tagName['topic'] . " ";//solved bug here, it was  = " $tagname "
                 }
 
                 }
@@ -620,7 +620,8 @@ use GuzzleHttp\Promise\Utils;
 
                         //loop through the tags.
                         //we will only put id in the tags array
-                        $_tags = json_decode($tags);
+                        $_tags = $tags;
+                        //$_tags = json_decode($tags); //double decoding unnecessary decoding
                         $finalTags = [];
                         foreach($_tags as $tag){
                             if(isset($tag->id) && !empty($tag->id)){

@@ -240,7 +240,7 @@ function sendTags(finalTags) {
 }
 
 ///on tag input change
-$("input#tag").keydown(function () {
+$("input#tag").keyup(function () {
     if ($(this).val().trim().length != 0) {
         $.get(
             "logic/procedures/listTags.php",
@@ -269,7 +269,7 @@ $("input#tag").keydown(function () {
     }
 });
 
-$("input#tag").keyup(function () {
+$("input#tag").keydown(function () {
     if ($(this).val().trim().length == 0) {
         closeSuggestionPopup();
     }

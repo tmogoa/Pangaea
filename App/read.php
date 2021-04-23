@@ -60,7 +60,6 @@ session_start();
     </script>
 
     <div class="flex flex-row p-12">
-        <!--Left-->
         <div class="flex flex-col fixed top-2/4">
             <div class="flex flex-row items-center text-red-500 mb-4">
                 <img src="assets/img/clap.svg" class="w-12 mr-2 border rounded-full p-1" alt="clapping" id="clapper">
@@ -76,6 +75,7 @@ session_start();
                 <span class="text-gray-500 text-sm" id="num-comments"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
             </div>
         </div>
+        <!--Left-->
 
         <!--Right-->
         <div class="w-8/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
