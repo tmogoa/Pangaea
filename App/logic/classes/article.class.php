@@ -1,7 +1,5 @@
 <?php
 
-use GuzzleHttp\Promise\Utils;
-
 /**
  * This is the article class.
  * It contains methods that allows the creation and uploading of articles.
@@ -147,7 +145,7 @@ use GuzzleHttp\Promise\Utils;
              */
             public function applaud($readerId){
 
-                if(Utility::queryTable("articleReaction", "aReactionId", "articleId = ? and readerId = ?", [$this->id, $readerId])){
+                if(Utility::queryTable("articleReaction", "aReactionId", "articleId = ? and applaudedBy = ?", [$this->id, $readerId])){
                    return $this->decreaseApplauds($readerId);
                 }else{
                    return $this->increaseApplauds($readerId);
@@ -429,10 +427,10 @@ use GuzzleHttp\Promise\Utils;
                 $condition = "aTopicId in $tags";
                 
                 $tagNames = Utility::queryTable($tableName, $column_specs, $condition, $this->tags);
-
+        
                 //appending tag names to the keywords
                 foreach($tagNames as $tagName){
-                    $keywords .= " $tagName ";
+                    $keywords .= " ". $tagName['topic'] . " ";//solved bug here, it was  = " $tagname "
                 }
 
                 }
@@ -620,7 +618,8 @@ use GuzzleHttp\Promise\Utils;
 
                         //loop through the tags.
                         //we will only put id in the tags array
-                        $_tags = json_decode($tags);
+                        $_tags = $tags;
+                        var_dump($_tags);
                         $finalTags = [];
                         foreach($_tags as $tag){
                             if(isset($tag->id) && !empty($tag->id)){

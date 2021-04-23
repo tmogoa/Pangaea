@@ -1,7 +1,10 @@
 let editor;
 let timeoutId;
 let parser;
+
+let isListOpen = false;
 const ImageTool = window.ImageTool;
+const articleId = $("#article-id").val();
 $(function () {
     parser = new Parser();
 
@@ -61,7 +64,6 @@ $(function () {
 
 function saveArticle(elem) {
     const urlToAutoSaver = "logic/procedures/editArticle.php";
-    const articleId = $("#article-id").val();
 
     switch (elem.attr("id")) {
         case "editorjs":
@@ -138,9 +140,9 @@ function listenForChanges() {
 }
 
 function autosave() {
-    $("#editorjs").keypress(listenForChanges);
-    $("#title").keypress(listenForChanges);
-    $("#subtitle").keypress(listenForChanges);
+    $("#editorjs").keydown(listenForChanges);
+    $("#title").keydown(listenForChanges);
+    $("#subtitle").keydown(listenForChanges);
 }
 
 autosave();
@@ -156,6 +158,8 @@ function toggleModal() {
 function windowOnClick(event) {
     if (event.target === modal) {
         toggleModal();
+    } else {
+        closeSuggestionPopup();
     }
 }
 
@@ -168,22 +172,37 @@ const tagInput = $("#tag");
 const tags = [];
 tagInput.keydown(function (event) {
     if (event.keyCode == 13 && tagInput.val() != "") {
-        tags.push(tagInput.val());
-        const tagIndex = tags.length - 1;
-        $("#tags").append(
-            ` <span id="${tagIndex}" class="rounded m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
-            <span class="text-xs mr-2">
-            ${tagInput.val()}
-            </span>
-            <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
-                <button class="x-button inline-flex justify-center items-center focus:outline-none" onclick="removeTag(this)">&times;</button>
-            </span>
-        </span>`
-        );
-        tagInput.val("");
+        const tagIndex = tags.length;
+        addTag({ id: null, text: tagInput.val(), index: tagIndex });
+        // $("#tags").append(
+        //     ` <span id="${tagIndex}" class="rounded m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
+        //     <span class="text-xs mr-2">
+        //     ${tagInput.val()}
+        //     </span>
+        //     <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
+        //         <button class="x-button inline-flex justify-center items-center focus:outline-none" onclick="removeTag(this)">&times;</button>
+        //     </span>
+        // </span>`
+        // );
+        // tagInput.val("");
         return false;
     }
 });
+
+function addTag(tag) {
+    tags.push(tag);
+    $("#tags").append(
+        ` <span id="${tag.index}" class="rounded m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
+        <span class="text-xs mr-2">
+        ${tag.text}
+        </span>
+        <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
+            <button class="x-button inline-flex justify-center items-center focus:outline-none" onclick="removeTag(this)">&times;</button>
+        </span>
+    </span>`
+    );
+    tagInput.val("");
+}
 
 function removeTag(elem) {
     //get parent node
@@ -216,6 +235,78 @@ function sendTags(finalTags) {
         function (data) {
             //check if publish was okay
             console.log(data);
+            if (data == "OK") {
+                routeTo("read", [{ id: articleId }]);
+            }
         }
     );
+}
+
+/**
+ *
+ * @param {sectionName} dest e.g write, read
+ * @param {array} params array of objects with query string params as key-value pairs
+ */
+function routeTo(dest, params) {
+    let url = "read.php?";
+    params.forEach((param, index) => {
+        for (const [key, value] of Object.entries(param)) {
+            url += `${key}=${value}`;
+            //${index + 1 == params.length ? "" : "&"}`;
+        }
+        url += `${index + 1 == params.length ? "" : "&"}`;
+    });
+    document.location.href = url;
+}
+///on tag input change
+$("input#tag").keyup(function () {
+    if ($(this).val().trim().length != 0) {
+        $.get(
+            "logic/procedures/listTags.php",
+            { tagInput: $(this).val().trim() },
+            function (data) {
+                $("#suggested-tags-list").empty();
+                //has numberOfArticles
+                const suggestions = JSON.parse(data);
+                if (suggestions.length === 0) {
+                    closeSuggestionPopup();
+                } else {
+                    showSuggestionPopup();
+                }
+                suggestions.forEach((tag) => {
+                    $("#suggested-tags-list").append(`
+                        <li class="p-2 hover:text-indigo-900 w-full" id="${tag.id}">${tag.text}</li>
+                    `);
+                    $(`li#${tag.id}`).click(function () {
+                        addSuggestedTag(tag);
+                    });
+                });
+            }
+        );
+    } else {
+        closeSuggestionPopup();
+    }
+});
+
+$("input#tag").keydown(function () {
+    if ($(this).val().trim().length == 0) {
+        closeSuggestionPopup();
+    }
+});
+function showSuggestionPopup() {
+    $("#suggestions").removeClass("hidden");
+    isListOpen = true;
+}
+
+function closeSuggestionPopup() {
+    if (isListOpen) {
+        $("#suggestions").addClass("hidden");
+        isListOpen = false;
+    }
+}
+
+function addSuggestedTag(tag) {
+    const tagIndex = tags.length;
+    addTag({ id: tag.id, text: tag.text, index: tagIndex });
+    closeSuggestionPopup();
 }

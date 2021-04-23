@@ -79,7 +79,7 @@ class TermNode{
     /**
      * Get the value of term_id
      */ 
-    public function getTerm_id()
+    public function getTermId()
     {
         return $this->term_id;
     }
@@ -89,7 +89,7 @@ class TermNode{
      *
      * @return  self
      */ 
-    public function setTerm_id($term_id)
+    public function setTermId($term_id)
     {
         $this->term_id = $term_id;
 
