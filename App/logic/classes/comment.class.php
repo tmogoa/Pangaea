@@ -2,15 +2,6 @@
 
 include('. /logic/procedures/utility.inc.php');
 
-
-class comments{
-    private $commentId;
-    private $readerId;
-    private $comment;
-    private $articleId;
-    private $created_at;
-
-
     // Function to convert DATETIME TO TIME ELAPSED string
     function time_elapsed_string($datetime, $full = false)
     {
@@ -79,7 +70,7 @@ class comments{
         return $html;
     }
 
-}
+
 
 // Article ID needs to exist, this is used to determine which comments are for which article
 if (isset($_GET['articleId'])) {
