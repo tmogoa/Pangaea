@@ -223,7 +223,6 @@ $("#go-live").click(function () {
             finalTags.push(element);
         }
     });
-    console.log(finalTags);
     sendTags(finalTags);
 });
 
