@@ -24,6 +24,11 @@ session_start();
      require_once(getcwd()."/logic/classes/$name.class.php");
  });
 
+ $user = new Reader($_SESSION['userId']);
+
+ $firstname = empty($user->getFirstName())?"":$user->getFirstName();
+ $lastname = empty($user->getLastName())?$user->getEmail():$user->getLastName();
+
  $article = new Article($articleId);
  if(!$article->isPublished()){
      header("Location: index.php");
@@ -86,6 +91,8 @@ session_start();
     </div>
 
     <input type="text" name="article-id" id="article-id" value="<?php echo $articleId?>" hidden/>
+    <input type="text" name="firstname" id="firstname" value="<?php echo $firstname?>" hidden/>
+    <input type="text" name="lastname" id="lastname" value="<?php echo $lastname?>" hidden/>
 
 
     <!-- Modal -->
@@ -95,22 +102,23 @@ session_start();
             >
                  <!--Header-->
                  <div class="flex flex-col">
-                    <div class="flex justify-between p-2">
+                    <div class="flex justify-between p-2 items-center">
                         <div class="mx-2 my-1 py-1 px-2 text-gray-500 text-lg">Comments</div>
-                        <div class="flex justify-center items-center rounded-full hover:bg-gray-200 mx-2 my-1 px-2">
+                        <div class="flex justify-center items-center rounded-full hover:bg-gray-200 mx-2 my-1 px-2 py-2">
                             <span class="text-gray-500 close-button flex justify-center items-center my-auto">&times;</span>
                         </div>
                     </div>
                     <div class="p-4 flex flex-col">
                         <div class="mb-1 flex flex-row justify-end">
-                            <button class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold">Post</button>
+                            <button class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold" id="post-btn">Post</button>
                         </div>
-                        <textarea name="comment-input" id="comment-input" class="border focus:outline-none resize-none rounded p-4 h-15 w-full" placeholder="Write comment here.."></textarea>
+                        <textarea name="comment-input" id="comment-input" class="border focus:outline-none resize-none rounded p-4 h-15 w-full text-gray-500 text-sm" placeholder="Write comment here.."></textarea>
                     </div>
                  </div>
 
                 <!--Body-->
-                <div class="overflow-y-scroll w-full flex flex-col h-80">
+                <div class="overflow-y-scroll w-full flex flex-col h-80" id="comments">
+
                     <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
                         <div class="mx-2">
                             <div class="w-10 h-10 rounded-full overflow-hidden">
@@ -133,6 +141,7 @@ session_start();
 
 
 </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
     <script src="./assets/js/parser.js"></script>
     <script src="./assets/js/read.js"></script>
     <script>

@@ -10,10 +10,11 @@ spl_autoload_register(function($name){
  require_once (getcwd()."/../logic/classes/$name.class.php");
 });
 
-$user = new Writer($_SESSION['userId']);
+$user = new Reader($_SESSION['userId']);
 
-$firstname = empty($user->getFirstName())?"edit first name":$user->getFirstName();
-$lastname = empty($user->getLastName())?$user->getEmail():$user->getLastName();
+$firstname = empty($user->getFirstName())?"edit name":$user->getFirstName();
+$lastname = empty($user->getLastName())?"edit name":$user->getLastName();
+$email = $user->getEmail()
 ?>
 
 <div class="relative">
@@ -33,10 +34,11 @@ $lastname = empty($user->getLastName())?$user->getEmail():$user->getLastName();
             </button>
         </div>
         <div
-            class="hidden absolute shadow w-48 text-sm top-16 right-0 rounded z-50 bg-white border text-gray-500 py-3"
+            class="hidden absolute shadow text-sm top-16 right-0 rounded z-50 bg-white border text-gray-500 py-3"
             id="drop-down-list"
         >
             <ul class="flex flex-col items-center w-full">
+                <li class="px-10 py-5 w-full border-b mb-1"><?php echo $email?></li>
                 <a
                     href="logic/procedures/logout.php"
                     class="px-10 py-3 hover:bg-indigo-500 hover:text-white w-full"
