@@ -204,6 +204,7 @@ $("#go-live").click(function () {
             finalTags.push({ id: null, text: element });
         }
     });
+    console.log(tags);
     sendTags(finalTags);
 });
 
