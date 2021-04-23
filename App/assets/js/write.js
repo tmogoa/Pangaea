@@ -138,9 +138,9 @@ function listenForChanges() {
 }
 
 function autosave() {
-    $("#editorjs").keypress(listenForChanges);
-    $("#title").keypress(listenForChanges);
-    $("#subtitle").keypress(listenForChanges);
+    $("#editorjs").keydown(listenForChanges);
+    $("#title").keydown(listenForChanges);
+    $("#subtitle").keydown(listenForChanges);
 }
 
 autosave();
@@ -201,9 +201,10 @@ $("#go-live").click(function () {
     const finalTags = [];
     tags.forEach((element) => {
         if (element !== null) {
-            finalTags.push(element);
+            finalTags.push({ id: null, text: element });
         }
     });
+    console.log(tags);
     sendTags(finalTags);
 });
 
@@ -219,3 +220,16 @@ function sendTags(finalTags) {
         }
     );
 }
+
+///on tag input change
+$("input#tag").keydown(function () {
+    $("#suggestions").removeClass("hidden");
+    $.get(
+        "logic/procedures/listTags.php",
+        { tagInput: $(this).val() },
+        function (data) {
+            const suggestedTags = JSON.parse(data);
+            console.log(suggestedTags);
+        }
+    );
+});

@@ -65,13 +65,13 @@ session_start();
         <!--Left-->
         <div class="flex flex-col fixed top-2/4">
             <div class="flex flex-row items-center text-red-500 mb-4">
-                <img src="assets/img/clap.svg" class="w-7" alt="clapping">
+                <img src="assets/img/clap.svg" class="w-12 mr-2 border rounded-full p-1" alt="clapping">
                 <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
                 <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
             </div>
 
             <div class="flex flex-row items-center">
-                <i class="far fa-comment-dots text-3xl text-gray-300"></i>
+                <img src="assets/img/comment.svg" class="w-12 mr-2" alt="clapping">
                 <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
             </div>
         </div>
