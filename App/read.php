@@ -63,14 +63,17 @@ session_start();
         <!--Left-->
         <div class="flex flex-col fixed top-2/4">
             <div class="flex flex-row items-center text-red-500 mb-4">
-                <img src="assets/img/clap.svg" class="w-12 mr-2 border rounded-full p-1" alt="clapping">
+                <img src="assets/img/clap.svg" class="w-12 mr-2 border rounded-full p-1" alt="clapping" id="clapper">
                 <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
-                <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
+                <span class="text-gray-500 text-sm" id="applauds"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
             </div>
 
             <div class="flex flex-row items-center">
-                <img src="assets/img/comment.svg" class="w-12 mr-2" alt="clapping">
-                <span class="text-gray-500"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
+                <span class="w-12 border rounded-full p-2 inline-flex items-center justify-center mr-2">
+                    <img src="assets/img/conversation.svg" class="w-10" alt="clapping">
+                </span>
+                <!-- <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+                <span class="text-gray-500 text-sm" id="num-comments"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
             </div>
         </div>
 
@@ -82,14 +85,18 @@ session_start();
         </div>
             
     </div>
+
+    <input type="text" name="article-id" id="article-id" value="<?php echo $articleId?>" hidden/>
+
 </body>
     <script src="./assets/js/parser.js"></script>
+    <script src="./assets/js/read.js"></script>
     <script>
         console.log(<?php echo htmlspecialchars_decode($article->getBody()) ?>);
         parser = new Parser();
         const renderable = parser.parse(<?php
         echo  htmlspecialchars_decode($article->getBody());
     ?>);
-    document.getElementById("output").innerHTML = renderable;
+        document.getElementById("output").innerHTML = renderable;
     </script>
 </html>

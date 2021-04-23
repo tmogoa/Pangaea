@@ -147,7 +147,7 @@ use GuzzleHttp\Promise\Utils;
              */
             public function applaud($readerId){
 
-                if(Utility::queryTable("articleReaction", "aReactionId", "articleId = ? and readerId = ?", [$this->id, $readerId])){
+                if(Utility::queryTable("articleReaction", "aReactionId", "articleId = ? and applaudedBy = ?", [$this->id, $readerId])){
                    return $this->decreaseApplauds($readerId);
                 }else{
                    return $this->increaseApplauds($readerId);

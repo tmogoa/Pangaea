@@ -4,6 +4,7 @@ let parser;
 
 let isListOpen = false;
 const ImageTool = window.ImageTool;
+const articleId = $("#article-id").val();
 $(function () {
     parser = new Parser();
 
@@ -63,7 +64,6 @@ $(function () {
 
 function saveArticle(elem) {
     const urlToAutoSaver = "logic/procedures/editArticle.php";
-    const articleId = $("#article-id").val();
 
     switch (elem.attr("id")) {
         case "editorjs":

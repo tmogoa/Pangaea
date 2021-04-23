@@ -32,8 +32,8 @@
                 $conn = Utility::makeConnection();
             }
             //todo
-            $tableName = "user";
-            $column_specs = "preferredArticles, isSubscribed";
+            $tableName = "users";
+            $column_specs = "preferredArticleTopics, isSubscribed";
             $condition = "userId = ?";
             $values = [$writerId];
             $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
