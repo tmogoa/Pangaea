@@ -36,8 +36,12 @@
         $(function () {
             $("#navbar").load("./components/navbar.php");
         });
-    </script>
+        </script>
 
+
+
+
+        <div class="p-12 ">
  <?php
     spl_autoload_register(function($name){
         $name = strtolower($name);
@@ -53,7 +57,7 @@
 
     if($articles){
         foreach($articles as $article){
-            
+
         }
     }
 
@@ -61,7 +65,6 @@
  ?>
 
         <!--Articles Display 1-->
-        <div class="p-12 ">
             <!--Category 1: Editor's picks-->
             <p class="text-gray-400">Editor's Picks</p>
             <div class="grid grid-flow-col grid-cols-3 grid-rows-1 gap-4">
