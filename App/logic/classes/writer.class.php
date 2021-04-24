@@ -20,6 +20,7 @@
      */
     public function __construct($writerId = false, &$conn = null){
         if($writerId){
+            $this->writerId = $writerId;
             $connectionWasPassed = ($conn == null)?false:true;
             if(!$connectionWasPassed){
                 $conn = Utility::makeConnection();
