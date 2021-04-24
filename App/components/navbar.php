@@ -31,14 +31,14 @@
         </li>
         <li class="mb-4 sm:mb-0">
             <a
-                href=""
+                href="earnings.php"
                 class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
                 >Earnings</a
             >
         </li>
         <li class="mb-4 sm:mb-0">
             <a
-                href=""
+                href="subscriptions.php"
                 class="text-gray-500 px-6 py-3 hover:bg-indigo-100 rounded-md text-sm"
                 >Subscription</a
             >

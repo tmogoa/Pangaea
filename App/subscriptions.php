@@ -43,42 +43,60 @@
 
          <!--Title-->
          <div>
-            <p class="p-2 text-center text-gray-400">Subscriptions</p>
+            <p class="p-2 text-center text-gray-500 text-lg mb-6 mt-6">Subscriptions</p>
         </div>
-
+        
+        <div class="flex flex-col w-4/12 mx-auto text-gray-500">
+            
+            <?php
+                for ($i=0; $i < 12; $i++) { 
+            ?>
+                    <div class="flex flex-row border p-4 rounded shadow items-center mb-4">
+                        <span class="mr-1">2020</span>
+                        <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full"></span>
+                        <span class="mr-3">August</span>
+                        <span class="rounded text-white bg-green-500 py-1 px-2 text-xs font-bold">CURRENT</span>
+                        <span class="flex-grow flex justify-end items-center">
+                            <i class="fas fa-check text-green-500"></i>
+                        </span>
+                    </div>
+            <?php
+                }
+            ?>
+        </div>
         <!--Box with everything-->
-        <div class="flex flex-col sm:flex bg-gray-50 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10">
+        <!-- <div class="flex flex-col sm:flex bg-gray-50 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10"> -->
            
             <!--Subscriptions list-->
-            <div>
+            <!-- <div>
                 <div class="flex justify-between p-6 m-2 border rounded-md bg-white ">
-                    <p class="mr-8">2020 August</p>
+                    <p class="mr-8">2020 August</p> -->
                     <!--Current Subscription-->
-                    <span class="border-0 mr-8 ml-8 rounded-md p-1 bg-green-600 text-white text-sm">CURRENT</span>
+                    <!-- <span class="border-0 mr-8 ml-8 rounded-md p-1 bg-green-600 text-white text-sm">CURRENT</span> -->
                     <!--State-->
-                    <span style="font-family: wingdings;color: #00A650; font-size: 200%;">&#252;</span>
+                    <!-- <span style="font-family: wingdings;color: #00A650; font-size: 200%;">&#252;</span>
                 </div>
 
                 <div class="flex justify-between p-6 m-2 border rounded-md bg-white ">
-                    <p class="mr-8">2020 August</p>
+                    <p class="mr-8">2020 August</p> -->
                     <!--State-->
-                    <span style="font-family: wingdings;color: #00A650; font-size: 200%;">&#252;</span>
+                    <!-- <span style="font-family: wingdings;color: #00A650; font-size: 200%;">&#252;</span>
                 </div>
 
                 <div class="flex justify-between p-6 m-2 border rounded-md bg-white ">
-                    <p class="mr-8">2020 August</p>
+                    <p class="mr-8">2020 August</p> -->
                     <!--State-->
-                    <span style='font-size:25px; color: #FF3131;'>&#10006;</span>
+                    <!-- <span style='font-size:25px; color: #FF3131;'>&#10006;</span>
                 </div>
 
                 <div class="flex justify-between p-6 m-2 border rounded-md bg-white ">
-                    <p class="mr-8">2020 August</p>
+                    <p class="mr-8">2020 August</p> -->
                     <!--State-->
-                    <span style="font-family: wingdings;color: #00A650; font-size: 200%;">&#252;</span>
+                    <!-- <span style="font-family: wingdings;color: #00A650; font-size: 200%;">&#252;</span>
                 </div>
 
             </div>
-        </div>
+        </div> -->
 
     </body>
         
