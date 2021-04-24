@@ -174,17 +174,6 @@ tagInput.keydown(function (event) {
     if (event.keyCode == 13 && tagInput.val() != "") {
         const tagIndex = tags.length;
         addTag({ id: null, text: tagInput.val(), index: tagIndex });
-        // $("#tags").append(
-        //     ` <span id="${tagIndex}" class="rounded m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
-        //     <span class="text-xs mr-2">
-        //     ${tagInput.val()}
-        //     </span>
-        //     <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
-        //         <button class="x-button inline-flex justify-center items-center focus:outline-none" onclick="removeTag(this)">&times;</button>
-        //     </span>
-        // </span>`
-        // );
-        // tagInput.val("");
         return false;
     }
 });
