@@ -79,15 +79,6 @@
                 <span class="text-xs font-bold mb-1">mpesa number</span>
                 <input type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" readonly>
             </div>
-
-            <div>
-            <button 
-                    id="go-live"
-                    class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
-                >
-                    Save
-                </button>
-            </div>
         </div>
 
         <!-- <div class="flex flex-col sm:flex bg-gray-100 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10">
