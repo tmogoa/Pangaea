@@ -427,12 +427,11 @@
                 //tags are now in [1, 2, 3] therefore, can be used in a query
                 $tags = substr($tags, 1, strlen($tags) - 2); //getting raid of the [] brackets
                 //getting the PDO accepted format
-                $tags = preg_replace("/^(\d+)/", "?", $tags); //now in ?,?, ?, format
+                $tags = preg_replace("/(\d+)/", "?", $tags); //now in ?,?, ?, format
                 $tags = "($tags)";
                 $tableName = "articleTopics";
                 $column_specs = "topic";
                 $condition = "aTopicId in $tags";
-                
                 $tagNames = Utility::queryTable($tableName, $column_specs, $condition, $this->tags);
         
                 //appending tag names to the keywords
