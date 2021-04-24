@@ -50,7 +50,7 @@
     //listing articles by tags
 
     
-    $sql = "SELECT article.articleId, writerId, title, subtitle, body, featured_image, article.updated_at, topic from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId) as tagsTable on tagsTable.articleId = article.articleId where publishStatus='published' order by article.updated_at DESC";
+    $sql = "SELECT article.articleId, writerId, title, subtitle, body, featured_image, article.updated_at, topic from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId LIMIT 1) as tagsTable on tagsTable.articleId = article.articleId where publishStatus='published' order by article.updated_at DESC";
 
     $conn = Utility::makeConnection();
     $stmt = $conn->prepare($sql);
