@@ -67,8 +67,16 @@ session_start();
     </script>
 
     
-    
-    <div class="w-full sm:w-8/12 p-12 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
+    <div class="flex flex-row items-center font-sans w-full sm:w-8/12 px-12 py-4 mx-auto m-1 justify-end">
+        <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+            <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
+        </div>
+        <div class="flex flex-col text-xs text-gray-500">
+            <span class="font-semibold">Tony Mogoa</span>
+            <span class="">July 2, 2020</span>
+        </div>
+    </div>
+    <div class="w-full sm:w-8/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
         <h2><?php echo $article->getTitle() ?></h2>
         <div id="output">
         </div>
