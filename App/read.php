@@ -76,7 +76,7 @@ session_start();
             <span class="">July 2, 2020</span>
         </div>
     </div>
-    <div class="w-full sm:w-8/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
+    <div class="w-full sm:w-7/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
         <h2><?php echo $article->getTitle() ?></h2>
         <div id="output">
         </div>
