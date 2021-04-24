@@ -45,7 +45,8 @@
             $dsn = "mysql:host=". self::$dbServerName. ";dbname=". self::$dbName;
             if(!$options){
                 $options = [ 
-                    PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC
+                    PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false
              ];
             }
 
@@ -181,6 +182,31 @@
             
          }
 
+         /**
+          * adds a column to a table if the column doesn't exist 
+          */
+        public static function addColumn($columnToAdd, $column_spec, $table, &$conn = false){
+            $was_passed = ($conn !== false)?true:false;
+            $sql = "SHOW COLUMNS FROM `$table` LIKE '$columnToAdd'";
+            if(!$was_passed){
+            $conn = self::makeConnection();
+            }
+
+            //column already exist
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            $return = ($stmt->fetchAll())?true:false;
+
+            if(!$return){
+                $sql = "ALTER TABLE `$table` ADD `$columnToAdd` $column_spec";
+                $stmt = $conn->prepare($sql);
+                $return = ($stmt->execute())?true:false;
+            }
+
+            return $return;
+        }
+        
 
         /**
          * checks names to ensure that they meet policy
@@ -207,7 +233,8 @@
          * checks the textarea input 
          */
         public static function sanitizeTextEditorInput($textEditorInput){
-            return htmlspecialchars($textEditorInput);
+            //return htmlspecialchars($textEditorInput);
+            return $textEditorInput;
         }
 
         
@@ -350,10 +377,10 @@
                 }
             
                 // quality is a value from 0 (worst) to 100 (best)
-                
-                if(imagejpeg($imageTmp, "../../storage/".$in_directory."/".$save_name."-".uniqid().".jpeg", 70)){
+                $name = "storage/".$in_directory."/".$save_name."-".uniqid().".jpeg";
+                if(imagejpeg($imageTmp, "../../$name", 70)){
                     imagedestroy($imageTmp);
-                    return true;
+                    return $name;
                 }
                 else{
                     imagedestroy($imageTmp);
@@ -404,6 +431,31 @@
                  return array_diff($inputArray, self::STOPWORDS);
              }
 
+
+             /**
+              * Numbers formatter. This function formats numbers and return 4000 as 4k
+              * from stackoverflow.
+              */
+
+             public static function thousandsCurrencyFormat($num) {
+
+                if($num>1000) {
+              
+                      $x = round($num);
+                      $x_number_format = number_format($x);
+                      $x_array = explode(',', $x_number_format);
+                      $x_parts = array('k', 'm', 'b', 't');
+                      $x_count_parts = count($x_array) - 1;
+                      $x_display = $x;
+                      $x_display = $x_array[0] . ((int) $x_array[1][0] !== 0 ? '.' . $x_array[1][0] : '');
+                      $x_display .= $x_parts[$x_count_parts - 1];
+              
+                      return $x_display;
+              
+                }
+              
+                return $num;
+              }
 
 
     }

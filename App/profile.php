@@ -42,10 +42,49 @@
             });
         </script>
 
-        <div class="flex flex-col sm:flex bg-gray-100 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10">
-            <!--Profile picture. *REMEMBER TO CENTRE*-->
+        <div class="w-6/12 mx-auto flex flex-col p-6 border rounded-sm mt-6 shadow text-gray-500 mb-6">
+
+            <div class="flex justify-center items-center">
+                <div class="w-24 h-24 overflow-hidden rounded-full">
+                    <img src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="avatar">
+                </div>
+            </div>
+
+            <div class="flex flex-row justify-end mb-3">
+                <button 
+                    id="go-live"
+                    class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
+                >
+                    Edit
+                </button>
+            </div>
+
+            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
+                <span class="text-xs font-bold mb-1">name</span>
+                <input type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" readonly>
+            </div>
+
+            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
+                <span class="text-xs font-bold mb-1">email</span>
+                <input type="text" class="text-md p-2 border focus:outline-none rounded" value="lpage@google.com" readonly>
+            </div>
+
+            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
+                <span class="text-xs font-bold mb-1">bio</span>
+                <textarea type="text" class="text-md p-2 border focus:outline-none rounded resize-none" readonly>Lawrence Edward Page is an American computer scientist and Internet entrepreneur. He is best known as one of the co-founders of Google along with Sergey Brin
+                </textarea>
+            </div>
+
+            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
+                <span class="text-xs font-bold mb-1">mpesa number</span>
+                <input type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" readonly>
+            </div>
+        </div>
+
+        <!-- <div class="flex flex-col sm:flex bg-gray-100 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10">
+            
             <div class="mx-20 m-12">
-                <img src="\App\assets\img\profile.jpeg" alt="" srcset="" class="rounded-full h-24 w-24">
+                <img src="assets\img\larry.jpeg" alt="" srcset="" class="rounded-full h-24 w-24">
             </div>
             <div class="text-right m-2">
                 <button
@@ -54,7 +93,7 @@
                         Edit
                 </button>
             </div>
-            <!--Profile Details-->
+            
             <div class="">
                 <div class="rounded-md shadow-lg bg-white m-2">
                     <p class="text-sm text-gray-500 font-bold">NAME</p>
@@ -87,6 +126,6 @@
 
 
             </div>
-        </div>
+        </div> -->
     </body>
 </html>

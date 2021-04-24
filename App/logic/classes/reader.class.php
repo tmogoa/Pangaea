@@ -32,8 +32,8 @@
                 $conn = Utility::makeConnection();
             }
             //todo
-            $tableName = "user";
-            $column_specs = "preferredArticles, isSubscribed";
+            $tableName = "users";
+            $column_specs = "preferredArticleTopics, isSubscribed";
             $condition = "userId = ?";
             $values = [$writerId];
             $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
@@ -60,19 +60,28 @@
             $conn = Utility::makeConnection();
         }
 
-        $tableName = "articleReaction";
-        $column_specs = "articleId, applaudedBy";
-        $values_specs = "?, ?";
-        $values = [$articleId, $this->writerId];
-
-        Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
+        $article = new Article();
+        $article->setId($articleId);
+        return $article->applaud($this->writerId);
     }
 
     /**
-     * 
+     * Get the number of reads this reader has made to calculate his subscription fee.
      */
     public function getReadTimePerArticle($articleId){
 
+    }
+
+    /**
+     * Read article. 
+     * This function sets the time a reader spends reading an article
+     */
+    public function read($articleId, $seconds){
+        if(Utility::insertIntoTable("reading", "readerId, articleId, timeReading", "?,?", [$this->writerId, $articleId, $seconds])){
+            echo "OK";
+        }else{
+            echo "UE";
+        }
     }
 
     public function paySubscriptionFee($articleId){

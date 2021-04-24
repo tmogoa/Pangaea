@@ -52,7 +52,7 @@
             </button>
 
             <button
-                class="rounded-md text-white bg-white-500 text-blue-500 w-full py-4 px-7 text-xs font-bold"
+                class="rounded-md bg-white-500 text-blue-500 w-full py-4 px-7 text-xs font-bold"
             >
                 Published
             </button>

@@ -1,5 +1,38 @@
 <?php
 session_start();
+/**
+ * If sign up is needed to read the article, please indicate it here.
+ * @Levi no signup needed
+ * We will check if the user has reached his/her number of free reads. If yes, then redirect to
+ * payment page. However, this logic is not implemented yet.
+ */
+
+ if(!isset($_GET['id'])){
+     header("Location: index.php");
+ }
+
+ 
+ $articleId = (int)$_GET['id'];
+
+ if($articleId == 0)//this is not to be used
+ {
+     header("Location: index.php");
+ }
+
+ spl_autoload_register(function($name){
+     $name = strtolower($name);
+     require_once(getcwd()."/logic/classes/$name.class.php");
+ });
+
+ $user = new Reader($_SESSION['userId']);
+
+ $firstname = empty($user->getFirstName())?"":$user->getFirstName();
+ $lastname = empty($user->getLastName())?$user->getEmail():$user->getLastName();
+
+ $article = new Article($articleId);
+ if(!$article->isPublished()){
+     header("Location: index.php");
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +45,7 @@ session_start();
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 
     <link rel="icon" href="assets/img/logo.svg" type="image/svg" sizes="16x16" />
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -21,7 +55,7 @@ session_start();
     <title>Pangaea</title>
 </head>
 
-<body>
+<body class="bg-gray-50 bg-opacity-30">
     <!-- html files will be injected into the divs defined here-->
     <div id="navbar"></div>
 
@@ -32,35 +66,97 @@ session_start();
         });
     </script>
 
-    <div class="flex flex row items-center p-12 ">
-        <!--Left-->
-        <div>
-            <div>
-                <i class="far fa-thumbs-up text-gray-400"></i>
-                <p class="text-gray-500">4.4K</p>
-            </div>
-
-            <div>
-                <i class="fas fa-comments"></i>
-                <p class="text-gray-500">18</p>
-            </div>
+    
+    <div class="flex flex-row items-center font-sans w-full sm:w-8/12 px-12 py-4 mx-auto m-1 justify-end">
+        <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+            <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
         </div>
-
-        <!--Right-->
-        <div class="p-10 m-2">
-            <p class="text-2xl font-bold text-center mb-8">How I grew my youtube channel</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget quam arcu. Donec felis turpis, luctus in felis laoreet, facilisis consectetur orci. Quisque at elit augue. Sed venenatis risus vitae pulvinar porttitor. Duis tempor lacinia mauris, venenatis tristique enim venenatis in. Quisque nec dui facilisis, sodales lacus fermentum, vulputate tortor. Aliquam porttitor ut ante et vestibulum. Suspendisse et imperdiet mauris. Nulla imperdiet odio eu massa rhoncus, sit amet porta leo sodales. Cras porta tempor odio, a scelerisque nunc mollis sit amet. Nam sed tempor metus. Morbi sapien urna, varius a sem ornare, porttitor tempor risus. Quisque in risus ex. Sed sapien dui, scelerisque sed sodales posuere, bibendum nec sapien.
-
-                Duis iaculis diam odio, ut commodo urna eleifend sit amet. Suspendisse potenti. Pellentesque nec tortor imperdiet, fermentum nulla id, euismod diam. Mauris ut enim vel nisi elementum malesuada. Nunc maximus risus eu rutrum facilisis. Donec vitae ligula sit amet dui pellentesque dictum non sit amet neque. Maecenas at nunc eget nibh efficitur sodales. Sed euismod magna nisl, ut efficitur mi commodo ullamcorper. Duis egestas, risus ut pellentesque aliquam, lacus metus euismod elit, quis pretium lectus eros scelerisque nibh.
-
-                Pellentesque at urna mattis diam accumsan rutrum nec a lorem. Aenean tincidunt ac massa nec pretium. Nam ultrices vel turpis et porta. Integer blandit laoreet sodales. Cras ac diam augue. Suspendisse mollis efficitur urna nec feugiat. Ut mattis nisl vel metus semper, quis volutpat velit condimentum. Morbi et turpis viverra, egestas dolor hendrerit, ultricies neque. Quisque pharetra purus risus, id luctus purus vulputate eget. Nullam scelerisque odio a nulla dignissim eleifend. Ut tempus mi libero, in feugiat lorem mattis non. Aenean congue in purus et luctus. Vivamus ante augue, rhoncus ut tortor eu, ullamcorper blandit mi. Nullam tincidunt maximus sem eu imperdiet.
-
-                Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris condimentum gravida congue. Curabitur condimentum, ligula quis congue varius, tortor mauris vulputate mauris, quis dapibus ante est at erat. Nam vel rutrum nisl, id porta erat. Proin id pellentesque nulla. Suspendisse pharetra volutpat enim quis posuere. Quisque scelerisque tincidunt nulla in finibus. Sed venenatis, nisi sit amet rutrum auctor, nulla nisl auctor sem, nec aliquam turpis erat eget urna. Maecenas in bibendum ligula, a tempus risus. Morbi hendrerit molestie velit eget euismod. Curabitur id libero id leo tincidunt fringilla ullamcorper eget sapien. Etiam felis nibh, rutrum sit amet nunc sed, aliquam sagittis nisl. Etiam pellentesque congue tempus. Aliquam laoreet neque ac lacus eleifend feugiat eu nec sapien. Suspendisse sagittis dolor et arcu posuere aliquam. Curabitur non pharetra mauris.
-
-                Ut magna orci, lobortis et pulvinar sed, luctus et velit. Proin eget feugiat magna. Quisque interdum eleifend mauris, eget eleifend velit scelerisque in. Sed eget imperdiet nisi. Sed non leo sapien. Quisque pharetra viverra commodo. Pellentesque eu elementum magna, eu mollis nisi. Nullam imperdiet, eros a aliquam maximus, enim ex pellentesque ligula, a elementum odio lacus in velit. Integer facilisis tempus dolor ut accumsan. Donec commodo interdum mauris eget malesuada. Sed pharetra a dolor quis pulvinar. Praesent sit amet massa in nisl laoreet fermentum eget quis quam. Sed luctus nulla nec dui maximus, et ullamcorper sapien varius. Ut sit amet dolor euismod, tincidunt turpis eget, iaculis lorem. Proin varius quam lectus.</p>
+        <div class="flex flex-col text-xs text-gray-500">
+            <span class="font-semibold">Tony Mogoa</span>
+            <span class="">July 2, 2020</span>
         </div>
     </div>
-</body>
+    <div class="w-full sm:w-7/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">
+        <h2><?php echo $article->getTitle() ?></h2>
+        <div id="output">
+        </div>
+    </div>
+    
+    <div class="flex flex-row items-center justify-evenly sm:flex-col sm:fixed sm:top-2/4 sm:left-10">
+        <div class="flex flex-row items-center text-red-500 mb-2 sm:mb-4">
+            <img src="assets/img/clap.svg" class="w-12 mr-2 border rounded-full p-1" alt="clapping" id="clapper">
+            <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/darius-dan" title="Darius Dan">Darius Dan</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <span class="text-gray-500 text-sm" id="applauds"><?php echo Utility::thousandsCurrencyFormat($article->getApplauds())?></span>
+        </div>
 
+        <div class="flex flex-row items-center mb-2">
+            <span class="trigger w-12 border rounded-full p-2 inline-flex items-center justify-center mr-2">
+                <img src="assets/img/conversation.svg" class="w-10" alt="clapping">
+            </span>
+            <!-- <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+            <span class="text-gray-500 text-sm" id="num-comments"><?php echo Utility::thousandsCurrencyFormat($article->getNumberOfComments())?></span>
+        </div>
+    </div>
+
+    <input type="text" name="article-id" id="article-id" value="<?php echo $articleId?>" hidden/>
+    <input type="text" name="firstname" id="firstname" value="<?php echo $firstname?>" hidden/>
+    <input type="text" name="lastname" id="lastname" value="<?php echo $lastname?>" hidden/>
+
+
+    <!-- Modal -->
+    <div class="modal overflow-hidden">
+            <div
+                class="modal-content flex flex-col sm:flex bg-gray-50 rounded-md w-10/12 sm:w-6/12 sm:mx-auto sm:mt-6 shadow mb-10 p-1 overflow-hidden"
+            >
+                 <!--Header-->
+                 <div class="flex flex-col">
+                    <div class="flex justify-between p-2 items-center">
+                        <div class="mx-2 my-1 py-1 px-2 text-gray-500 text-lg">Comments</div>
+                        <div class="flex justify-center items-center rounded-full hover:bg-gray-200 mx-2 my-1 px-2 py-2">
+                            <span class="text-gray-500 close-button flex justify-center items-center my-auto">&times;</span>
+                        </div>
+                    </div>
+                    <div class="p-4 flex flex-col">
+                        <div class="mb-1 flex flex-row justify-end">
+                            <button class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold" id="post-btn">Post</button>
+                        </div>
+                        <textarea name="comment-input" id="comment-input" class="border focus:outline-none resize-none rounded p-4 h-15 w-full text-gray-500 text-sm" placeholder="Write comment here.."></textarea>
+                    </div>
+                 </div>
+
+                <!--Body-->
+                <div class="overflow-y-scroll w-full flex flex-col h-80" id="comments">
+
+                    <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
+                        <div class="mx-2">
+                            <div class="w-10 h-10 rounded-full overflow-hidden">
+                                <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex flex-col sm:flex-row sm:items-center text-sm mb-1">
+                                <span class="pr-1">Larry Page</span>
+                                <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
+                                <span class="text-xs">9 April, 2021 3:53pm</span>
+                            </div>
+                            <div class="text-xs ml-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Risus ultricies tristique nulla aliquet. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in dictum.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
+    <script src="./assets/js/parser.js"></script>
+    <script src="./assets/js/read.js"></script>
+    <script>
+        parser = new Parser();
+        const renderable = parser.parse(<?php
+        echo  htmlspecialchars_decode($article->getBody());
+    ?>);
+        document.getElementById("output").innerHTML = renderable;
+    </script>
 </html>

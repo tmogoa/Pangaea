@@ -2,7 +2,10 @@
     session_start();
     if(!isset($_SESSION['userId'])){
         header("Location: login.php");
+    }else{
+        require_once "logic/procedures/addArticle.php";
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +46,7 @@
         <div class="flex flex-col">
             <div 
                 id = "loaderContainer"
-                class="flex sticky top-0 flex-row justify-end w-full mt-3 py-6 px-6 sm:px-36"
+                class="flex lg:sticky lg:top-0 flex-row justify-end w-full mt-3 py-6 px-6 sm:px-36"
             >
                 <div class="hidden" id="loader">
                     <div class="flex flex-row items-center">
@@ -53,8 +56,7 @@
                 </div>
                 <div>
                 <button
-                    class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
-                    onclick="saveArticle()"
+                    class="trigger rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                 >
                     Publish
                 </button>
@@ -97,133 +99,85 @@
                     id="editorjs"
                     class="w-full shadow-sm border rounded sm:w-8/12 sm:mx-auto p-6 font-serif text-lg prose lg:prose-xl"
                 ></div>
+            </div>
+        </div>
 
-                <div id="parsedText" class="w-full shadow-sm border rounded sm:w-8/12 sm:mx-auto p-6 font-serif text-lg prose lg:prose-xl mt-6">
 
+        <input type="text" name="user-id" id="user-id" value="<?php echo $_SESSION['userId'] ?>" hidden>
+        <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
+
+
+
+        <!-- Modal -->
+
+
+        <div class="modal">
+            <div
+                class="modal-content flex flex-col sm:flex bg-gray-50 rounded-md w-10/12 sm:w-6/12 sm:mx-auto sm:mt-6 shadow  mb-10"
+            >
+                 <!--Header-->
+            <div class="flex justify-between p-2 items-center">
+                <div class="m-2 py-1 px-2 text-gray-500 text-lg">Add tags to your article</div>
+                <div class="flex justify-center items-center rounded-full hover:bg-gray-200 m-2 p-2">
+                    <span class="text-gray-500 close-button flex justify-center items-center my-auto">&times;</span>
+                </div>
+            </div>
+
+                <div class="m-2">
+                    <!--Input-->
+                    <div class="text-sm text-gray-500 py-2 px-4 relative flex justify-start">
+                        <input
+                            type="text"
+                            name="tag" 
+                            id="tag"
+                            class="text-gray-500 py-2 px-4 rounded-3xl border focus:outline-none w-2/3"
+                            placeholder="Enter tags here"
+                        />
+                        <div class="rounded w-1/2 hidden absolute top-12 left-6 py-2 border shadow z-50 bg-white overflow-y-hidden" id="suggestions">
+                            <ul id="suggested-tags-list" class="overflow-y-scroll h-48">
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="flex flex-col md:flex-wrap md:flex-row md:items-center p-6 w-full" id="tags">
+                        
+                    </div>
+                    <!--Checkbox-->
+                    <div
+                        class="text-xs max-w-none text-gray-500 text-justify flex items-start p-6"
+                    >
+                        <input
+                            type="checkbox"
+                            name="permission"
+                            id="permission"
+                            value="Granted"
+                        />
+                        <label for="permission" class="ml-2"
+                            >Allow Pangaea curators to curate my article to reach a
+                            bigger audience. Without checking this your article
+                            won’t earn money.</label
+                        >
+                    </div>
+
+                    <!--Button-->
+                    <div class="text-right m-2">
+                        <button 
+                            id="go-live"
+                            class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
+                        >
+                            Go Live
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
+
+
         <!-- JS file injections-->
-        <script>
-            let editor;
-            let timeoutId;
-            let parser;
-            $(function () {
-                parser = edjsHTML();
-
-                $("#title").change(function () {
-                    if ($("#title").val() != "") {
-                        $("#title_label").css("display", "block");
-                    } else {
-                        $("#title_label").css("display", "none");
-                    }
-                });
-                $("#subtitle").change(function () {
-                    if ($("#subtitle").val() !== "") {
-                        $("#subtitle_label").css("display", "block");
-                    } else {
-                        $("#subtitle_label").css("display", "none");
-                    }
-                });
-                $("#navbar").load("./components/navbar.php");
-
-                editor = new EditorJS({
-                    /**
-                     * Id of Element that should contain the Editor
-                     */
-                    holder: "editorjs",
-
-                    /**
-                     * Available Tools list.
-                     * Pass Tool's class or Settings object for each Tool you want to use
-                     */
-                    tools: {
-                        header: Header,
-                        delimiter: Delimiter,
-                        paragraph: {
-                            class: Paragraph,
-                            inlineToolbar: true,
-                            config: {
-                                placeholder:
-                                    "OK, write something binge-worthy...",
-                            },
-                        },
-                        embed:{
-                            class: Embed,
-                            inlineToolbar: true
-                        },
-                        // image: SimpleImage,
-                        image: {
-                            class: ImageTool,
-                            config: {
-                                endpoints: {
-                                    byFile: "http://localhost:8008/uploadFile", // Your backend file uploader endpoint
-                                    byUrl: "http://localhost:8008/fetchUrl", // Your endpoint that provides uploading by Url
-                                },
-                            },
-                        },
-                    },
-                    embed: Embed,
-                    image: SimpleImage,
-                    /**
-                     * Previously saved data that should be rendered
-                     */
-                    data: {},
-                });
-            });
-
-            function saveArticle() {
-                editor
-                    .save()
-                    .then((output) => {
-                        //getting json from the editor
-
-                        //test code
-                        showLoader(true);
-                        setTimeout(() => {
-                            showLoader(false);  
-                        }, 3000);
-                        //end of test code
-
-                        $("#parsedText").html(parser.parse(output));
-
-                        //console.log("data:" + output);
-
-                    })
-                    .catch((error) => {
-                        console.log("error:" + error);
-                    });
-            }
-
-            function showLoader(visible) {
-
-                if(visible){
-                    $("#loaderContainer").removeClass("justify-end");
-                    $("#loaderContainer").addClass("justify-between");
-                    $("#loader").removeClass("hidden");
-                }else{
-                    $("#loaderContainer").removeClass("justify-between");
-                    $("#loaderContainer").addClass("justify-end");
-                    $("#loader").addClass("hidden");
-                }
-                
-            }
-
-            function autosave(){
-                $("#editorjs").keypress(function() {
-                    if(timeoutId){
-                        clearTimeout(timeoutId);
-                    }
-
-                    timeoutId = setTimeout(() => {
-                        //save article to db after 1s inactivity
-                        saveArticle();
-                    }, 1000);
-                });
-            }
-
-            autosave();
-        </script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script>
@@ -231,6 +185,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/editorjs-html@3.0.3/build/edjsHTML.js"></script>
+        <script src="./assets/js/write.js"></script>
+        <script src="./assets/js/parser.js"></script>
     </body>
 </html>

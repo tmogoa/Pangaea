@@ -1,7 +1,5 @@
 <?php
 
-use GuzzleHttp\Promise\Utils;
-
 /**
  * This is the article class.
  * It contains methods that allows the creation and uploading of articles.
@@ -24,6 +22,8 @@ use GuzzleHttp\Promise\Utils;
             private $shares;
             private $readTime;
             private $numberOfReaders;
+            private $numberOfComments;
+            private $comments = [];//will be fetched from the database when called. we don't want a heavy object. 
 
             /**
              * Creates an article with no field set.
@@ -51,14 +51,14 @@ use GuzzleHttp\Promise\Utils;
                         $this->body = $result['body'];
                         $this->writerId = $result['writerId'];
                         $this->publishStatus = $result['publishStatus'];
-                        $this->featuredImage = $result['featuredImage'];
+                        $this->featuredImage = $result['featured_image'];
                         $this->dateUpdated = $result['updated_at'];
                         $this->dateCreated = $result['created_at'];
                         $this->datePublished = $result['published_at'];
                         $this->shares = $result['shares'];
                         
                         //getting applauds
-                        $applauds = Utility::queryTable("ArticleReaction", "Count(aReactionId) as applauds", "articleId = ?", [$this->id], $conn);
+                        $applauds = Utility::queryTable("articleReaction", "Count(aReactionId) as applauds", "articleId = ?", [$this->id], $conn);
                         if($applauds){
                             if(count($applauds) > 0){
                                 $this->applauds = $applauds[0]['applauds'];
@@ -69,10 +69,17 @@ use GuzzleHttp\Promise\Utils;
                         }
 
                         //readTime
-                        $this->readTime = round(count(preg_split("/\s+/", $this->body, 0))/200);
+                        $body = json_decode($this->body);
+                        $words = "";
+                        foreach($body->blocks as $block){
+                            if($block->type == "header" || $block->type == "paragraph"){
+                                $words .= " ".$block->data->text;
+                            }
+                        }
+                        $this->readTime = round(count(preg_split("/\s+/", $words, 0))/200);
                        
                         //calculating the number of readers
-                        $numberOfReaders = Utility::queryTable("Reading", "count(readingId) as numOfReaders", "articleId = ?", [$this->id], $conn);
+                        $numberOfReaders = Utility::queryTable("reading", "count(readingId) as numberOfReaders", "articleId = ?", [$this->id], $conn);
 
                         if($numberOfReaders && count($numberOfReaders) > 0){
                             $this->numberOfReaders = $numberOfReaders[0]['numberOfReaders'];
@@ -80,8 +87,17 @@ use GuzzleHttp\Promise\Utils;
                             $this->numberOfReaders = 0;
                         }
 
+                        //calculating the number of comments
+                        $numberOfComments = Utility::queryTable("comment", "count(commentId) as numberOfComments", "articleId = ?", [$this->id], $conn);
+
+                        if($numberOfComments && count($numberOfComments) > 0){
+                            $this->numberOfComments = $numberOfComments[0]['numberOfComments'];
+                        }else{
+                            $this->numberOfComments = 0;
+                        }
+
                         //setting the tags
-                        $tags = Utility::queryTable("ArticleTags", "tagId", "articleId = ?", [$this->id], $conn);
+                        $tags = Utility::queryTable("articleTags", "tagId", "articleId = ?", [$this->id], $conn);
 
                         if($tags && count($tags) > 0){
                             foreach($tags as $tag){
@@ -131,7 +147,16 @@ use GuzzleHttp\Promise\Utils;
                 return ($this->publishStatus == "published")?true:false;
             }
 
+            /**
+             * This function applauds an article or remove the applaud.
+             */
             public function applaud($readerId){
+
+                if(Utility::queryTable("articleReaction", "aReactionId", "articleId = ? and applaudedBy = ?", [$this->id, $readerId])){
+                   return $this->decreaseApplauds($readerId);
+                }else{
+                   return $this->increaseApplauds($readerId);
+                }
                 return false;
             }
 
@@ -148,7 +173,7 @@ use GuzzleHttp\Promise\Utils;
                     $conn = Utility::makeConnection();
                 }
 
-                if(!isset($this->articleId)){
+                if(!isset($this->id)){ // found a bug here changed it from $this->articleId
                     return "NIE";//Null ID Error;
                 }
 
@@ -156,7 +181,7 @@ use GuzzleHttp\Promise\Utils;
                 $values = [];
 
                 if(isset($this->title) && !empty($this->title)){
-                    $column_specs = "title = ?";
+                    $column_specs .= "title = ?";
                     $values[] = $this->title;
                 }
 
@@ -164,7 +189,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "subtitle = ?";
+                    $column_specs .= "subtitle = ?";
                     $values[] = $this->subtitle;
                 }
 
@@ -172,7 +197,7 @@ use GuzzleHttp\Promise\Utils;
                     if(count($values) > 0){
                         $column_specs .=", ";
                     }
-                    $column_specs = "body = ?";
+                    $column_specs .= "body = ?";
                     $values[] = $this->body;
                 }
 
@@ -181,7 +206,7 @@ use GuzzleHttp\Promise\Utils;
                 $numOfTags =  count($this->tags);
                 if($numOfTags > 0){
                     $t_values = [];
-                    $_t = "ArticleTags";
+                    $_t = "articleTags";
                     $t_columns_spec = "articleId, tagId";
                     $t_values_specs = "";
 
@@ -205,6 +230,15 @@ use GuzzleHttp\Promise\Utils;
                         //Error might occur here
                         Utility::insertIntoTable($_t, $t_columns_spec, $t_values_specs, $t_values,$conn);
                     }
+                }
+
+                //updating the feature image link
+                if(isset($this->featuredImage) && !empty($this->featuredImage)){
+                    if(count($values) > 0){
+                        $column_specs .=", ";
+                    }
+                    $column_specs .= "featured_image = ?";
+                    $values[] = $this->featuredImage;
                 }
 
                 //update the actual table
@@ -324,7 +358,7 @@ use GuzzleHttp\Promise\Utils;
                 $numOfTags =  count($this->tags);
                 if($numOfTags > 0){
                     $t_values = [];
-                    $tableName = "ArticleTags";
+                    $tableName = "articleTags";
                     $t_columns_spec = "articleId, tagId";
                     $t_values_specs = "";
                     
@@ -371,7 +405,20 @@ use GuzzleHttp\Promise\Utils;
                         $conn = Utility::makeConnection();
                 }
 
-                $keywords = $this->title + " "+$this->subtitle+" "+$this->body;
+                $body = htmlspecialchars_decode($this->body);
+                $body = json_decode($body);
+                // var_dump($body);
+                $str_body = "";
+                foreach($body->blocks as $block){
+                    if($block->type == "image"){
+                        $str_body .= $block->data->caption;
+                        continue;
+                    }
+                    $str_body .= " ". $block->data->text;
+                }
+
+
+                $keywords = $this->title . " ".$this->subtitle." ".$str_body;
 
                 //dealing with tags
                 if(count($this->tags) > 0){
@@ -380,17 +427,16 @@ use GuzzleHttp\Promise\Utils;
                 //tags are now in [1, 2, 3] therefore, can be used in a query
                 $tags = substr($tags, 1, strlen($tags) - 2); //getting raid of the [] brackets
                 //getting the PDO accepted format
-                $tags = preg_replace("/^(\d+)/", "?", $tags); //now in ?,?, ?, format
+                $tags = preg_replace("/(\d+)/", "?", $tags); //now in ?,?, ?, format
                 $tags = "($tags)";
                 $tableName = "articleTopics";
                 $column_specs = "topic";
                 $condition = "aTopicId in $tags";
-                
                 $tagNames = Utility::queryTable($tableName, $column_specs, $condition, $this->tags);
-
+        
                 //appending tag names to the keywords
                 foreach($tagNames as $tagName){
-                    $keywords .= " $tagName ";
+                    $keywords .= " ". $tagName['topic'] . " ";//solved bug here, it was  = " $tagname "
                 }
 
                 }
@@ -415,7 +461,9 @@ use GuzzleHttp\Promise\Utils;
                 }
                 //the keywords is are now ready to be stemmed
 
-                $keywords = preg_split("/\s+/", $keywords, 0);
+                //echo $keywords;
+
+                $keywords = preg_split("/\W+/", $keywords, 0);
                 $keywords = Utility::removeStopwords($keywords);
                 $keywords = array_map("PorterStemmer::Stem", $keywords);
 
@@ -427,15 +475,21 @@ use GuzzleHttp\Promise\Utils;
                 $values_specs = "?, ?, ?";
                 $values = [$this->id, $keywords, 0];
 
-                $keywordsId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
-
-                if(is_int($keywordsId)){
+                //test if the article is already in the database
+                if(Utility::queryTable($tableName, "keywordId", "articleId = ?", [$this->id], $conn)){
+                    $keywordsId = Utility::updateTable($tableName, "keywords = ?, is_indexed = ?", "articleId = ?", [$keywords, 0, $this->id], $conn);
+                }else{
+                    $keywordsId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, $values, $conn);
+                }
+               
+                if($keywordsId){
                     $this->isPublished(true);
                     return true;
                 }
 
                 return false;
             }
+
             /**
              * -------------------------------------------------------------------
              * Getters and setters
@@ -566,7 +620,31 @@ use GuzzleHttp\Promise\Utils;
                             return false;
                         }
 
-                        $this->tags = $tags;
+                        $tableName = "articleTopics";
+
+                        //loop through the tags.
+                        //we will only put id in the tags array
+                        $_tags = $tags;
+                        //var_dump($_tags);
+                        $finalTags = [];
+                        foreach($_tags as $tag){
+                            if(isset($tag->id) && !empty($tag->id)){
+                                $finalTags[] = $tag->id;
+                            }
+                            else if($result = Utility::queryTable($tableName, "aTopicId", "topic Like ? ", [$tag->text])){
+                                $finalTags[] = $result[0]['aTopicId'];
+                            }
+                            else{
+                                $column_specs = "topic";
+                                $values_specs = "?";
+                                $tagId = Utility::insertIntoTable($tableName, $column_specs, $values_specs, [$tag->text]);
+                                if($tagId){
+                                    $finalTags[] = $tagId;
+                                }
+                            }
+                        }
+
+                        $this->tags = array_unique($finalTags);
 
                         return $this;
             }
@@ -610,43 +688,11 @@ use GuzzleHttp\Promise\Utils;
              * Feature images are titled feat-img-articleId-uniqueid 
              * @return  self
              */ 
-            public function setFeaturedImage($featuredImage, $tmpImgId)
+            public function setFeaturedImage($featuredImageLink)
             {
-                $in_directory = "../../storage/images";
+                $this->featuredImage = $featuredImageLink;
                 //The id of the article must be set
-                if(file_exists("$in_directory/$featuredImage")){
-                    switch (exif_imagetype($featuredImage)) {
-                        case IMAGETYPE_PNG:
-                            $imageTmp=imagecreatefrompng($featuredImage);
-                            break;
-                        case IMAGETYPE_JPEG:
-                            $imageTmp=imagecreatefromjpeg($featuredImage);
-                            break;
-                        case IMAGETYPE_GIF:
-                            $imageTmp=imagecreatefromgif($featuredImage);
-                            break;
-                        case IMAGETYPE_BMP:
-                            $imageTmp=imagecreatefrombmp($featuredImage);
-                            break;
-                        // Defaults to JPG
-                        default:
-                            $imageTmp=imagecreatefromjpeg($featuredImage);
-                            break;
-                    }
-    
-                    $new_img_name = "feat-img-$this->id"."-".uniqid(). ".jpeg";
-                    if(imagejpeg($imageTmp, "$in_directory/$new_img_name", 70)){
-                        
-                        unlink("$in_directory/$featuredImage");
-
-                        if(Utility::updateTable("article", "featuredImage = ?", "articleId = ?", [$new_img_name, $this->id])){
-                            //delete if from the temporaryImage table
-                            Utility::deleteFromTable("temporaryImage", "tmpImgId = ?", [$tmpImgId]);
-                            $this->featuredImage = $new_img_name;
-                        }      
-                    }    
-                }
-                        return $this;
+                return $this;
             }
 
             /**
@@ -705,15 +751,42 @@ use GuzzleHttp\Promise\Utils;
                             $conn = Utility::makeConnection();
                         }
 
-                        if(Utility::deleteFromTable("ArticleReaction", "applaudedBy = ? and articleId = ?", [$readerId, $this->id], $conn)){
+                        if(Utility::deleteFromTable("articleReaction", "applaudedBy = ? and articleId = ?", [$readerId, $this->id], $conn)){
                             $this->applauds = $this->applauds - 1;
+                        }else{
+                            return false;
                         }
                        
                         if(!$connectionWasPassed){
                             $conn = null;
                         }
 
-                        return $this;
+                        return true;
+            }
+
+             /**
+             * Set the value of applauds
+             * Decrease the applauds by 1. The reader Id must be passed
+             * @return  self
+             */ 
+            public function increaseApplauds($readerId, &$conn = null)
+            {
+                        $connectionWasPassed = ($conn != null)?true:false;
+                        if(!$connectionWasPassed){
+                            $conn = Utility::makeConnection();
+                        }
+
+                        if(Utility::insertIntoTable("articleReaction", "articleId, applaudedBy", "?, ?", [$this->id, $readerId], $conn)){
+                            $this->applauds = $this->applauds + 1;
+                        }else{
+                            return false;
+                        }
+                       
+                        if(!$connectionWasPassed){
+                            $conn = null;
+                        }
+
+                        return true;
             }
 
             /**
@@ -751,7 +824,15 @@ use GuzzleHttp\Promise\Utils;
              */ 
             public function setReadTime()
             {
-                        $this->readTime = round(count(preg_split("/\s+/",$this->body, 0))/200);
+                        $body = json_decode($this->body);
+                        $words = "";
+                        foreach($body->blocks as $block){
+                            if($block->type == "header" || $block->type == "paragraph"){
+                                $words .= " ".$block->data->text;
+                            }
+                        }
+                        $this->readTime = round(count(preg_split("/\s+/", $words, 0))/200);
+                        
                         return $this;
             }
 
@@ -767,16 +848,72 @@ use GuzzleHttp\Promise\Utils;
              * Set the value of numberOfReaders
              * This function is only called when the threshold for reading is met.
              * It is only called by the reader object. 
-             * There can be duplicate rows in the Reading table. A reader can read an article and 
+             * There can be duplicate rows in the reading table. A reader can read an article and 
              * reads it again.
              * @return  self
              */ 
             public function increaseNumberOfReaders($readerId, &$conn = null)
             {
-                        if(Utility::insertIntoTable("Reading", "readerId, articleId", "?, ?", [$readerId, $this], $conn)){
+                        if(Utility::insertIntoTable("reading", "readerId, articleId", "?, ?", [$readerId, $this], $conn)){
                             $this->numberOfReaders = $this->numberOfReaders + 1;
                         }
                         
+                        return $this;
+            }
+
+            /**
+             * Get the value of numberOfComments
+             */ 
+            public function getNumberOfComments()
+            {
+                        return $this->numberOfComments;
+            }
+
+            /**
+             * Set the value of numberOfComments
+             *
+             * @return  self
+             */ 
+            public function setNumberOfComments($numberOfComments)
+            {
+                        $this->numberOfComments = $numberOfComments;
+
+                        return $this;
+            }
+
+            /**
+             * Get the value of comments
+             * This fetches the comments from the database and returns them.
+             */ 
+            public function getComments()
+            {
+                        if(!isset($this->id)){
+                            return "NIE";//Null Id error
+                        }
+
+                        $tableName = "comment";
+                        $column_specs = "*";
+                        $condition = "articleId = ? order by created_at";
+                        $values = [$this->id];
+
+                        $comments = Utility::queryTable($tableName, $column_specs, $condition, $values);
+
+                        if($comments){
+                            return $comments;
+                        }
+                        
+                        return $this->comments;
+            }
+
+            /**
+             * Set the value of comments
+             *
+             * @return  self
+             */ 
+            public function setComments($comments)
+            {
+                        $this->comments = $comments;
+
                         return $this;
             }
     }

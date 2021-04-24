@@ -19,6 +19,7 @@
             try{
                 $conn->beginTransaction();
 
+                
                 //Abart, please write the db creation statement in here. Make sure to add drop if exist or something to check if the table already exist if you only want to update it.
 
                 //We reomoved the not null from on some columns
@@ -37,7 +38,7 @@
                 $stmt1 =  $conn->prepare($sql);
                 $stmt1->execute();
 
-                $sql = "CREATE TABLE ArticleTopics
+                $sql = "CREATE TABLE articleTopics
                 (
 
                 aTopicId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -50,13 +51,13 @@
                 $stmt2->execute();
 
                 //I already made some updates
-                $sql = "CREATE TABLE Article
+                $sql = "CREATE TABLE article
                 (
-                	articleId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                	articleId INT(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED NOT NULL,
-                    title VARCHAR(500) NOT NULL,
+                    title VARCHAR(500),
                     subtitle VARCHAR(500),
-                	body TEXT NOT NULL,
+                	body TEXT,
                 	publishStatus enum('published', 'draft'),
                 	shares INT DEFAULT 0,
                     featured_image VARCHAR(1000), 
@@ -70,79 +71,82 @@
                 $stmt3 =  $conn->prepare($sql);
                 $stmt3->execute();
 
-                $sql = "CREATE TABLE ArticleReaction 
+                $sql = "CREATE TABLE articleReaction 
                 (
                 	aReactionId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	articleId INT (20) UNSIGNED,
                 	applaudedBy INT(20) UNSIGNED,
                 	FOREIGN KEY (applaudedBy) REFERENCES users(userId),
-                	FOREIGN KEY (articleId) REFERENCES Article(articleId)
+                	FOREIGN KEY (articleId) REFERENCES article(articleId)
 
                 )";
 
                 $stmt4 =  $conn->prepare($sql);
                 $stmt4->execute();
 
-                $sql = "CREATE TABLE Reading
+                $sql = "CREATE TABLE reading
                 (
                 	readingId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	readerId INT(20) UNSIGNED,
                 	FOREIGN KEY (readerId) REFERENCES users(userId),
                 	articleId INT(20) UNSIGNED, timeReading INT,  
-                	FOREIGN KEY (articleId) REFERENCES Article(articleId)
+                	FOREIGN KEY (articleId) REFERENCES article(articleId)
 
 
                 )";
                 
-                $sql = "CREATE TABLE ArticleTags 
+                $stmt5 =  $conn->prepare($sql);
+                $stmt5->execute();
+
+                $sql = "CREATE TABLE articleTags 
                 (
                 tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 articleId INT(20) UNSIGNED,
                 tagId INT(20) UNSIGNED,
 
-                FOREIGN KEY (tagId) REFERENCES ArticleTopics(aTopicId),
-                FOREIGN KEY (articleId) REFERENCES Article(articleId)
+                FOREIGN KEY (tagId) REFERENCES articleTopics(aTopicId),
+                FOREIGN KEY (articleId) REFERENCES article(articleId)
 		        )";
 		
-                $stmt5 =  $conn->prepare($sql);
-                $stmt5->execute();
-
-		$sql = "CREATE TABLE ArticleKeywords
-		(
-		        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-		        articleId INT(20) UNSIGNED,
-		        keywords TEXT,
-		        is_indexed INT DEFAULT 0, 
-		        FOREIGN KEY (articleId) REFERENCES Article(articleId)
-		 )";
-          
                 $stmt6 =  $conn->prepare($sql);
                 $stmt6->execute();
-		    
-		 $sql = "CREATE TABLE Index
-		(
-			termId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-			term VARCHAR(255),
-			docfreq INT UNSIGNED
-		)";
+
+                $sql = "CREATE TABLE articleKeywords
+                (
+                        keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                        articleId INT(20) UNSIGNED,
+                        keywords TEXT,
+                        is_indexed INT DEFAULT 0, 
+                        FOREIGN KEY (articleId) REFERENCES article(articleId)
+                )";
           
                 $stmt7 =  $conn->prepare($sql);
                 $stmt7->execute();
-
- 		$sql = "CREATE TABLE temporaryImage
-		(
-			tmpImgId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-			imagePath TEXT,
-			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-		)";
+		    
+                $sql = "CREATE TABLE `index`
+                (
+                    termId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                    term VARCHAR(255),
+                    docfreq INT UNSIGNED
+                )";
           
                 $stmt8 =  $conn->prepare($sql);
                 $stmt8->execute();
-		
-		    
-		    
-		   
-                
+
+                $sql = "CREATE TABLE comment
+                (
+                    commentId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                    readerId INT unsigned not null,
+                    articleId INT unsigned not null,
+                    comment text not null,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    foreign key(readerId) references users(userId),
+                    foreign Key(articleId) references article(articleId)
+                )";
+          
+                $stmt9 =  $conn->prepare($sql);
+                $stmt9->execute();
 
 
                 $conn->commit();
