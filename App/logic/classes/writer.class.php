@@ -5,7 +5,7 @@
  * Registration of a new user happens through this class.
  */
  class Writer{
-    protected $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality, $profile_image;
+    protected $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality, $profileImage;
     /**
      * all the articles that a writer has written.
      */
@@ -35,7 +35,8 @@
             $this->lastName = $details[0]['lastname'];
             $this->email = $details[0]['email'];
             $this->password = $details[0]['password'];
-
+            $this->profileImage = $details[0]['profile_image'];
+            
             if(!$connectionWasPassed){
                 $conn = null;
             }
@@ -370,7 +371,7 @@
             $values[] = $this->firstName;
       } 
 
-      if(isset($this->lastName) && $this->lastName !== null){
+      if(isset($this->lastName) && !empty($this->lastName)){
             if(!Utility::checkName($this->lastName)){
                 return "ULNE";
             }
@@ -429,6 +430,16 @@
                 $column_specs .= "nationality = ? ";
                 $values[] = $this->nationality;
             }
+
+            if(isset($this->profileImage) && !empty($this->profileImage)){
+               
+                //some columns are before this one.
+                if(count($values) > 0){
+                    $column_specs .= ", ";
+                }
+                $column_specs .= "profileImage = ? ";
+                $values[] = $this->profileImage;
+            }
       
             $values[] = $this->writerId;
             //everything is okay
@@ -445,6 +456,28 @@
             }
 
       }  
+    }
+
+    //get the profile_image link
+
+    /**
+     * Get the value of profileImage
+     */ 
+    public function getProfileImage()
+    {
+        return $this->profileImage;
+    }
+
+    /**
+     * Set the value of profileImage
+     *
+     * @return  self
+     */ 
+    public function setProfileImage($profileImage)
+    {
+        $this->profileImage = $profileImage;
+
+        return $this;
     }
  }
 
