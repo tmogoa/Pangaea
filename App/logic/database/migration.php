@@ -33,12 +33,13 @@
                 	password VARCHAR (256) NOT NULL,
                 	preferredArticleTopics VARCHAR(255),
                 	isSubscribed TINYINT default 0
+			profile_image VARCHAR(500);
                 )";
 
                 $stmt1 =  $conn->prepare($sql);
                 $stmt1->execute();
 
-                $sql = "CREATE TABLE articleTopics
+                $sql = "CREATE TABLE ArticleTopics
                 (
 
                 aTopicId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -51,7 +52,7 @@
                 $stmt2->execute();
 
                 //I already made some updates
-                $sql = "CREATE TABLE article
+                $sql = "CREATE TABLE Article
                 (
                 	articleId INT(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED NOT NULL,
@@ -71,7 +72,7 @@
                 $stmt3 =  $conn->prepare($sql);
                 $stmt3->execute();
 
-                $sql = "CREATE TABLE articleReaction 
+                $sql = "CREATE TABLE ArticleReaction 
                 (
                 	aReactionId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	articleId INT (20) UNSIGNED,
@@ -84,12 +85,13 @@
                 $stmt4 =  $conn->prepare($sql);
                 $stmt4->execute();
 
-                $sql = "CREATE TABLE reading
+                $sql = "CREATE TABLE Reading
                 (
                 	readingId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	readerId INT(20) UNSIGNED,
                 	FOREIGN KEY (readerId) REFERENCES users(userId),
-                	articleId INT(20) UNSIGNED, timeReading INT,  
+                	articleId INT(20) UNSIGNED,
+			timeReading INT,  
                 	FOREIGN KEY (articleId) REFERENCES article(articleId)
 
 
@@ -98,7 +100,7 @@
                 $stmt5 =  $conn->prepare($sql);
                 $stmt5->execute();
 
-                $sql = "CREATE TABLE articleTags 
+                $sql = "CREATE TABLE ArticleTags 
                 (
                 tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 articleId INT(20) UNSIGNED,
@@ -111,7 +113,7 @@
                 $stmt6 =  $conn->prepare($sql);
                 $stmt6->execute();
 
-                $sql = "CREATE TABLE articleKeywords
+                $sql = "CREATE TABLE ArticleKeywords
                 (
                         keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                         articleId INT(20) UNSIGNED,
