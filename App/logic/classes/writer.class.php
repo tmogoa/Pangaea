@@ -5,7 +5,7 @@
  * Registration of a new user happens through this class.
  */
  class Writer{
-    protected $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality;
+    protected $writerId, $firstName, $lastName, $email = null, $password = null, $phoneNumber, $nationality, $profile_image;
     /**
      * all the articles that a writer has written.
      */
