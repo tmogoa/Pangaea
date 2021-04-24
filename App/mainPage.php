@@ -42,27 +42,7 @@
 
 
         <div class="p-12 ">
- <?php
-    spl_autoload_register(function($name){
-        $name = strtolower($name);
-        require_once("logic/classes/$name.class.php");
-    });
 
-    //listing articles by tags
-
-    
-    // $sql = "SELECT articleId, title, subtitle, featured_image, updated_at, tagsTable.* from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId) as tagsTable on tagsTable.articleId = article.articleId Group by tagsTable.tagId";
-
-    $articles = Utility::queryTable("article", "articleId, title, subtitle, featured_image, updated_at, tagsTable.* from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId LIMIT 1) as tagsTable on tagsTable.articleId = article.articleId Group by tagsTable.tagId", "1 = ?", [1]);
-
-    if($articles){
-        foreach($articles as $article){
-
-        }
-    }
-
-
- ?>
 
         <!--Articles Display 1-->
             <!--Category 1: Editor's picks-->

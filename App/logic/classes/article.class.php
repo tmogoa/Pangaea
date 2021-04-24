@@ -619,7 +619,7 @@
                         //loop through the tags.
                         //we will only put id in the tags array
                         $_tags = $tags;
-                        var_dump($_tags);
+                        //var_dump($_tags);
                         $finalTags = [];
                         foreach($_tags as $tag){
                             if(isset($tag->id) && !empty($tag->id)){
