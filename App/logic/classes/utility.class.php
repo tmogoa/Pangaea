@@ -233,7 +233,8 @@
          * checks the textarea input 
          */
         public static function sanitizeTextEditorInput($textEditorInput){
-            return htmlspecialchars($textEditorInput);
+            //return htmlspecialchars($textEditorInput);
+            return $textEditorInput;
         }
 
         

@@ -66,10 +66,22 @@
     }
 
     /**
-     * 
+     * Get the number of reads this reader has made to calculate his subscription fee.
      */
     public function getReadTimePerArticle($articleId){
 
+    }
+
+    /**
+     * Read article. 
+     * This function sets the time a reader spends reading an article
+     */
+    public function read($articleId, $seconds){
+        if(Utility::insertIntoTable("reading", "readerId, articleId, timeReading", "?,?", [$this->writerId, $articleId, $seconds])){
+            echo "OK";
+        }else{
+            echo "UE";
+        }
     }
 
     public function paySubscriptionFee($articleId){

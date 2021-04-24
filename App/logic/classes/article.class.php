@@ -69,7 +69,14 @@
                         }
 
                         //readTime
-                        $this->readTime = round(count(preg_split("/\s+/", $this->body, 0))/200);
+                        $body = json_decode($this->body);
+                        $words = "";
+                        foreach($body->blocks as $block){
+                            if($block->type == "header" || $block->type == "paragraph"){
+                                $words .= " ".$block->data->text;
+                            }
+                        }
+                        $this->readTime = round(count(preg_split("/\s+/", $words, 0))/200);
                        
                         //calculating the number of readers
                         $numberOfReaders = Utility::queryTable("reading", "count(readingId) as numberOfReaders", "articleId = ?", [$this->id], $conn);
@@ -818,7 +825,15 @@
              */ 
             public function setReadTime()
             {
-                        $this->readTime = round(count(preg_split("/\s+/",$this->body, 0))/200);
+                        $body = json_decode($this->body);
+                        $words = "";
+                        foreach($body->blocks as $block){
+                            if($block->type == "header" || $block->type == "paragraph"){
+                                $words .= " ".$block->data->text;
+                            }
+                        }
+                        $this->readTime = round(count(preg_split("/\s+/", $words, 0))/200);
+                        
                         return $this;
             }
 
