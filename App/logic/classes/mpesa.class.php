@@ -117,7 +117,7 @@
                *  - subPaymentId, readerId, merchantId (varchar 500), checkoutRequestId varchar(500), payer (varchar(20)), transactionId varchar(255), transactionDate timestamp, resultCode (int default -1), month, year
                */
               $tableName = "subscriptionPayment";
-              $column_specs = "readerId, merchantId, checkoutRequestId, month, year";
+              $column_specs = "readerId, merchantId, checkoutRequestId, `month`, `year`";
               $value_specs = "?,?,?,?,?";
               $values= [$_SESSION['userId'], $response->MerchantRequestID, $response->CheckoutRequestID, date("F"), date("Y")];
 

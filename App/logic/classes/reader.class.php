@@ -123,9 +123,34 @@
      */
     public function hasPaid(){
         //we will check for 10 seconds if the user has paid
-        $sql = "SELECT resultCode from subscriptionPayment where readerId = ?";
+        $month = date("F");
+        $year = date("Y");
+
+        $sql = "SELECT resultCode from subscriptionPayment where readerId = ? and `month` = ? and  `year` = ?";
         $conn = Utility::makeConnection();
-        
+
+        $stmt = $conn->prepare($sql);
+
+        for($i = 0; $i < 10; $i++){
+            set_time_limit(30);
+
+            if($stmt->execute([$this->writerId, $month, $year])){
+                $result = $stmt->fetchAll();
+                $result = $result[0];
+
+                if($result == -1){
+                    continue;
+                }
+
+                if($result == 0){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            sleep(1);
+        }
+        return false;
     }
 
     public function reportArticle($articleId, $commplaint){
