@@ -33,3 +33,9 @@ Tables needed
 
 10. comment
      -commentId, articleId, readerId, comment, created_at, updated_at
+
+11. subscriptionPayment
+    - subPaymentId, readerId, merchantId (varchar 500), checkoutRequestId varchar(500), payer (varchar(20)), transactionId varchar(255), transactionDate timestamp, resultCode (int default -1), month, year
+
+12. earning
+   -earningId, readerId, articleId, amount, month, year, earned_at  
