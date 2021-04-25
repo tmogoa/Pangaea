@@ -83,7 +83,7 @@
                         <span class="mr-1"><?php echo $year ?></span>
                         <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full"></span>
                         <span class="mr-3"><?php echo $month ?></span>
-                        <span class="rounded text-white bg-green-500 py-1 px-2 text-xs font-bold">CURRENT<?php echo $current ?></span>
+                        <span class="rounded text-white bg-green-500 py-1 px-2 text-xs font-bold"><?php echo $current ?></span>
                         <span class="flex-grow flex justify-end items-center">
                            <?php
                             if($paid){
