@@ -72,7 +72,7 @@
         /**
          * Allows the reader to pay their bills through stk push
          */
-        public static function stkPush($phone, $amount, $code, $order_id){
+        public static function stkPush($phone, $amount){
             $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
       
             $access_token = self::generateToken();
@@ -113,10 +113,14 @@
             //var_dump($response);
             if(isset($response->ResponseCode) && $response->ResponseCode == "0"){
               //saving this in the order table
-              $tableName = "";
-              $column_specs = "";
-              $value_specs = "";
-              $values= [];
+              /**
+               *  - subPaymentId, readerId, merchantId (varchar 500), checkoutRequestId varchar(500), payer (varchar(20)), transactionId varchar(255), transactionDate timestamp, resultCode (int default -1), month, year
+               */
+              $tableName = "subscriptionPayment";
+              $column_specs = "readerId, merchantId, checkoutRequestId, month, year";
+              $value_specs = "?,?,?,?,?";
+              $values= [$_SESSION['userId'], $response->MerchantRequestID, $response->CheckoutRequestID, date("F"), date("Y")];
+
               Utility::insertIntoTable($tableName, $column_specs, $value_specs, $values);
               $return = true;
 

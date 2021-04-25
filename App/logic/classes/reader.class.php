@@ -84,14 +84,45 @@
         }
     }
 
-    public function paySubscriptionFee($articleId){
+    /**
+     * The user pays the required monthly subscription fee through STK push.
+     * The user's Mpesa details must be set.
+     */
+    public function paySubscriptionFee(){
+        if(!isset($this->phoneNumber) || empty($this->phoneNumber)){
+            return "NPNE";//No Phone Number Error
+        }
 
+        $amount = 100; //100ksh per month
+        //check the phone number
+        if(strlen($this->phoneNumber) == 10){
+            //check if there is a 0
+            if($this->phoneNumber[0] == "0"){
+                $this->phoneNumber = "254".substr($this->phoneNumber, 1); //converting 0740958965 to 254740958965
+            }
+        }
+
+        //if we have 9 digits which I know we wont. Anyway, lemme be sure
+        if(strlen($this->phoneNumber) == "9"){
+            $this->phoneNumber = "254".$this->phoneNumber;
+        }
+
+        if(strlen($this->phoneNumber) == 13){
+            //check if there is a +
+            if($this->phoneNumber[0] == "+"){
+                $this->phoneNumber = substr($this->phoneNumber, 1);
+            }
+        }
+
+        //When the user pays, they will confirm with a button
+        return Mpesa::stkPush($this->phoneNumber, $amount);
     }
 
     public function reportArticle($articleId, $commplaint){
 
     }
     
+
 
  }
 
