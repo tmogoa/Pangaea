@@ -166,7 +166,7 @@
                             id="go-live"
                             class="flex rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                         >
-                        <img src="assets/img/grid2.svg" id="publish-loader" class="hidden mr-1" width="12" alt="..." class="mr-3">Go Live
+                        <img src="assets/img/grid2.svg" id="publish-loader" class="hidden mr-2" width="12" alt="..." class="mr-3">Go Live
                         </button>
                     </div>
                 </div>
