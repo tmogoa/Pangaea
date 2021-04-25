@@ -1,5 +1,13 @@
 <?php
     session_start();
+    if(!isset($_SESSION['userId'])){
+        header("Location: login.php");
+    }
+
+    spl_autoload_register(function($name){
+        $name = strtolower($name);
+        require_once("logic/classes/$name.class.php");
+    });
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,19 +57,53 @@
         <div class="flex flex-col w-4/12 mx-auto text-gray-500">
             
             <?php
-                for ($i=0; $i < 12; $i++) { 
+                $sql = "SELECT subPaymentId from subscriptionPayment where readerId = ? and `month` = ? and `year` = ? and resultCode = ?";
+                $conn = Utility::makeConnection();
+                $stmt = $conn->prepare($sql);
+
+                for ($i=1; $i <= 12; $i++) { 
+                    $month = date("F", mktime(0,0,0, $i));
+                    $year = date("Y");
+                    $values = [$_SESSION['userId'], $month, $year, 1];
+
+                    $paid = false;
+                    $current = "";
+                    
+                    if(date("F") == $month){
+                        $current = "CURRENT";
+                    }
+                    $stmt->execute($values);
+                    $result = $stmt->fetchAll();
+                    if($result){
+                        $paid = true;
+
+                    }
             ?>
                     <div class="flex flex-row border p-4 rounded shadow items-center mb-4">
-                        <span class="mr-1">2020</span>
+                        <span class="mr-1"><?php echo $year ?></span>
                         <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full"></span>
-                        <span class="mr-3">August</span>
-                        <span class="rounded text-white bg-green-500 py-1 px-2 text-xs font-bold">CURRENT</span>
+                        <span class="mr-3"><?php echo $month ?></span>
+                        <span class="rounded text-white bg-green-500 py-1 px-2 text-xs font-bold">CURRENT<?php echo $current ?></span>
                         <span class="flex-grow flex justify-end items-center">
-                            <i class="fas fa-check text-green-500"></i>
+                           <?php
+                            if($paid){
+                                ?>
+                                <i class="fas fa-check text-green-500"></i>
+                                <?php
+                            }
+                            else{
+                                ?>
+                                 <i class="fas fa-check text-red-500"></i>
+                                <?php
+                            }
+                            ?>
                         </span>
                     </div>
             <?php
+                if($current == "CURRENT"){
+                    break;
                 }
+             }
             ?>
         </div>
         <!--Box with everything-->

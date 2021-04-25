@@ -10,10 +10,18 @@
         /**
          * Write the transaction that will create the tables in this function
          */
+        public static function clearDatabase(){
+            $conn = Utility::makeConnection();
+            $conn->query("drop database IF EXISTS pangaea_db");
+            $conn->query("create database pangaea_db");
+        }
+
         public static function makeDatabase(){
             /**
              * Please make sure to set your database name in the .env file.
              */
+            self::clearDatabase();
+
             $conn = utility::makeConnection();
 
             try{
@@ -29,7 +37,7 @@
                 	lastname VARCHAR(20) ,
                 	phone VARCHAR(15) ,
                 	email VARCHAR(255) NOT NULL,
-                	password VARCHAR (256) NOT NULL,
+                	`password` VARCHAR (256) NOT NULL,
                 	preferredArticleTopics VARCHAR(255),
                 	isSubscribed TINYINT default 0,
 			        profile_image VARCHAR(500)
@@ -170,13 +178,13 @@
                 
                 $sql = "CREATE TABLE earning
                 (
-                earningId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT
+                earningId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 readerId INT(20) UNSIGNED,
                 articleId INT(20) UNSIGNED,
                 amount INT,
-                month INT,
-                year INT,
-                earned_at DATETIME CURRENT_TIMESTAMP,
+                `month` INT,
+                `year` INT,
+                earned_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 
                 FOREIGN KEY(articleId) references article(articleId),		
                 FOREIGN KEY (readerId) REFERENCES users(userId)

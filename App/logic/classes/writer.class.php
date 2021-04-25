@@ -87,9 +87,9 @@
         
         //Todo
         $tableName = "users";
-        $column_specs = " email, `password` ";
-        $values_spec = "?, ?";
-        $values = [$this->email, $this->password];
+        $column_specs = " email, `password`, profile_image ";
+        $values_spec = "?, ?, ?";
+        $values = [$this->email, $this->password, "assets/img/logo.svg"];
         $status = Utility::insertIntoTable($tableName, $column_specs, $values_spec, $values, $conn);
         if($status === false){
             return "SQE";
@@ -437,7 +437,7 @@
                 if(count($values) > 0){
                     $column_specs .= ", ";
                 }
-                $column_specs .= "profileImage = ? ";
+                $column_specs .= "profile_image = ? ";
                 $values[] = $this->profileImage;
             }
       
