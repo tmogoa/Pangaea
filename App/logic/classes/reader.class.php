@@ -38,6 +38,20 @@
             $values = [$writerId];
             $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
             $this->isSubscribed = ($details[0]['isSubscribed'] == 0)?false:true;
+
+            /**
+             * update the user's subscription
+             */
+             $condition = "`month` = ? and `year` = ? and resultCode = ? and readerId = ?";
+             $values = [date("F"), date("Y"), 1, $this->writerId];
+             $result = Utility::queryTable("subscriptionPayment", "`month`, `year`", $condition, $values);
+             if($result){
+                 $this->isSubscribed = true;
+             }else{
+                 $this->isSubscribed = false;
+                 Utility::updateTable($tableName, "isSubscribed = ?", "userId = ?", [0, $this->writerId]);
+             }
+
             /**
              * The preferredArticlesTopics is stored as a JSON array in the database
              */
@@ -159,6 +173,25 @@
     
 
 
+
+    /**
+     * Get the reader Subscription is represented as integer
+     */ 
+    public function isSubscribed()
+    {
+        return $this->isSubscribed;
+    }
+
+    /**
+     * Set the reader Subscription is represented as integer
+     *
+     * @return  self
+     */ 
+    public function setIsSubscribed($isSubscribed)
+    {
+        $this->isSubscribed = $isSubscribed;
+        return $this;
+    }
  }
 
 ?>
