@@ -116,6 +116,52 @@ function saveArticle(elem) {
     }
 }
 
+function saveWholeArticle() {
+    const urlToAutoSaver = "logic/procedures/editArticle.php";
+
+    editor
+        .save() //getting json from the editor
+        .then((output) => {
+            showLoader(true);
+            const featuredImg = parser.getFeaturedImg(output);
+            $.post(
+                urlToAutoSaver,
+                {
+                    id: articleId,
+                    body: output,
+                    featuredImg: featuredImg ? featuredImg : "",
+                },
+                function (data) {
+                    console.log(data);
+                    showLoader(false);
+                }
+            );
+        })
+        .catch((error) => {
+            console.log("error:" + error);
+        });
+
+    showLoader(true);
+
+    $.post(
+        urlToAutoSaver,
+        { id: articleId, title: $("#title").val() },
+        function (data) {
+            showLoader(false);
+        }
+    );
+
+    showLoader(true);
+
+    $.post(
+        urlToAutoSaver,
+        { id: articleId, subtitle: $("#subtitle").val() },
+        function (data) {
+            showLoader(false);
+        }
+    );
+}
+
 function showLoader(visible) {
     if (visible) {
         $("#loaderContainer").removeClass("justify-end");
@@ -140,9 +186,9 @@ function listenForChanges() {
 }
 
 function autosave() {
-    $("#editorjs").keydown(listenForChanges);
-    $("#title").keydown(listenForChanges);
-    $("#subtitle").keydown(listenForChanges);
+    $("#editorjs").on("keydown onmouseup", listenForChanges);
+    $("#title").on("keydown onmouseup", listenForChanges);
+    $("#subtitle").on("keydown onmouseup", listenForChanges);
 }
 
 autosave();
@@ -206,6 +252,7 @@ function removeTag(elem) {
 
 $("#go-live").click(function () {
     //Removing null elems from the array
+    $("#publish-loader").removeClass("hidden");
     const finalTags = [];
     tags.forEach((element) => {
         if (element !== null) {
@@ -216,6 +263,7 @@ $("#go-live").click(function () {
 });
 
 function sendTags(finalTags) {
+    saveWholeArticle();
     const articleId = $("#article-id").val();
     const url = "logic/procedures/publishArticle.php";
     $.post(

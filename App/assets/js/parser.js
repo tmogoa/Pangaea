@@ -3,11 +3,16 @@ class Parser {
 
     getFeaturedImg(data) {
         let url = null;
-        data.blocks.forEach((block) => {
-            if (block.type === "image") {
-                url = block.data.file.url;
+        for (let index = data.blocks.length - 1; index >= 0; index--) {
+            if (data.blocks[index].type === "image") {
+                url = data.blocks[index].data.file.url;
             }
-        });
+        }
+        // data.blocks.forEach((block) => {
+        //     if (block.type === "image") {
+        //         url = block.data.file.url;
+        //     }
+        // });
         return url;
     }
 
