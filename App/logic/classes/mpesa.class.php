@@ -21,7 +21,7 @@
         //urls
         
         //till stk push
-        public static $till_call_back_url = "";
+        public static $till_call_back_url = "https://localhost/pangaea/logic/procedures/mpesaTillResponse.php";
     
         //account ballance
         public static $account_bal_result_url = ""; 
