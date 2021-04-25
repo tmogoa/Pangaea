@@ -38,6 +38,20 @@
             $values = [$writerId];
             $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
             $this->isSubscribed = ($details[0]['isSubscribed'] == 0)?false:true;
+
+            /**
+             * update the user's subscription
+             */
+             $condition = "`month` = ? and `year` = ? and resultCode = ? and readerId = ?";
+             $values = [date("F"), date("Y"), 1, $this->writerId];
+             $result = Utility::queryTable("subscriptionPayment", "`month`, `year`", $condition, $values);
+             if($result){
+                 $this->isSubscribed = true;
+             }else{
+                 $this->isSubscribed = false;
+                 Utility::updateTable($tableName, "isSubscribed = ?", "userId = ?", [0, $this->writerId]);
+             }
+
             /**
              * The preferredArticlesTopics is stored as a JSON array in the database
              */
@@ -123,9 +137,34 @@
      */
     public function hasPaid(){
         //we will check for 10 seconds if the user has paid
-        $sql = "SELECT resultCode from subscriptionPayment where readerId = ?";
+        $month = date("F");
+        $year = date("Y");
+
+        $sql = "SELECT resultCode from subscriptionPayment where readerId = ? and `month` = ? and  `year` = ?";
         $conn = Utility::makeConnection();
-        
+
+        $stmt = $conn->prepare($sql);
+
+        for($i = 0; $i < 10; $i++){
+            set_time_limit(30);
+
+            if($stmt->execute([$this->writerId, $month, $year])){
+                $result = $stmt->fetchAll();
+                $result = $result[0];
+
+                if($result == -1){
+                    continue;
+                }
+
+                if($result == 0){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            sleep(1);
+        }
+        return false;
     }
 
     public function reportArticle($articleId, $commplaint){
@@ -134,6 +173,25 @@
     
 
 
+
+    /**
+     * Get the reader Subscription is represented as integer
+     */ 
+    public function isSubscribed()
+    {
+        return $this->isSubscribed;
+    }
+
+    /**
+     * Set the reader Subscription is represented as integer
+     *
+     * @return  self
+     */ 
+    public function setIsSubscribed($isSubscribed)
+    {
+        $this->isSubscribed = $isSubscribed;
+        return $this;
+    }
  }
 
 ?>
