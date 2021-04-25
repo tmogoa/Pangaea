@@ -91,7 +91,8 @@
                 	readerId INT(20) UNSIGNED,
                 	FOREIGN KEY (readerId) REFERENCES users(userId),
                 	articleId INT(20) UNSIGNED,
-			timeReading INT,  
+			timeReading INT,
+			read_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
                 	FOREIGN KEY (articleId) REFERENCES article(articleId)
 
 
