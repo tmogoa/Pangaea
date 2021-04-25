@@ -19,7 +19,6 @@
             try{
                 $conn->beginTransaction();
 
-                
                 //Abart, please write the db creation statement in here. Make sure to add drop if exist or something to check if the table already exist if you only want to update it.
 
                 //We reomoved the not null from on some columns
@@ -32,14 +31,14 @@
                 	email VARCHAR(255) NOT NULL,
                 	password VARCHAR (256) NOT NULL,
                 	preferredArticleTopics VARCHAR(255),
-                	isSubscribed TINYINT default 0
-			profile_image VARCHAR(500);
+                	isSubscribed TINYINT default 0,
+			        profile_image VARCHAR(500)
                 )";
 
                 $stmt1 =  $conn->prepare($sql);
                 $stmt1->execute();
 
-                $sql = "CREATE TABLE ArticleTopics
+                $sql = "CREATE TABLE articleTopics
                 (
 
                 aTopicId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -52,7 +51,7 @@
                 $stmt2->execute();
 
                 //I already made some updates
-                $sql = "CREATE TABLE Article
+                $sql = "CREATE TABLE article
                 (
                 	articleId INT(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
                 	writerId INT(20) UNSIGNED NOT NULL,
@@ -72,7 +71,7 @@
                 $stmt3 =  $conn->prepare($sql);
                 $stmt3->execute();
 
-                $sql = "CREATE TABLE ArticleReaction 
+                $sql = "CREATE TABLE articleReaction 
                 (
                 	aReactionId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	articleId INT (20) UNSIGNED,
@@ -85,14 +84,14 @@
                 $stmt4 =  $conn->prepare($sql);
                 $stmt4->execute();
 
-                $sql = "CREATE TABLE Reading
+                $sql = "CREATE TABLE reading
                 (
                 	readingId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 	readerId INT(20) UNSIGNED,
                 	FOREIGN KEY (readerId) REFERENCES users(userId),
                 	articleId INT(20) UNSIGNED,
-			timeReading INT,
-			read_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+                    timeReading INT,
+                    read_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
                 	FOREIGN KEY (articleId) REFERENCES article(articleId)
 
 
@@ -101,7 +100,7 @@
                 $stmt5 =  $conn->prepare($sql);
                 $stmt5->execute();
 
-                $sql = "CREATE TABLE ArticleTags 
+                $sql = "CREATE TABLE articleTags 
                 (
                 tagRefId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 articleId INT(20) UNSIGNED,
@@ -114,7 +113,7 @@
                 $stmt6 =  $conn->prepare($sql);
                 $stmt6->execute();
 
-                $sql = "CREATE TABLE ArticleKeywords
+                $sql = "CREATE TABLE articleKeywords
                 (
                         keywordId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                         articleId INT(20) UNSIGNED,
@@ -136,12 +135,12 @@
                 $stmt8 =  $conn->prepare($sql);
                 $stmt8->execute();
 
-                $sql = "CREATE TABLE comment
+                $sql = "CREATE TABLE `comment`
                 (
                     commentId INT(20) UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                     readerId INT unsigned not null,
                     articleId INT unsigned not null,
-                    comment text not null,
+                    `comment` text not null,
                     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                     foreign key(readerId) references users(userId),

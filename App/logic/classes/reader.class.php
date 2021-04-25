@@ -118,6 +118,16 @@
         return Mpesa::stkPush($this->phoneNumber, $amount);
     }
 
+    /**
+     * This function verifies that the reader has paid the month's subscription fees
+     */
+    public function hasPaid(){
+        //we will check for 10 seconds if the user has paid
+        $sql = "SELECT resultCode from subscriptionPayment where readerId = ?";
+        $conn = Utility::makeConnection();
+        
+    }
+
     public function reportArticle($articleId, $commplaint){
 
     }
