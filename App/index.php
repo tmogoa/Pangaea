@@ -50,7 +50,7 @@
     //listing articles by tags
 
     
-    $sql = "SELECT article.articleId, writerId, title, subtitle, body, featured_image, article.updated_at, topic from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId LIMIT 1) as tagsTable on tagsTable.articleId = article.articleId where publishStatus='published' order by article.updated_at DESC";
+    $sql = "SELECT article.articleId, writerId, title, subtitle, body, featured_image, article.updated_at, topic from article left join (select * from articleTopics inner join articleTags on aTopicId = tagId LIMIT 1) as tagsTable on tagsTable.articleId = article.articleId where publishStatus='published' order by article.updated_at ASC";
 
     $conn = Utility::makeConnection();
     $stmt = $conn->prepare($sql);
@@ -61,6 +61,7 @@
 
                 $article = $articles[0];
                 $writer = new Reader($article['writerId']);
+                echo $writer->getFirstName()." ". $writer->getLastName()
                 ?>
                     <a href="read.php?id=<?php echo $article['articleId'] ?>">
                     <div class="flex text-gray-500 flex-col md:flex-row bg-white shadow-md rounded justify-between w-10/12 mx-auto md:h-96 mt-6">
@@ -69,7 +70,7 @@
                                 <img src="<?php echo $article['featured_image'] ?>" class="h-full w-full object-cover" alt="">
                             </div>
 
-                            <div class="flex flex-col mx-4 p-4">
+                            <div class="flex flex-col mx-4 p-4 w-6/12">
                                 <div class="flex flex-row items-center mb-3">
                                     <span class="pr-1 text-xs font-semibold"><?php echo $article['topic'] ?></span>
                                     <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full"></span>
@@ -78,16 +79,14 @@
                                 <div class="w-full flex flex-col mb-3">
                                     <span class="mb-2 text-lg font-bold md:text-3xl"><?php echo $article['title'] ?></span>
                                     <span class="text-md md:text-lg mb-1"><?php echo $article['subtitle'] ?></span>
-                                    <div class="hidden lg:block text-sm whitespace-normal overflow-ellipsis flex-grow-0 px-4" id="output"><?php echo $article['body']; ?></div>
-                                    Tony, please write the script to render the body of the article 
-                                    in here.
+                                    <div class="hidden lg:block text-sm whitespace-normal h-24 overflow-hidden overflow-ellipsis flex-grow-0 px-4" id="output"></div>
                                 </div>
                                 <div class="flex-grow flex flex-col justify-end">
                                     <div class="flex flex-row items-center">
                                         <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
                                             <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
                                         </div>
-                                        <div class="text-xs"><?php echo $writer->getFirstName()." ". $writer->getLastName() ?></div>
+                                        <div class="text-xs bg-red-400"><?php echo $writer->getFirstName()." ". $writer->getLastName() ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -101,9 +100,6 @@
                                     for($i = 1; $i < count($articles); $i++) { 
                                         $article = $articles[$i];
                                 ?>
-                                        <!-- <div class="bg-white shadow-md p-2 rounded">grid grid-cols-3 gap-4</div>
-                                        <div class="bg-white shadow-md p-2 rounded">grid grid-cols-3 gap-4</div>
-                                        <div class="bg-white shadow-md p-2 rounded">grid grid-cols-3 gap-4</div> -->
                                         <a href="read.php?id=<?php echo $article['articleId'] ?>"><div class="flex justify-center items-center">
                                             <div class="flex flex-col p-4 sm:w-96 m-1 rounded justify-center bg-white shadow-md">
                                                 <div class=" mb-2 w-11/12 sm:w-80 sm:h-48 overflow-hidden rounded">
@@ -149,6 +145,11 @@
 
 
  ?>
-
+        <script src="./assets/js/parser.js"></script>
+        <script>
+            parser = new Parser();
+            const renderable = parser.parse(<?php echo $article['body']; ?>);
+            document.getElementById("output").innerHTML = renderable;
+        </script>
     </body>
 </html>

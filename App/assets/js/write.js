@@ -140,9 +140,9 @@ function listenForChanges() {
 }
 
 function autosave() {
-    $("#editorjs").keydown(listenForChanges);
-    $("#title").keydown(listenForChanges);
-    $("#subtitle").keydown(listenForChanges);
+    $("#editorjs").on("keydown onmouseup", listenForChanges);
+    $("#title").on("keydown onmouseup", listenForChanges);
+    $("#subtitle").on("keydown onmouseup", listenForChanges);
 }
 
 autosave();
