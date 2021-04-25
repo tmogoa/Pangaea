@@ -70,7 +70,7 @@
                                 <img src="<?php echo $article['featured_image'] ?>" class="h-full w-full object-cover" alt="">
                             </div>
 
-                            <div class="flex flex-col mx-4 p-4 w-6/12">
+                            <div class="flex flex-col mx-4 p-4 w-full md:w-6/12">
                                 <div class="flex flex-row items-center mb-3">
                                     <span class="pr-1 text-xs font-semibold"><?php echo $article['topic'] ?></span>
                                     <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full"></span>
