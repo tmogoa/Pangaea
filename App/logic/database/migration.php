@@ -181,6 +181,9 @@
 		FOREIGN KEY(articleId) references article(articleId),		
 		FOREIGN KEY (readerId) REFERENCES users(userId)
 		)";
+		    
+		$stmt11 $conn->prepare($sql);
+                $stmt11 ->execute();
 
 
                 $conn->commit();
