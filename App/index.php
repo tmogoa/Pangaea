@@ -101,18 +101,18 @@
                                         $article = $articles[$i];
                                 ?>
                                         <a href="read.php?id=<?php echo $article['articleId'] ?>"><div class="flex justify-center items-center">
-                                            <div class="flex flex-col p-4 sm:w-96 m-1 rounded justify-center bg-white shadow-md">
-                                                <div class=" mb-2 w-11/12 sm:w-80 sm:h-48 overflow-hidden rounded">
+                                            <div class="flex flex-col sm:w-96 m-1 rounded justify-center bg-white shadow-md border">
+                                                <div class=" mb-2 w-full sm:h-48 overflow-hidden rounded-t">
                                                     <img src="<?php echo $article['featured_image'] ?>" class="h-full w-full object-cover" alt="<?php 
                                                     echo $article['title'];
                                                     ?>">
                                                 </div>
-                                                <div class="flex flex-row items-center mb-1">
+                                                <div class="flex flex-row items-center mb-2 px-4">
                                                     <span class="pr-1 text-xs font-semibold"><?php echo $article['topic'] ?></span>
                                                     <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
                                                     <span class="text-xs"><?php echo date("F d, Y", strtotime($article['updated_at'])) ?></span>
                                                 </div>
-                                                <div class="w-full text-sm flex flex-col">
+                                                <div class="w-full text-sm flex flex-col px-4 pb-4">
                                                     <span class="font-bold mb-1"><?php echo $article['title'] ?></span>
                                                     <span class="text-xs"><?php echo $article['subtitle'] ?></span>
                                                 </div>
