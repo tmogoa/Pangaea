@@ -46,7 +46,7 @@ $email = $user->getEmail()
                     Logout
                 </a>
                 <a
-                    href=""
+                    href="profile.php"
                     class="px-10 py-3 hover:bg-indigo-500 hover:text-white w-full"
                 >
                     Profile
