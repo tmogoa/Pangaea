@@ -15,7 +15,7 @@
      $user = new Writer();
      $changePassword = false;
     
-     $user->setWriterId($_SESSION['userr_id']);
+     $user->setWriterId($_SESSION['userId']);
 
      //do not worry about validating the input. Everything is done by the persist method in the Writer
      //class.

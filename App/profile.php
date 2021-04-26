@@ -42,64 +42,73 @@
             });
         </script>
 
-        <div class="w-6/12 mx-auto flex flex-col p-6 border rounded-sm mt-6 shadow text-gray-500 mb-6">
+        <form enctype="multipart/form-data" method="POST">
+            <div class=" w-11/12 lg:w-6/12 mx-auto flex flex-col p-6 border rounded-sm mt-6 shadow text-gray-500 mb-6">
 
-            <div class="flex flex-col justify-center items-center mb-3">
-                <div class="w-24 h-24 overflow-hidden rounded-full border shadow-lg mb-2">
-                    <img src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
+                <div class="flex flex-col justify-center items-center mb-3">
+                    <div>
+                        <i class="fas fa-user-circle m-2 text-blue-400 text-9xl mx-2"></i>
+                    </div>
+                    <div class="hidden w-24 h-24 overflow-hidden rounded-full border shadow-lg mb-2">
+                        <img src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
+                    </div>
+                    <input type="file" name="profile-pic" class="hidden">
+                    <button 
+                        type="button"  
+                        id="change-btn"
+                        class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
+                    >
+                        Change
+                    </button>
                 </div>
-                <button 
-                    id="edit-btn"
-                    class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
-                >
-                    Change
-                </button>
-            </div>
 
 
-            <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold mb-1">firstname</span>
-                    <input placeholder="Firstname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" autofocus>
+                <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold mb-1">firstname</span>
+                        <input name="firstname" placeholder="Firstname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" autofocus>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold mb-1">lastname</span>
+                        <input name="lastname" placeholder="Lastname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" >
+                    </div>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold mb-1">lastname</span>
-                    <input placeholder="Lastname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" >
+
+                <div class="flex flex-col p-2 mb-4 rounded-sm">
+                    <span class="text-xs font-bold mb-1">email</span>
+                    <input name="email" placeholder="Your email" type="email" class="text-md p-2 border focus:outline-none rounded" value="lpage@google.com" >
+                </div>
+
+                <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold mb-2">old password</span>
+                        <input type="password" cpassword-errorlass="text-md p-2 border focus:outline-none rounded" name="old-password" placeholder="Enter old password">
+                        <span class="text-red-500" id="password-error"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold mb-2">new password</span>
+                        <input type="password" class="text-md mb-2 p-2 border focus:outline-none rounded" name="new-password" placeholder="Enter a new password">
+                        <span class="text-xs font-bold mb-2">confirm password</span>
+                        <input type="password" class="text-md p-2 border focus:outline-none rounded" name="password-confirmation" placeholder="Confirm password">
+                    </div>
+                </div>
+
+                <div class="flex flex-col p-2 mb-4 rounded-sm">
+                    <span class="text-xs font-bold mb-1">mpesa number</span>
+                    <input name="phone-number" placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" >
+                </div>
+
+                <div class="flex flex-row justify-end mb-3">
+                    <button 
+                        id="save-btn"
+                        type="submit"
+                        class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
+                    >
+                        Save
+                    </button>
                 </div>
             </div>
-
-            <div class="flex flex-col p-2 mb-4 rounded-sm">
-                <span class="text-xs font-bold mb-1">email</span>
-                <input placeholder="Your email" type="email" class="text-md p-2 border focus:outline-none rounded" value="lpage@google.com" >
-            </div>
-
-            <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold mb-2">old password</span>
-                    <input type="password" class="text-md p-2 border focus:outline-none rounded" id="old-password" placeholder="Enter old password">
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-xs font-bold mb-2">new password</span>
-                    <input type="password" class="text-md mb-2 p-2 border focus:outline-none rounded" id="new-password" placeholder="Enter a new password">
-                    <span class="text-xs font-bold mb-2">confirm password</span>
-                    <input type="password" class="text-md p-2 border focus:outline-none rounded" id="password-confirmation" placeholder="Confirm password">
-                </div>
-            </div>
-
-            <div class="flex flex-col p-2 mb-4 rounded-sm">
-                <span class="text-xs font-bold mb-1">mpesa number</span>
-                <input placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" >
-            </div>
-
-            <div class="flex flex-row justify-end mb-3">
-                <button 
-                    id="edit-btn"
-                    class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
-                >
-                    Save
-                </button>
-            </div>
-        </div>
+        </form>
 
         <!-- <div class="flex flex-col sm:flex bg-gray-100 rounded-md w-full sm:w-8/12 sm:mx-auto sm:mt-6 shadow overflow-hidden mb-10">
             
@@ -147,5 +156,6 @@
 
             </div>
         </div> -->
+        <script src="assets/js/profile.js"></script>
     </body>
 </html>
