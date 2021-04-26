@@ -9,10 +9,10 @@
   $userId = $_SESSION['userId'];
   
   $tableName = "article";
-  $column_spec = "writerId, publishStatus";
-  $values_spec = "?, ?";
+  $column_spec = "writerId, publishStatus, featured_image ";
+  $values_spec = "?, ?, ?";
 
-  $articleId = Utility::insertIntoTable($tableName, $column_spec, $values_spec, [$userId, "draft"]);
+  $articleId = Utility::insertIntoTable($tableName, $column_spec, $values_spec, [$userId, "draft", "assets/img/logo.svg"]);
   $_GET['id'] = $articleId;
 
   if($articleId == false){

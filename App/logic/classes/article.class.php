@@ -52,6 +52,7 @@
                         $this->writerId = $result['writerId'];
                         $this->publishStatus = $result['publishStatus'];
                         $this->featuredImage = $result['featured_image'];
+
                         $this->dateUpdated = $result['updated_at'];
                         $this->dateCreated = $result['created_at'];
                         $this->datePublished = $result['published_at'];
@@ -333,7 +334,9 @@
                 }
                 $values_specs .= ", ";
                 $column_specs .= "publishStatus";
+                
              
+                
 
                 //firstly dealing with the Article table
 
