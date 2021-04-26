@@ -35,7 +35,7 @@ Tables needed
      -commentId, articleId, readerId, comment, created_at, updated_at
 
 11. subscriptionPayment
-    - subPaymentId, readerId, merchantId (varchar 500), checkoutRequestId varchar(500), payer (varchar(20)), transactionId varchar(255) can be null, transactionDate timestamp can be null, resultCode (int default -1), month, year
+    - subPaymentId, readerId, merchantId (varchar 500), checkoutRequestId varchar(500), payer (varchar(20)), transactionId varchar(255) can be null, transactionDate timestamp can be null, resultCode (int default -1), month, year, made_at default current_timestamp
 
 12. earning
    -earningId, readerId, articleId, amount, month, year, earned_at  

@@ -33,6 +33,7 @@
             $details =  Utility::queryTable($tableName, $column_specs, $condition, $values, $conn);
             $this->firstName = $details[0]['firstname'];
             $this->lastName = $details[0]['lastname'];
+            $this->phoneNumber = $details[0]['phoneNumber'];
             $this->email = $details[0]['email'];
             $this->password = $details[0]['password'];
             $this->profileImage = $details[0]['profile_image'];
