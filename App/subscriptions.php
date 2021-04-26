@@ -120,16 +120,16 @@
                 class="modal-content flex flex-col sm:flex bg-gray-50 rounded-md w-10/12 sm:w-6/12 sm:mx-auto sm:mt-6 shadow  mb-10"
             >
                  <!--Header-->
-            <div class="flex justify-between p-2 items-center">
-                <div class="m-2 py-1 px-2 text-gray-500 text-lg">How to pay</div>
+            <div class="flex justify-between p-2 items-center border-b">
+                <div class="m-2 py-1 px-2 text-gray-500 text-lg">Subscribing</div>
                 <div class="flex justify-center items-center rounded-full hover:bg-gray-200 m-2 p-2">
                     <span class="text-gray-500 close-button flex justify-center items-center my-auto">&times;</span>
                 </div>
             </div>
 
                 <div class="m-2">
-                    
-                    <p class="text-gray-500 p-4">Pay 200ksh. via M-pesa to our paybill number. Once you receive a message from Safaricom confirming payment, click `I have paid below`</p>
+                    <p class="text-gray-500 p-2">Only 200 KES to read unlimited articles this for a month</p>
+                    <p class="text-gray-500 p-4 text-sm">We've just sent a prompt to your phone to confirm payment of Ksh. 200 for this month. Once you have paid click `I have paid` below.</p>
 
 
                     <!--Button-->
