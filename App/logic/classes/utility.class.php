@@ -16,7 +16,7 @@
          * Regular expressions for input validations
          */
         public static $nameRegex = "/^[\w]+(\s?[\w\-_\'\.]+?\s*?)+?$/";
-        public static $phoneRegex = "/^\+\d{10,15}$/";  
+        public static $phoneRegex = "/^\+\d{12}$/";  
         public static $textAreaRegex = ""; //who cares for sql injection when we are using PDO???
         
         /**
