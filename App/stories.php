@@ -68,11 +68,11 @@
             <!--<p>Editors picks</p>-->
 
             <!--Articles display-->
-            <div class="grid grid-flow-col grid-cols-3 grid-rows-2 gap-4">
+            <div class="grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 p-4">
                 
                 <!--Article 1-->
                 <div class="border border-gray-100 rounded-md">
-                    <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                    <img src="assets\img\person working.jpg" alt="" srcset="">
                     
                     <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold ">
                         <!--Tag-->
@@ -89,11 +89,11 @@
     </div>
 
     <div id="published" class="hidden">
-        <div class="grid grid-flow-col grid-cols-3 grid-rows-2 gap-4">
+        <div class="grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 p-4">
                     
                     <!--Article 1-->
                     <div class="border border-gray-100 rounded-md">
-                        <img src="\App\assets\img\person working.jpg" alt="" srcset="">
+                        <img src="assets\img\person working.jpg" alt="" srcset="">
                         
                         <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold ">
                             <!--Tag-->
