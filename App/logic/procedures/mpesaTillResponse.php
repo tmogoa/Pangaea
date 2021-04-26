@@ -36,6 +36,8 @@
 
         $values = [$stkCallBack->ResultCode,$items[1]->Value, $items[3]->Value , $items[4]->Value, $stkCallBack->MerchantRequestID, $stkCallBack->CheckoutRequestID];
         Utility::updateTable("subscriptionPayment", " resultCode = ?, transactionId = ?,  transactionDate = ?, payer = ?", "merchantId = ? and checkoutRequestId = ?", $values);
+
+        //the subscription status will be updated by Reader constructor
     
     }
     else{
