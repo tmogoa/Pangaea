@@ -28,3 +28,4 @@
 
  //updated the readTime of the article
  echo $reader->read($articleId, $readTime);
+?>

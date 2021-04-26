@@ -61,7 +61,6 @@
 
                 $article = $articles[0];
                 $writer = new Reader($article['writerId']);
-                echo $writer->getFirstName()." ". $writer->getLastName()
                 ?>
                     <a href="read.php?id=<?php echo $article['articleId'] ?>">
                     <div class="flex text-gray-500 flex-col md:flex-row bg-white shadow-md rounded justify-between w-10/12 mx-auto md:h-96 mt-6 border">
@@ -84,7 +83,7 @@
                                 <div class="flex-grow flex flex-col justify-end">
                                     <div class="flex flex-row items-center">
                                         <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                                            <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
+                                            <img src="<?php echo $writer->getProfileImage();?>" alt="" class="h-full w-full object-cover">
                                         </div>
                                         <div class="text-xs"><?php if($writer->getFirstName() != null){echo $writer->getFirstName()." ". $writer->getLastName();}else{echo $writer->getEmail();}  ?></div>
                                     </div>

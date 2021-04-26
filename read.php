@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if(!isset($_SESSION['userId'])){
+    header("Location: login.php");
+}
+
 /**
  * If sign up is needed to read the article, please indicate it here.
  * @Levi no signup needed
@@ -33,6 +38,8 @@ session_start();
  if(!$article->isPublished()){
      header("Location: index.php");
  }
+
+ $writer = new Writer($article->getWriterId());
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,11 +76,11 @@ session_start();
     
     <div class="flex flex-row items-center font-sans w-full sm:w-8/12 px-12 py-4 mx-auto m-1 justify-end">
         <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-            <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
+            <img src="<?php echo $writer->getProfileImage();?>" alt="" class="h-full w-full object-cover">
         </div>
         <div class="flex flex-col text-xs text-gray-500">
-            <span class="font-semibold">Tony Mogoa</span>
-            <span class="">July 2, 2020</span>
+            <span class="font-semibold"><?php echo $writer->getFirstName() . " " . $writer->getLastName();?></span>
+            <span class=""><?php echo date("F d, Y", strtotime($article->getDateUpdated())); ?></span>
         </div>
     </div>
     <div class="w-full sm:w-7/12 p-6 text-lg prose lg:prose-2xl font-serif mx-auto m-1">

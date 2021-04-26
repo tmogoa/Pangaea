@@ -10,3 +10,5 @@
         $name = strtolower($name);
         require_once("../classes/$name.class.php");
     });
+
+?>

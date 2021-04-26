@@ -1,5 +1,16 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION['userId'])){
+        header("Location: login.php");
+    }
+
+    spl_autoload_register(function($name){
+        $name = strtolower($name);
+        require_once(getcwd()."/logic/classes/$name.class.php");
+    });
+
+    $user = new Reader($_SESSION['userId']);
 ?>
 
 <!DOCTYPE html>
@@ -42,17 +53,22 @@
             });
         </script>
 
-        <form enctype="multipart/form-data" method="POST">
+        <form enctype="multipart/form-data" method="POST" id='avatar-form'>
+            <input type="file" name="profile-pic" class="hidden" id="file-add" name="profileImage"> 
+        </form>
+
+
+        <form enctype="multipart/form-data" method="POST" id="profile-details">
             <div class=" w-11/12 lg:w-6/12 mx-auto flex flex-col p-6 border rounded-sm mt-6 shadow text-gray-500 mb-6">
 
                 <div class="flex flex-col justify-center items-center mb-3">
-                    <div>
+                    <div id="fallback-avatar">
                         <i class="fas fa-user-circle m-2 text-blue-400 text-9xl mx-2"></i>
                     </div>
-                    <div class="hidden w-24 h-24 overflow-hidden rounded-full border shadow-lg mb-2">
-                        <img src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
+                    <div id="avatar-div" class="hidden w-24 h-24 overflow-hidden rounded-full border shadow-lg mb-2">
+                        <img id="avatar" src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
                     </div>
-                    <input type="file" name="profile-pic" class="hidden">
+                    
                     <button 
                         type="button"  
                         id="change-btn"
@@ -66,23 +82,29 @@
                 <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
                     <div class="flex flex-col">
                         <span class="text-xs font-bold mb-1">firstname</span>
-                        <input name="firstname" placeholder="Firstname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" autofocus>
+                        <input name="firstname" placeholder="Firstname" type="text" class="text-md p-2 border focus:outline-none rounded" value="<?php
+                        echo $user->getFirstName();
+                         ?>" autofocus>
                     </div>
                     <div class="flex flex-col">
                         <span class="text-xs font-bold mb-1">lastname</span>
-                        <input name="lastname" placeholder="Lastname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" >
+                        <input name="lastname" placeholder="Lastname" type="text" class="text-md p-2 border focus:outline-none rounded" value="<?php
+                        echo $user->getLastName();
+                        ?>" >
                     </div>
                 </div>
 
                 <div class="flex flex-col p-2 mb-4 rounded-sm">
                     <span class="text-xs font-bold mb-1">email</span>
-                    <input name="email" placeholder="Your email" type="email" class="text-md p-2 border focus:outline-none rounded" value="lpage@google.com" >
+                    <input name="email" placeholder="Your email" type="email" class="text-md p-2 border focus:outline-none rounded" value="<?php
+                    echo $user->getEmail();
+                    ?>" >
                 </div>
 
                 <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
                     <div class="flex flex-col">
                         <span class="text-xs font-bold mb-2">old password</span>
-                        <input type="password" cpassword-errorlass="text-md p-2 border focus:outline-none rounded" name="old-password" placeholder="Enter old password">
+                        <input type="password" class="text-md p-2 border focus:outline-none rounded" name="old-password" placeholder="Enter old password">
                         <span class="text-red-500" id="password-error"></span>
                     </div>
                     <div class="flex flex-col">
@@ -95,15 +117,15 @@
 
                 <div class="flex flex-col p-2 mb-4 rounded-sm">
                     <span class="text-xs font-bold mb-1">mpesa number</span>
-                    <input name="phone-number" placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" >
+                    <input name="phone-number" placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="<?php echo $user->getPhoneNumber() ?>" >
                 </div>
 
                 <div class="flex flex-row justify-end mb-3">
-                    <button 
-                        id="save-btn"
-                        type="submit"
-                        class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
-                    >
+                        <button 
+                            id="save-btn"
+                            type="submit"
+                            class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
+                        >
                         Save
                     </button>
                 </div>

@@ -21,11 +21,17 @@
       $response = Utility::uploadImage($sentImage, "prf-img-". $_SESSION['userId'], "profile_images",true);
 
       if($response !== false){
+          $reader->setProfileImage($response);
+          $conn = Utility::makeConnection();
+          $reader->uploadImage($response);
+          
           echo "{
               success: 1,
               file: \"$response\"
           }";
-      }else{
+
+      }
+      else{
           echo "UE";
       }
 

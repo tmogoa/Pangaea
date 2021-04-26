@@ -72,8 +72,8 @@ function addComment(comment) {
     ).val()}</span>
                     <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
                     <span class="text-xs">${dayjs().format(
-        "D MMM, YYYY h:mma"
-    )}</span>
+                        "D MMM, YYYY h:mma"
+                    )}</span>
                 </div>
                 <div class="text-xs ml-2">${comment}</div>
             </div>

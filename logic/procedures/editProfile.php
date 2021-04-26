@@ -47,7 +47,7 @@
         //the old password must also be sent. Else, we will not honor the change request.
         if(!empty($_POST['old-password'])){
             //then proceed to make sure the password match.
-            $tableName = "user";
+            $tableName = "users";
             $column_specs = "password";
             $condition = "userId = ?";
             $values = [$user->getWriterId()];
@@ -56,7 +56,7 @@
             if($password_result){
                 $password = $password_result[0];
                 //This is the hashed password
-                $user->setPassword($password);
+                $user->setPassword($password['password']);
                 $changePassword = true;
             }else{
                 echo "SQLE";//a database error occured while trying to change the password

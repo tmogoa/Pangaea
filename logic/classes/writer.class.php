@@ -300,7 +300,10 @@
         $tableName = "users";
         $column_specs = "`password` = ?";
         $condition = "userId = ?";
-        $values = [password_hash($this->password, PASSWORD_DEFAULT), $this->writerId];
+        $this->password = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $values = [$this->password, $this->writerId];
+        
         if(Utility::updateTable($tableName, $column_specs, $condition, $values)){
             $this->password = password_hash($this->password, PASSWORD_DEFAULT);
             return true;
@@ -452,10 +455,10 @@
             ///-----------------------
             //update the database
             if(Utility::updateTable('users', $column_specs, "userId = ?", $values, $pdo)){
-                return true;
+                return "OK";
             }
             else{
-                return false; //Quick check
+                return "UE"; //Quick check
             }
 
       }  
@@ -481,6 +484,17 @@
         $this->profileImage = $profileImage;
 
         return $this;
+    }
+
+    /**
+     * Saves an uploaded profile image to the database.
+     */
+    public function uploadImage($profileImage){
+        if(empty($profileImage)){
+            $profileImage = "assets/img/logo.svg";
+        }
+
+        Utility::updateTable("users", "profile_image = ?", "userId = ?", [$profileImage, $this->writerId]);
     }
 
  }

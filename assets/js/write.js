@@ -312,7 +312,7 @@ $("input#tag").keyup(function () {
                 }
                 suggestions.forEach((tag) => {
                     $("#suggested-tags-list").append(`
-                        <li class="p-2 hover:text-indigo-900 w-full" id="${tag.id}">${tag.text}</li>
+                        <li class="px-2 py-3 hover:bg-indigo-500 hover:text-white w-full" id="${tag.id}">${tag.text}</li>
                     `);
                     $(`li#${tag.id}`).click(function () {
                         addSuggestedTag(tag);
