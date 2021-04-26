@@ -56,7 +56,7 @@
             if($password_result){
                 $password = $password_result[0];
                 //This is the hashed password
-                $user->setPassword($password);
+                $user->setPassword($password['password']);
                 $changePassword = true;
             }else{
                 echo "SQLE";//a database error occured while trying to change the password
