@@ -86,7 +86,7 @@
                                         <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
                                             <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
                                         </div>
-                                        <div class="text-xs bg-red-400"><?php echo $writer->getFirstName()." ". $writer->getLastName() ?></div>
+                                        <div class="text-xs"><?php if($writer->getFirstName() != null){echo $writer->getFirstName()." ". $writer->getLastName();}else{echo $writer->getEmail();}  ?></div>
                                     </div>
                                 </div>
                             </div>
