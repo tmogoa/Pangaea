@@ -2,6 +2,13 @@
 
     /**
      * This script accepts the command from the reader to pay their subscription bills
+     * Responses: NPNE: No Phone Number Error - Redirects the user to the edit profile page
+     * to add their phone.
+     * UE: unknown Error
+     * OK: stkPush made successfully
+     * YES: confirmed payment
+     * NO: payment was not made
+     * IAE: Invalid Action Error
      */
 
      require_once("utility.inc.php");
@@ -34,10 +41,10 @@
          case "confirm":
             {
                 if($reader->hasPaid()){
-                    echo "yes";
+                    echo "YES";
                 }
                 else{
-                    echo "no";
+                    echo "NO";
                 }
                 break;
             }
