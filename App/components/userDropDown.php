@@ -52,10 +52,10 @@ $email = $user->getEmail()
                     Profile
                 </a>
                 <a
-                    href=""
+                    href="stories.php"
                     class="px-10 py-3 hover:bg-indigo-500 hover:text-white w-full"
                 >
-                    Test
+                    Stories
                 </a>
             </ul>
         </div>
