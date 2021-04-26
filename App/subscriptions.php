@@ -55,7 +55,7 @@
         </div>
         
         <div class="flex justify-center md:fixed md:left-64 md:top-1/3 mb-6">
-            <button class="trigger rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold">Pay subscription</button>
+            <button id="pay-btn" class="trigger rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold">Pay subscription</button>
         </div>
 
         <div class="flex flex-col w-4/12 mx-auto text-gray-500">
@@ -135,7 +135,7 @@
                     <!--Button-->
                     <div class="flex justify-end m-2">
                         <button 
-                            id="go-live"
+                            id="confirm-btn"
                             class="flex rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                         >
                         <img src="assets/img/grid2.svg" id="publish-loader" class="hidden mr-2" width="12" alt="..." class="mr-3">I have paid
