@@ -407,7 +407,7 @@
                     $file_name = $file_name[count($file_name) - 1];
                     return $file_name;
                 }
-               return "../";
+               return "";
              }
 
             /**
