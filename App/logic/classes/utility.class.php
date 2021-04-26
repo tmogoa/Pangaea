@@ -403,7 +403,7 @@
                 $target_dir = "../../storage/$in_directory";
                 $all_files  = glob("$target_dir/$image_name-*.jpeg");
                 if(count($all_files) > 0){
-                    $file_name = explode("/", $all_files);
+                    $file_name = explode("/", $all_files[0]);
                     $file_name = $file_name[count($file_name) - 1];
                     return $file_name;
                 }

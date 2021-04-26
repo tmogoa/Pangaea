@@ -486,6 +486,17 @@
         return $this;
     }
 
+    /**
+     * Saves an uploaded profile image to the database.
+     */
+    public function uploadImage($profileImage){
+        if(empty($profileImage)){
+            $profileImage = "assets/img/logo.svg";
+        }
+
+        Utility::updateTable("users", "profile_image = ?", "userId = ?", [$profileImage, $this->writerId]);
+    }
+
  }
 
 ?>
