@@ -82,7 +82,7 @@
                 <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
                     <div class="flex flex-col">
                         <span class="text-xs font-bold mb-2">old password</span>
-                        <input type="password" cpassword-errorlass="text-md p-2 border focus:outline-none rounded" name="old-password" placeholder="Enter old password">
+                        <input type="password" class="text-md p-2 border focus:outline-none rounded" name="old-password" placeholder="Enter old password">
                         <span class="text-red-500" id="password-error"></span>
                     </div>
                     <div class="flex flex-col">
