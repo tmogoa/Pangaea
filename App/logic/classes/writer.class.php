@@ -452,10 +452,10 @@
             ///-----------------------
             //update the database
             if(Utility::updateTable('users', $column_specs, "userId = ?", $values, $pdo)){
-                return true;
+                return "OK";
             }
             else{
-                return false; //Quick check
+                return "UE"; //Quick check
             }
 
       }  
