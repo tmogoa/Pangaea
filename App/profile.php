@@ -42,7 +42,7 @@
             });
         </script>
 
-        <form enctype="multipart/form-data" method="POST" id='avatar'>
+        <form enctype="multipart/form-data" method="POST" id='avatar-form'>
             <input type="file" name="profile-pic" class="hidden" id="file-add" name="profileImage"> 
         </form>
 
@@ -51,11 +51,11 @@
             <div class=" w-11/12 lg:w-6/12 mx-auto flex flex-col p-6 border rounded-sm mt-6 shadow text-gray-500 mb-6">
 
                 <div class="flex flex-col justify-center items-center mb-3">
-                    <div>
+                    <div id="fallback-avatar">
                         <i class="fas fa-user-circle m-2 text-blue-400 text-9xl mx-2"></i>
                     </div>
-                    <div class="hidden w-24 h-24 overflow-hidden rounded-full border shadow-lg mb-2">
-                        <img src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
+                    <div id="avatar-div" class="hidden w-24 h-24 overflow-hidden rounded-full border shadow-lg mb-2">
+                        <img id="avatar" src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
                     </div>
                     
                     <button 

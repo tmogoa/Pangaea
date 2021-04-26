@@ -34,7 +34,12 @@ $("#file-add").change(function () {
             contentType: false,
             processData: false,
             success: function (data) {
-                console.log(data);
+                const resp = JSON.parse(data);
+                if (resp.success == 1) {
+                    $("#fallback-avatar").addClass("hidden");
+                    $("#avatar-div").removeClass("hidden");
+                    $("#avatar").attr("src", resp.file);
+                }
             },
         });
     } else {

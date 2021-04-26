@@ -21,7 +21,11 @@ $email = $user->getEmail()
     <div
         class="flex flex-row border border-gray-200 rounded-md p-1 items-center"
     >
-        <i class="fas fa-user-circle m-2 text-blue-400 text-3xl mx-2"></i>
+       
+        <span class="w-8 h-8 overflow-hidden rounded-full border shadow">
+            <img id="avatar" src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
+        </span>
+        
         <span class="flex flex-col items-center mx-2">
             <span class="text-gray-500 text-xs"><?php echo $firstname ?></span>
             <span class="text-gray-500 text-xs"><?php echo $lastname ?></span>
