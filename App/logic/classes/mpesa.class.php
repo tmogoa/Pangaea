@@ -21,7 +21,7 @@
         //urls
         
         //till stk push
-        public static $till_call_back_url = "https://localhost/pangaea/logic/procedures/mpesaTillResponse.php";
+        public static $till_call_back_url = "https://094088647456.ngrok.io/pangaea/logic/procedures/mpesaTillResponse.php";
     
         //account ballance
         public static $account_bal_result_url = ""; 
@@ -73,9 +73,11 @@
          * Allows the reader to pay their bills through stk push
          */
         public static function stkPush($phone, $amount){
-            $url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+            $url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
       
             $access_token = self::generateToken();
+            echo "access token:  $access_token";
+
             if($access_token === false){
                 return false;
             }
@@ -108,8 +110,11 @@
             $curl_response = curl_exec($curl);
             curl_close($curl);
     
+            echo $curl_response;
+
             $response = json_decode($curl_response);
     
+            
             //var_dump($response);
             if(isset($response->ResponseCode) && $response->ResponseCode == "0"){
               //saving this in the order table
