@@ -300,7 +300,10 @@
         $tableName = "users";
         $column_specs = "`password` = ?";
         $condition = "userId = ?";
-        $values = [password_hash($this->password, PASSWORD_DEFAULT), $this->writerId];
+        $this->password = password_hash($newPassword, PASSWORD_DEFAULT);
+
+        $values = [$this->password, $this->writerId];
+        
         if(Utility::updateTable($tableName, $column_specs, $condition, $values)){
             $this->password = password_hash($this->password, PASSWORD_DEFAULT);
             return true;
