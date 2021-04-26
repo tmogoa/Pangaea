@@ -8,10 +8,10 @@
         /**
          * For database connections
          */
-        public static $dbName = "dbg41h1jb7cdum";
-        public static $dbServerName = "ec2-54-228-174-49.eu-west-1.compute.amazonaws.com";
-        public static $dbUserName = "apyqgvczcekvhw";
-        public static $dbPassword = "c633fec3ecfd4fbb954d4ca1ab8c9baef22068a63fbbe849bdc55fbbfa731d2a";
+        public static $dbName = "pangaea_db";
+        public static $dbServerName = "localhost";
+        public static $dbUserName = "root";
+        public static $dbPassword = "";
         /**
          * Regular expressions for input validations
          */
