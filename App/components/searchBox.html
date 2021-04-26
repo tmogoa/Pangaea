@@ -1,0 +1,18 @@
+<form action="">
+    <input
+        type="text"
+        class="py-2 px-4 rounded-3xl border focus:outline-none"
+        placeholder="Search articles"
+        id="search"
+    />
+</form>
+<script>
+    const searchInput = $("#search");
+    searchInput.keydown(function (event) {
+        if (event.keyCode == 13 && searchInput.val() != "") {
+            //submit data via ajax
+            console.log("submitting");
+            return false;
+        }
+    });
+</script>

@@ -1,0 +1,58 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+a {
+    text-decoration: none;
+}
+.active-indicator {
+    width: 20px;
+    height: 3px;
+    background-color: #2e82ff;
+    visibility: hidden;
+}
+.active-indicator.active {
+    visibility: visible;
+}
+.article {
+    font-family: "Newsreader", serif;
+}
+.font-13 {
+    font-size: 13px;
+}
+.font-12 {
+    font-size: 12px;
+}
+.font-grey {
+    color: #888989;
+}
+.logo {
+    width: 60px;
+    height: 60px;
+}
+.logo-text {
+    font-size: 21px;
+    font-weight: bold;
+    color: #2e82ff;
+}
+.nav-item {
+    color: #888989;
+}
+.nav-a-link {
+    color: #888989;
+}
+.nav-a-link.active {
+    color: #2e82ff;
+    font-weight: bolder;
+}
+.nav-item:hover {
+    color: #2e82ff;
+}
+
+.search-box {
+    width: 300px;
+    color: #888989;
+    font-size: 13px;
+}
+.search-box:focus {
+    outline: none;
+}

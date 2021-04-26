@@ -1,0 +1,41 @@
+This file will have the require tables for the database.
+Abart please check this file regularly and update the database using the migration.php
+
+All ids should be unsigned int.
+
+**New** All table names should be cammelcase. we have made some changes in the migration file. Check them out.
+
+Tables needed
+1. users table
+   -userId, firstname, lastname, phone, email, password, preferredArticleTopics (should be a varchar), isSubscribed (integer), profile_image (varchar 500)
+
+2. ArticleTopics
+   -aTopicId, topic, created_at, updated_at
+
+3. Article table
+   -articleId, writerId (foreign key referencing the userId), title (varchar 255) not null, subtitle (varchar 255 ), body TEXT not null, publishStatus(published, draft), shares (int), featured_image (varchar 255), created_at, updated_at, published_at
+
+4. ArticleReaction table
+   aReactionId, -articleId (foreign key), applaudedBy (foreign key userId), 
+
+/**new**/
+5. Reading table
+    -readingId, readerId (userId), articleId, timeReading, read_at
+
+6. ArticleTags //new
+   -tagRefId, articleId (foreign key), tagId (foreign key from the ArticleTopics table)
+
+7. ArticleKeywords
+ -keywordId, articleId, keywords, is_indexed default = 0
+
+8. index 
+   -termId, term (varchar(255)), docfreq (int unsigned)
+
+10. comment
+     -commentId, articleId, readerId, comment, created_at, updated_at
+
+11. subscriptionPayment
+    - subPaymentId, readerId, merchantId (varchar 500), checkoutRequestId varchar(500), payer (varchar(20)), transactionId varchar(255) can be null, transactionDate timestamp can be null, resultCode (int default -1), month, year, made_at default current_timestamp
+
+12. earning
+   -earningId, readerId, articleId, amount, month, year, earned_at  
