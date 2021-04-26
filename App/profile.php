@@ -1,5 +1,16 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION['userId'])){
+        header("Location: login.php");
+    }
+
+    spl_autoload_register(function($name){
+        $name = strtolower($name);
+        require_once(getcwd()."/logic/classes/$name.class.php");
+    });
+
+    $user = new Reader($_SESSION['userId']);
 ?>
 
 <!DOCTYPE html>
@@ -71,17 +82,23 @@
                 <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
                     <div class="flex flex-col">
                         <span class="text-xs font-bold mb-1">firstname</span>
-                        <input name="firstname" placeholder="Firstname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" autofocus>
+                        <input name="firstname" placeholder="Firstname" type="text" class="text-md p-2 border focus:outline-none rounded" value="<?php
+                        echo $user->getFirstName();
+                         ?>" autofocus>
                     </div>
                     <div class="flex flex-col">
                         <span class="text-xs font-bold mb-1">lastname</span>
-                        <input name="lastname" placeholder="Lastname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" >
+                        <input name="lastname" placeholder="Lastname" type="text" class="text-md p-2 border focus:outline-none rounded" value="<?php
+                        echo $user->getLastName();
+                        ?>" >
                     </div>
                 </div>
 
                 <div class="flex flex-col p-2 mb-4 rounded-sm">
                     <span class="text-xs font-bold mb-1">email</span>
-                    <input name="email" placeholder="Your email" type="email" class="text-md p-2 border focus:outline-none rounded" value="lpage@google.com" >
+                    <input name="email" placeholder="Your email" type="email" class="text-md p-2 border focus:outline-none rounded" value="<?php
+                    echo $user->getEmail();
+                    ?>" >
                 </div>
 
                 <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
@@ -100,15 +117,15 @@
 
                 <div class="flex flex-col p-2 mb-4 rounded-sm">
                     <span class="text-xs font-bold mb-1">mpesa number</span>
-                    <input name="phone-number" placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="+254708502805" >
+                    <input name="phone-number" placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="<?php echo $user->getPhoneNumber() ?>" >
                 </div>
 
                 <div class="flex flex-row justify-end mb-3">
-                    <button 
-                        id="save-btn"
-                        type="submit"
-                        class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
-                    >
+                        <button 
+                            id="save-btn"
+                            type="submit"
+                            class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
+                        >
                         Save
                     </button>
                 </div>

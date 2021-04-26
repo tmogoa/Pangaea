@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if(!isset($_SESSION['userId'])){
+    header("Location: login.php");
+}
+
 /**
  * If sign up is needed to read the article, please indicate it here.
  * @Levi no signup needed

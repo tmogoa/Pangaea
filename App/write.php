@@ -1,7 +1,19 @@
 <?php
     session_start();
+
+
     if(!isset($_SESSION['userId'])){
         header("Location: login.php");
+    }
+
+    spl_autoload_register(function($name){
+        $name = strtolower($name);
+        require_once(getcwd()."/logic/classes/$name.class.php");
+    });
+
+    if(isset($_GET['id']) && (int)$_GET['id'] !== 0){
+        $article = new Article($_GET['id']);
+        $articleId = $article->getId();
     }else{
         require_once "logic/procedures/addArticle.php";
     }
@@ -78,6 +90,7 @@
                             id="title"
                             class="font-serif text-lg w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-200 rounded"
                             placeholder="Title"
+                            value="<?php echo isset($article)?$article->getTitle(): ""; ?>"
                         />
                     </div>
                     <div class="w-full">
@@ -92,6 +105,7 @@
                             id="subtitle"
                             class="font-serif text-lg w-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-200 rounded"
                             placeholder="Subtitle"
+                            value="<?php echo isset($article)?$article->getSubtitle(): ""; ?>"
                         />
                     </div>
                 </div>
@@ -105,6 +119,11 @@
 
         <input type="text" name="user-id" id="user-id" value="<?php echo $_SESSION['userId'] ?>" hidden>
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
+        <?php
+            if(isset($article)){
+                echo "<input type=\"text\" name=\"article-id\" id=\"article-id\" value=\"{$article->getBody()}\" hidden>";
+            }
+        ?>
 
 
 
