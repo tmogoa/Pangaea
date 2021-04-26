@@ -44,40 +44,60 @@
 
         <div class="w-6/12 mx-auto flex flex-col p-6 border rounded-sm mt-6 shadow text-gray-500 mb-6">
 
-            <div class="flex justify-center items-center">
-                <div class="w-24 h-24 overflow-hidden rounded-full">
-                    <img src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="avatar">
+            <div class="flex flex-col justify-center items-center mb-3">
+                <div class="w-24 h-24 overflow-hidden rounded-full border shadow-lg mb-2">
+                    <img src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
                 </div>
+                <button 
+                    id="edit-btn"
+                    class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
+                >
+                    Change
+                </button>
+            </div>
+
+
+            <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold mb-1">firstname</span>
+                    <input placeholder="Firstname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" autofocus>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold mb-1">lastname</span>
+                    <input placeholder="Lastname" type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" >
+                </div>
+            </div>
+
+            <div class="flex flex-col p-2 mb-4 rounded-sm">
+                <span class="text-xs font-bold mb-1">email</span>
+                <input placeholder="Your email" type="email" class="text-md p-2 border focus:outline-none rounded" value="lpage@google.com" >
+            </div>
+
+            <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold mb-2">old password</span>
+                    <input type="password" class="text-md p-2 border focus:outline-none rounded" id="old-password" placeholder="Enter old password">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xs font-bold mb-2">new password</span>
+                    <input type="password" class="text-md mb-2 p-2 border focus:outline-none rounded" id="new-password" placeholder="Enter a new password">
+                    <span class="text-xs font-bold mb-2">confirm password</span>
+                    <input type="password" class="text-md p-2 border focus:outline-none rounded" id="password-confirmation" placeholder="Confirm password">
+                </div>
+            </div>
+
+            <div class="flex flex-col p-2 mb-4 rounded-sm">
+                <span class="text-xs font-bold mb-1">mpesa number</span>
+                <input placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" >
             </div>
 
             <div class="flex flex-row justify-end mb-3">
                 <button 
-                    id="go-live"
+                    id="edit-btn"
                     class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                 >
-                    Edit
+                    Save
                 </button>
-            </div>
-
-            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
-                <span class="text-xs font-bold mb-1">name</span>
-                <input type="text" class="text-md p-2 border focus:outline-none rounded" value="Larry Page" readonly>
-            </div>
-
-            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
-                <span class="text-xs font-bold mb-1">email</span>
-                <input type="text" class="text-md p-2 border focus:outline-none rounded" value="lpage@google.com" readonly>
-            </div>
-
-            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
-                <span class="text-xs font-bold mb-1">bio</span>
-                <textarea type="text" class="text-md p-2 border focus:outline-none rounded resize-none" readonly>Lawrence Edward Page is an American computer scientist and Internet entrepreneur. He is best known as one of the co-founders of Google along with Sergey Brin
-                </textarea>
-            </div>
-
-            <div class="flex flex-col p-2 mb-4 border rounded-sm shadow-sm">
-                <span class="text-xs font-bold mb-1">mpesa number</span>
-                <input type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" readonly>
             </div>
         </div>
 

@@ -11,7 +11,7 @@
          * Write the transaction that will create the tables in this function
          */
         public static function clearDatabase(){
-            $conn = Utility::makeConnection();
+            $conn = utility::makeConnection();
             $conn->query("drop database IF EXISTS pangaea_db");
             $conn->query("create database pangaea_db");
         }
