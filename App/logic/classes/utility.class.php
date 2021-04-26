@@ -233,7 +233,8 @@
          * checks the textarea input 
          */
         public static function sanitizeTextEditorInput($textEditorInput){
-            return htmlspecialchars($textEditorInput);
+            //return htmlspecialchars($textEditorInput);
+            return $textEditorInput;
         }
 
         
@@ -376,10 +377,10 @@
                 }
             
                 // quality is a value from 0 (worst) to 100 (best)
-                
-                if(imagejpeg($imageTmp, "../../storage/".$in_directory."/".$save_name."-".uniqid().".jpeg", 70)){
+                $name = "storage/".$in_directory."/".$save_name."-".uniqid().".jpeg";
+                if(imagejpeg($imageTmp, "../../$name", 70)){
                     imagedestroy($imageTmp);
-                    return true;
+                    return $name;
                 }
                 else{
                     imagedestroy($imageTmp);

@@ -116,6 +116,52 @@ function saveArticle(elem) {
     }
 }
 
+function saveWholeArticle() {
+    const urlToAutoSaver = "logic/procedures/editArticle.php";
+
+    editor
+        .save() //getting json from the editor
+        .then((output) => {
+            showLoader(true);
+            const featuredImg = parser.getFeaturedImg(output);
+            $.post(
+                urlToAutoSaver,
+                {
+                    id: articleId,
+                    body: output,
+                    featuredImg: featuredImg ? featuredImg : "",
+                },
+                function (data) {
+                    console.log(data);
+                    showLoader(false);
+                }
+            );
+        })
+        .catch((error) => {
+            console.log("error:" + error);
+        });
+
+    showLoader(true);
+
+    $.post(
+        urlToAutoSaver,
+        { id: articleId, title: $("#title").val() },
+        function (data) {
+            showLoader(false);
+        }
+    );
+
+    showLoader(true);
+
+    $.post(
+        urlToAutoSaver,
+        { id: articleId, subtitle: $("#subtitle").val() },
+        function (data) {
+            showLoader(false);
+        }
+    );
+}
+
 function showLoader(visible) {
     if (visible) {
         $("#loaderContainer").removeClass("justify-end");
@@ -140,9 +186,9 @@ function listenForChanges() {
 }
 
 function autosave() {
-    $("#editorjs").keydown(listenForChanges);
-    $("#title").keydown(listenForChanges);
-    $("#subtitle").keydown(listenForChanges);
+    $("#editorjs").on("keydown onmouseup", listenForChanges);
+    $("#title").on("keydown onmouseup", listenForChanges);
+    $("#subtitle").on("keydown onmouseup", listenForChanges);
 }
 
 autosave();
@@ -174,17 +220,6 @@ tagInput.keydown(function (event) {
     if (event.keyCode == 13 && tagInput.val() != "") {
         const tagIndex = tags.length;
         addTag({ id: null, text: tagInput.val(), index: tagIndex });
-        // $("#tags").append(
-        //     ` <span id="${tagIndex}" class="rounded m-2 border p-2 text-gray-500 inline-flex items-center justify-between">
-        //     <span class="text-xs mr-2">
-        //     ${tagInput.val()}
-        //     </span>
-        //     <span class="inline-flex justify-center items-center rounded-full hover:bg-gray-200">
-        //         <button class="x-button inline-flex justify-center items-center focus:outline-none" onclick="removeTag(this)">&times;</button>
-        //     </span>
-        // </span>`
-        // );
-        // tagInput.val("");
         return false;
     }
 });
@@ -217,6 +252,7 @@ function removeTag(elem) {
 
 $("#go-live").click(function () {
     //Removing null elems from the array
+    $("#publish-loader").removeClass("hidden");
     const finalTags = [];
     tags.forEach((element) => {
         if (element !== null) {
@@ -227,6 +263,7 @@ $("#go-live").click(function () {
 });
 
 function sendTags(finalTags) {
+    saveWholeArticle();
     const articleId = $("#article-id").val();
     const url = "logic/procedures/publishArticle.php";
     $.post(

@@ -69,7 +69,14 @@
                         }
 
                         //readTime
-                        $this->readTime = round(count(preg_split("/\s+/", $this->body, 0))/200);
+                        $body = json_decode($this->body);
+                        $words = "";
+                        foreach($body->blocks as $block){
+                            if($block->type == "header" || $block->type == "paragraph"){
+                                $words .= " ".$block->data->text;
+                            }
+                        }
+                        $this->readTime = round(count(preg_split("/\s+/", $words, 0))/200);
                        
                         //calculating the number of readers
                         $numberOfReaders = Utility::queryTable("reading", "count(readingId) as numberOfReaders", "articleId = ?", [$this->id], $conn);
@@ -420,12 +427,11 @@
                 //tags are now in [1, 2, 3] therefore, can be used in a query
                 $tags = substr($tags, 1, strlen($tags) - 2); //getting raid of the [] brackets
                 //getting the PDO accepted format
-                $tags = preg_replace("/^(\d+)/", "?", $tags); //now in ?,?, ?, format
+                $tags = preg_replace("/(\d+)/", "?", $tags); //now in ?,?, ?, format
                 $tags = "($tags)";
                 $tableName = "articleTopics";
                 $column_specs = "topic";
                 $condition = "aTopicId in $tags";
-                
                 $tagNames = Utility::queryTable($tableName, $column_specs, $condition, $this->tags);
         
                 //appending tag names to the keywords
@@ -619,7 +625,7 @@
                         //loop through the tags.
                         //we will only put id in the tags array
                         $_tags = $tags;
-                        var_dump($_tags);
+                        //var_dump($_tags);
                         $finalTags = [];
                         foreach($_tags as $tag){
                             if(isset($tag->id) && !empty($tag->id)){
@@ -818,7 +824,15 @@
              */ 
             public function setReadTime()
             {
-                        $this->readTime = round(count(preg_split("/\s+/",$this->body, 0))/200);
+                        $body = json_decode($this->body);
+                        $words = "";
+                        foreach($body->blocks as $block){
+                            if($block->type == "header" || $block->type == "paragraph"){
+                                $words .= " ".$block->data->text;
+                            }
+                        }
+                        $this->readTime = round(count(preg_split("/\s+/", $words, 0))/200);
+                        
                         return $this;
             }
 
