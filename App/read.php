@@ -110,17 +110,17 @@ session_start();
             >
                  <!--Header-->
                  <div class="flex flex-col">
-                    <div class="flex justify-between p-2 items-center">
+                    <div class="flex justify-between p-2 items-center border-b">
                         <div class="mx-2 my-1 py-1 px-2 text-gray-500 text-lg">Comments</div>
                         <div class="flex justify-center items-center rounded-full hover:bg-gray-200 mx-2 my-1 px-2 py-2">
                             <span class="text-gray-500 close-button flex justify-center items-center my-auto">&times;</span>
                         </div>
                     </div>
                     <div class="p-4 flex flex-col">
-                        <div class="mb-1 flex flex-row justify-end">
+                        <textarea name="comment-input" id="comment-input" class="border focus:outline-none resize-none rounded p-4 h-15 w-full text-gray-500 text-sm mb-1" placeholder="Write comment here.."></textarea>
+                        <div class="flex flex-row justify-end">
                             <button class="rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold" id="post-btn">Post</button>
                         </div>
-                        <textarea name="comment-input" id="comment-input" class="border focus:outline-none resize-none rounded p-4 h-15 w-full text-gray-500 text-sm" placeholder="Write comment here.."></textarea>
                     </div>
                  </div>
 

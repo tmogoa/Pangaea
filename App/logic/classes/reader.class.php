@@ -140,7 +140,7 @@
         $month = date("F");
         $year = date("Y");
 
-        $sql = "SELECT resultCode from subscriptionPayment where readerId = ? and `month` = ? and  `year` = ?";
+        $sql = "SELECT resultCode from subscriptionPayment where readerId = ? and `month` = ? and  `year` = ? order by ";
         $conn = Utility::makeConnection();
 
         $stmt = $conn->prepare($sql);

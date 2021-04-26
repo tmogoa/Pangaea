@@ -54,11 +54,11 @@
             <p class="p-2 text-center text-gray-500 text-lg mb-6 mt-6">Subscriptions</p>
         </div>
         
-        <div class="flex justify-center md:fixed md:left-64 md:top-1/3 mb-6">
-            <button class="trigger rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold">Pay subscription</button>
+        <div class="flex justify-center lg:fixed lg:left-64 lg:top-1/3 mb-6">
+            <button id="pay-btn" class="trigger rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold">Pay subscription</button>
         </div>
 
-        <div class="flex flex-col w-4/12 mx-auto text-gray-500">
+        <div class="flex flex-col w-11/12 sm:w-4/12 mx-auto text-gray-500">
             
             <?php
                 $sql = "SELECT subPaymentId from subscriptionPayment where readerId = ? and `month` = ? and `year` = ? and resultCode = ?";
@@ -135,7 +135,7 @@
                     <!--Button-->
                     <div class="flex justify-end m-2">
                         <button 
-                            id="go-live"
+                            id="confirm-btn"
                             class="flex rounded text-white bg-blue-500 py-2 px-4 text-xs font-bold"
                         >
                         <img src="assets/img/grid2.svg" id="publish-loader" class="hidden mr-2" width="12" alt="..." class="mr-3">I have paid
@@ -178,7 +178,7 @@
 
             </div>
         </div> -->
-    <script src="./assets/js/read.js"></script>
+    <script src="./assets/js/subscriptions.js"></script>
 
     </body>
         
