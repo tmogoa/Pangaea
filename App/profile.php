@@ -82,7 +82,7 @@
                 <div class="flex flex-row p-2 mb-4 rounded-sm justify-between">
                     <div class="flex flex-col">
                         <span class="text-xs font-bold mb-2">old password</span>
-                        <input type="password" cpassword-errorlass="text-md p-2 border focus:outline-none rounded" name="old-password" placeholder="Enter old password">
+                        <input type="password" class="text-md p-2 border focus:outline-none rounded" name="old-password" placeholder="Enter old password">
                         <span class="text-red-500" id="password-error"></span>
                     </div>
                     <div class="flex flex-col">
@@ -95,7 +95,7 @@
 
                 <div class="flex flex-col p-2 mb-4 rounded-sm">
                     <span class="text-xs font-bold mb-1">mpesa number</span>
-                    <input name="phone-number" placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="+254 708-502-805" >
+                    <input name="phone-number" placeholder="Your phone number" type="text" class="text-md p-2 border focus:outline-none rounded" value="+254708502805" >
                 </div>
 
                 <div class="flex flex-row justify-end mb-3">
