@@ -85,6 +85,8 @@
                 </div>
                 
             </div>
+
+
         </div>
     </div>
 
@@ -93,33 +95,33 @@
                     
                     <!--Article 1-->
                     <div class="border border-gray-100 rounded-md">
-                        <img src="assets\img\person working.jpg" alt="" srcset="">
+                            <img src="assets\img\person working.jpg" alt="" srcset="">
+                            
+                            <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold ">
+                                <!--Tag-->
+                                <p>Development</p>
+                                <!--Date-->
+                                <p class="text-right">July 2, 2020</p>
+                            </div>
+                            <!--Title-->
+                        <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
                         
-                        <div class="flex text-gray-500 p-4 m-0 sm:w-8/12 w-full space-x-2 font-bold ">
-                            <!--Tag-->
-                            <p>Development</p>
-                            <!--Date-->
-                            <p class="text-right">July 2, 2020</p>
-                        </div>
-                        <!--Title-->
-                    <p class="font-bold">Hybrid vs Nature - Here is how you can chose one over the other</p>
-                    
-                    <!--Statistics-->
-                    <div class="border border-gray-100 rounded-md m-2">
-                        <div class="flex space-x-10 ">
-                                <p class="text-gray-500">THIS MONTH</p>
-                        </div>
-                        <div class="grid grid-cols-2 divide-x divide-gray-100">
-                            <div>
-                                <p class="text-green-500 font-bold">KES</p>
-                                <p class="text-gray-500 font-bold text-4xl">3489</p>
+                        <!--Statistics-->
+                        <div class="border border-gray-100 rounded-md m-2">
+                            <div class="flex space-x-10 ">
+                                    <p class="text-gray-500">THIS MONTH</p>
                             </div>
-                            <div>
-                                <p class="text-green-500 font-bold">VIEWS</p>
-                                <p class="text-gray-500 font-bold text-4xl">2.4K</p>
+                            <div class="grid grid-cols-2 divide-x divide-gray-100">
+                                <div>
+                                    <p class="text-green-500 font-bold">KES</p>
+                                    <p class="text-gray-500 font-bold text-4xl">3489</p>
+                                </div>
+                                <div>
+                                    <p class="text-green-500 font-bold">VIEWS</p>
+                                    <p class="text-gray-500 font-bold text-4xl">2.4K</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </div>
 
                     

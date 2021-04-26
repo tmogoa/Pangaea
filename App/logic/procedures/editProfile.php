@@ -15,35 +15,35 @@
      $user = new Writer();
      $changePassword = false;
     
-     $user->setWriterId($_SESSION['userr_id']);
+     $user->setWriterId($_SESSION['userId']);
 
      //do not worry about validating the input. Everything is done by the persist method in the Writer
      //class.
 
-    if(isset($_POST['firstname'])){
+    if(!empty($_POST['firstname'])){
         $user->setFirstName($_POST['firstname']);
     }
 
-    if(isset($_POST['lastname'])){
+    if(!empty($_POST['lastname'])){
         $user->setLastName($_POST['lastname']);
     }
 
-    if(isset($_POST['email'])){
+    if(!empty($_POST['email'])){
         if(!empty($_POST['email'])){
             $user->setEmail($_POST['email']);
         }
         
     }
 
-    if(isset($_POST['phone-number'])){
+    if(!empty($_POST['phone-number'])){
         $user->setPhoneNumber($_POST['phone-number']);
     }
 
-    if(isset($_POST['country'])){
-        $user->setNationality($_POST['nationality']);
-    }
+    // if(!empty($_POST['country'])){
+    //     $user->setNationality($_POST['nationality']);
+    // }
 
-    if(isset($_POST['new-password'])){
+    if(!empty($_POST['new-password'])){
         //the old password must also be sent. Else, we will not honor the change request.
         if(!empty($_POST['old-password'])){
             //then proceed to make sure the password match.
@@ -87,12 +87,12 @@
 
     //if the image contains an error, we will not upload it and not error message will be sent back to the user.
 
-    if(isset($_FILES['profile-picture'])){
-        //the user wants to upload their profile image
-        if(Utility::isImage($_FILES['profile-picture']['tmp_name'])){
-            //proceed to upload the image
-            Utility::uploadImage($_FILES['profile-picture'], "profile-img-". $user->getWriterId()."-".uniqid(), true);
-        }
-    }
+    // if(!empty($_FILES['profile-picture'])){
+    //     //the user wants to upload their profile image
+    //     if(Utility::isImage($_FILES['profile-picture']['tmp_name'])){
+    //         //proceed to upload the image
+    //         Utility::uploadImage($_FILES['profile-picture'], "profile-img-". $user->getWriterId()."-".uniqid(), true);
+    //     }
+    // }
 
 ?>

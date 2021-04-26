@@ -42,7 +42,7 @@ window.addEventListener("click", windowOnClick);
 
 //Posting comment
 $("#post-btn").click(function () {
-    const url = "logic/procedures/addComment.php";
+    const url = "logic/classes/comment.class.php";
     $.post(
         url,
         {

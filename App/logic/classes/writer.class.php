@@ -364,7 +364,7 @@
         $column_specs = "";
         $values = [];
 
-      if(isset($this->firstName) && $this->firstName !== null){
+      if(isset($this->firstName) && !empty($this->firstName)){
             if(!Utility::checkName($this->firstName)){
                 return "UFNE";
             }
@@ -385,7 +385,8 @@
             $values[] = $this->lastName;
       }  
 
-      if(isset($this->email) && $this->email !== null){
+      if(isset($this->email) && !empty($this->email)){ 
+
             if(!Utility::checkEmail($this->email)){
                 return "UEE";
             }
@@ -417,7 +418,7 @@
                     $column_specs .= ", ";
                 }
                 $column_specs .= "phone = ? ";
-                $values[] = $this->phone;
+                $values[] = $this->phoneNumber;
             } 
             
             if(isset($this->nationality) && $this->nationality !== null)
@@ -425,6 +426,7 @@
                 if(!Utility::checkCountry($this->nationality)){
                     return "UNE";
                 }
+
                 if(count($values) > 0){
                     $column_specs .= ", ";
                 }
