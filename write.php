@@ -119,9 +119,12 @@
 
         <input type="text" name="user-id" id="user-id" value="<?php echo $_SESSION['userId'] ?>" hidden>
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
+        <p id="abody" hidden><?php echo isset($article) ? $article->getBody(): "" ?></p>
         
         <script>
-            var articleBody = <?php echo isset($article)?$article->getBody():"\"\"";?>;
+            console.log($("#abody").text());
+            var articleBody = JSON.parse($("#abody").text());
+            <?php //echo isset($article)? "var articleBody =".$article->getBody(): "var articleBody = null"?>
         </script>
 
 

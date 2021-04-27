@@ -69,7 +69,7 @@
 
     <div id="drafts">
         <!--Drafts State-->
-        <div class="grid grid-flow-col grid-cols-3 grid-rows-2 gap-4 p-4">
+        <div class="grid grid-flow-row grid-cols-3 gap-4 p-4">
             <?php 
                 $drafts = Utility::queryTable("article", "articleId", "writerId = ? and publishStatus = ?", [$_SESSION['userId'], "draft"]);
                 if($drafts){
