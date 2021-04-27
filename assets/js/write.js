@@ -5,6 +5,9 @@ let parser;
 let isListOpen = false;
 const ImageTool = window.ImageTool;
 const articleId = $("#article-id").val();
+
+// console.log($("#article-body").val());
+
 $(function () {
     parser = new Parser();
 
@@ -60,7 +63,7 @@ $(function () {
             },
         },
 
-        data: $("#article-id").val(),
+        data: articleBody,
     });
 });
 

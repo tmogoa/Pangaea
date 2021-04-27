@@ -119,12 +119,10 @@
 
         <input type="text" name="user-id" id="user-id" value="<?php echo $_SESSION['userId'] ?>" hidden>
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
-        <?php
-            if(isset($article)){
-                echo "<input type=\"text\" name=\"article-id\" id=\"article-id\" value=\"{$article->getBody()}\" hidden>";
-            }
-        ?>
-
+        
+        <script>
+            var articleBody = <?php echo $article->getBody()?>;
+        </script>
 
 
         <!-- Modal -->
