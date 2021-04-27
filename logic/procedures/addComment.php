@@ -9,7 +9,7 @@ if (isset($_POST['articleId'])) {
         exit;
     }
 
-    if( Utility::insertIntoTable("comment", "articleId, readerId, comment", "?, ?, ?", [$_GET['articleId'], $_SESSION['userId'], $_POST['comment']])){
+    if( Utility::insertIntoTable("comment", "articleId, readerId, comment", "?, ?, ?", [$_POST['articleId'], $_SESSION['userId'], $_POST['comment']])){
         exit('OK');
     }else{
         echo "UE";//Uknown error
