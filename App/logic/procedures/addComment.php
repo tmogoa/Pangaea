@@ -90,7 +90,7 @@ if (isset($_GET['articleId'])) {
         // POST variables exist, insert a new comment into the MySQL comments table (user submitted form)
         $stmt = $pdo->prepare('INSERT INTO comments (articleId, commentId, readerId, comment, created_at) VALUES (?,?,?,?,NOW())');
         $stmt->execute([$_GET['articleId'], $_POST['commentId'], $_POST['readerId'], $_POST['content']]);
-        exit('Your comment has been submitted!');
+        echo 'OK';
     }
 
     // Get all comments by the Article ID ordered by the submit date
@@ -103,7 +103,7 @@ if (isset($_GET['articleId'])) {
     $stmt->execute([$_GET['articleId']]);
     $comments_info = $stmt->fetch(PDO::FETCH_ASSOC);
 } else {
-    exit('No article ID specified!');
+       echo 'OK';
 }
 
 
