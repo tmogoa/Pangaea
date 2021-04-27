@@ -59,6 +59,8 @@ $(function () {
                 },
             },
         },
+
+        data: $("#article-id").val(),
     });
 });
 
