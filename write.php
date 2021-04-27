@@ -119,7 +119,11 @@
 
         <input type="text" name="user-id" id="user-id" value="<?php echo $_SESSION['userId'] ?>" hidden>
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
-        <p id="abody" hidden><?php echo isset($article) ? $article->getBody(): "" ?></p>
+        <p id="abody" hidden><?php if($article->getBody() !== null && !empty($article->getBody())){
+            echo $article->getBody();
+        }else{
+            echo "{}";
+        } ?></p>
         
         <script>
             console.log($("#abody").text());
