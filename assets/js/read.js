@@ -85,6 +85,6 @@ function addComment(comment) {
 }
 
 function incrementCommmentCount() {
-    const count = Number.parseInt($("#num-comments").val());
-    $("#num-comment").text(count + 1);
+    const count = Number.parseInt($("#num-comments").text());
+    $("#num-comments").text(count + 1);
 }
