@@ -11,7 +11,7 @@
         require_once(getcwd()."/logic/classes/$name.class.php");
     });
 
-    if(isset($_GET['id']) && (int)$_GET['id'] !== 0){
+    if(isset($_GET['id'])){
         $article = new Article($_GET['id']);
         $articleId = $article->getId();
     }else{
@@ -121,7 +121,7 @@
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
         
         <script>
-            var articleBody = <?php echo $article->getBody()?>;
+            var articleBody = <?php echo isset($article)?$article->getBody():"";?>;
         </script>
 
 
