@@ -66,7 +66,10 @@
                     <div class="flex text-gray-500 flex-col md:flex-row bg-white shadow-md rounded justify-between w-10/12 mx-auto md:h-96 mt-6 border">
 
                             <div class="w-full h-1/2 mb-2 md:w-6/12 md:h-full overflow-hidden rounded-tl rounded-bl-none rounded-tr md:rounded-tr-none md:rounded-bl flex-shrink-0">
-                                <img src="<?php echo $article['featured_image'] ?>" class="h-full w-full object-cover" alt="">
+                                <picture>
+                                    <!-- <source srcset="assets/img/logo.svg"> -->
+                                    <img srcset="<?php echo $article['featured_image'] ?>, assets/img/logo.svg" class="h-full w-full object-cover" alt="">
+                                </picture> 
                             </div>
 
                             <div class="flex flex-col mx-4 p-4 w-full md:w-6/12">
@@ -102,7 +105,7 @@
                                         <a href="read.php?id=<?php echo $article['articleId'] ?>"><div class="flex justify-center items-center">
                                             <div class="flex flex-col sm:w-96 m-1 rounded justify-center bg-white shadow-md border">
                                                 <div class=" mb-2 w-full h-48 overflow-hidden rounded-t">
-                                                    <img src="<?php echo $article['featured_image'] ?>" class="h-full w-full object-cover" alt="<?php 
+                                                    <img srcset="<?php echo $article['featured_image'] ?>, assets/img/logo.svg" class="h-full w-full object-cover" alt="<?php 
                                                     echo $article['title'];
                                                     ?>">
                                                 </div>

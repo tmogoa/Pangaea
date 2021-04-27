@@ -133,8 +133,28 @@ if(!isset($_SESSION['userId'])){
 
                 <!--Body-->
                 <div class="overflow-y-scroll w-full flex flex-col h-80" id="comments">
+                <?php
+                    $comments = Utility::queryTable("comment", "*", "articleId = ? order by ", )
 
-                    <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
+                ?>
+
+                <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
+                    <div class="mx-2">
+                        <div class="w-10 h-10 rounded-full overflow-hidden">
+                            <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="flex flex-col sm:flex-row sm:items-center text-sm mb-1">
+                            <span class="pr-1">${$("#firstname").val()} ${$("#lastname").val()}</span>
+                            <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
+                            <span class="text-xs">${dayjs().format("D MMM, YYYY h:mma")}</span>
+                        </div>
+                        <div class="text-xs ml-2">${comment}</div>
+                    </div>
+                </div>
+
+                    <!-- <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
                         <div class="mx-2">
                             <div class="w-10 h-10 rounded-full overflow-hidden">
                                 <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
@@ -148,7 +168,7 @@ if(!isset($_SESSION['userId'])){
                             </div>
                             <div class="text-xs ml-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Risus ultricies tristique nulla aliquet. Maecenas volutpat blandit aliquam etiam erat velit scelerisque in dictum.</div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>

@@ -1,5 +1,28 @@
 <?php
     session_start();
+
+    if(!isset($_SESSION['userId'])){
+        header("Location: login.php");
+    }
+    
+    if(!isset($_GET['id'])){
+        header("Location: index.php");
+    }
+
+    
+    $articleId = (int)$_GET['id'];
+
+    if($articleId == 0)//this is not to be used
+    {
+        header("Location: index.php");
+    }
+
+    spl_autoload_register(function($name){
+        $name = strtolower($name);
+        require_once(getcwd()."/logic/classes/$name.class.php");
+    });
+
+    
 ?>
 
 <!DOCTYPE html>
