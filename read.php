@@ -157,7 +157,7 @@ if(!isset($_SESSION['userId'])){
                                             <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
                                             <span class="text-xs"><?php echo $commentDate ?></span>
                                         </div>
-                                        <div class="text-xs ml-2"><?php $commentText ?></div>
+                                        <div class="text-xs ml-2"><?php echo $commentText ?></div>
                                     </div>
                                 </div>
                             <?php
