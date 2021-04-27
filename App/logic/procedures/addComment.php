@@ -91,6 +91,7 @@ if (isset($_GET['articleId'])) {
         $stmt = $pdo->prepare('INSERT INTO comments (articleId, commentId, readerId, comment, created_at) VALUES (?,?,?,?,NOW())');
         $stmt->execute([$_GET['articleId'], $_POST['commentId'], $_POST['readerId'], $_POST['content']]);
         echo 'OK';
+        exit();
     }
 
     // Get all comments by the Article ID ordered by the submit date
@@ -104,6 +105,7 @@ if (isset($_GET['articleId'])) {
     $comments_info = $stmt->fetch(PDO::FETCH_ASSOC);
 } else {
        echo 'OK';
+       exit();
 }
 
 
