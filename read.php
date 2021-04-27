@@ -134,25 +134,42 @@ if(!isset($_SESSION['userId'])){
                 <!--Body-->
                 <div class="overflow-y-scroll w-full flex flex-col h-80" id="comments">
                 <?php
-                    $comments = Utility::queryTable("comment", "*", "articleId = ? order by ", )
+                    $comments = Utility::queryTable("comment", "*", "articleId = ? order by created_at ASC LIMIT 10", [$articleId] );
+
+                    if($comments){
+                        foreach($comments as $comment){
+                            $commentText = $comment['comment'];
+                            $writer = new Reader($comment['readerId']);
+                            $commentDate = date("F d, Y h:i:s a", strtotime($comment['created_at']));
+
+                            ?>
+                                <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
+                                    <div class="mx-2">
+                                        <div class="w-10 h-10 rounded-full overflow-hidden">
+                                            <img src="<?php echo $writer->getProfileImage() ?>" alt="" class="h-full w-full object-cover">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div class="flex flex-col sm:flex-row sm:items-center text-sm mb-1">
+                                            <span class="pr-1"><?php echo $writer->getFirstName()." ". $writer->getLastName() ?></span>
+                                            <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
+                                            <span class="text-xs"><?php echo $commentDate ?></span>
+                                        </div>
+                                        <div class="text-xs ml-2"><?php $commentText ?></div>
+                                    </div>
+                                </div>
+                            <?php
+                        }
+                    }else{
+                        ?>
+                        <!--Be the first to comment. Tony write something here-->
+                        <?php
+                    }
+
 
                 ?>
 
-                <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
-                    <div class="mx-2">
-                        <div class="w-10 h-10 rounded-full overflow-hidden">
-                            <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
-                        </div>
-                    </div>
-                    <div class="flex flex-col">
-                        <div class="flex flex-col sm:flex-row sm:items-center text-sm mb-1">
-                            <span class="pr-1">${$("#firstname").val()} ${$("#lastname").val()}</span>
-                            <span class="mr-1 w-1 h-1 bg-gray-500 rounded-full hidden sm:inline"></span>
-                            <span class="text-xs">${dayjs().format("D MMM, YYYY h:mma")}</span>
-                        </div>
-                        <div class="text-xs ml-2">${comment}</div>
-                    </div>
-                </div>
+                
 
                     <!-- <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
                         <div class="mx-2">
