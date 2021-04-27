@@ -26,7 +26,7 @@
     }
 
     $newImage = uniqid("img-").".jpeg";
-    imagejpeg($imageTmp, "/..../storage/images/$newImage");
+    imagejpeg($imageTmp, "../../storage/images/$newImage");
     imagedestroy($imageTmp);
 
     //image uploading done.
