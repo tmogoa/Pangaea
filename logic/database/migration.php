@@ -168,6 +168,7 @@
                 transactionId VARCHAR(255) DEFAULT NULL,
                 transactionDate DATETIME DEFAULT NULL,
                 resultCode INT DEFAULT -1,
+		made_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 month INT,
                 year INT,
                 FOREIGN KEY (readerId) REFERENCES users(userId)
