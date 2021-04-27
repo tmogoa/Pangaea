@@ -121,7 +121,7 @@
         <input type="text" name="article-id" id="article-id" value="<?php echo $articleId ?>" hidden>
         
         <script>
-            var articleBody = <?php echo isset($article)?$article->getBody():"";?>;
+            var articleBody = <?php echo isset($article)?$article->getBody():"\"\"";?>;
         </script>
 
 
