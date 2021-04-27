@@ -133,6 +133,10 @@ if(!isset($_SESSION['userId'])){
 
                 <!--Body-->
                 <div class="overflow-y-scroll w-full flex flex-col h-80" id="comments">
+                <?php
+                    $comments = Utility::queryTable("comment", "*", "articleId = ? order by ", )
+
+                ?>
 
                     <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
                         <div class="mx-2">
