@@ -84,26 +84,18 @@ function show_write_comment_form($commentId = -1)
 
 
 // Article ID needs to exist, this is used to determine which comments are for which article
-if (isset($_GET['articleId'])) {
+if (isset($_POST['articleId'])) {
     // Check if the submitted form variables exist
     if (isset($_POST['readerId'], $_POST['content'])) {
         // POST variables exist, insert a new comment into the MySQL comments table (user submitted form)
         $stmt = $pdo->prepare('INSERT INTO comments (articleId, commentId, readerId, comment, created_at) VALUES (?,?,?,?,NOW())');
         $stmt->execute([$_GET['articleId'], $_POST['commentId'], $_POST['readerId'], $_POST['content']]);
-        exit('Your comment has been submitted!');
+        exit('OK');
     }
 
     // Get all comments by the Article ID ordered by the submit date
-    $stmt = $pdo->prepare('SELECT * FROM comments WHERE articleId = ? ORDER BY created_at DESC');
-    $stmt->execute([$_GET['articleId']]);
-    $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Get the total number of comments
-    $stmt = $pdo->prepare('SELECT COUNT(*) AS total_comments FROM comments WHERE articleId = ?');
-    $stmt->execute([$_GET['articleId']]);
-    $comments_info = $stmt->fetch(PDO::FETCH_ASSOC);
 } else {
-    exit('No article ID specified!');
+    exit('NIE'); //No Id Errors
 }
 
 
