@@ -58,11 +58,14 @@ $("#post-btn").click(function () {
 });
 
 function addComment(comment) {
+    console.log($("#avatar-img").val());
     $("#comments").append(`
         <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
             <div class="mx-2">
                 <div class="w-10 h-10 rounded-full overflow-hidden">
-                    <img src="storage/images/larry.jpeg" alt="" class="h-full w-full object-cover">
+                    <img src="${$(
+                        "#avatar-img"
+                    ).val()}" alt="" class="h-full w-full object-cover">
                 </div>
             </div>
             <div class="flex flex-col">

@@ -33,6 +33,7 @@ if(!isset($_SESSION['userId'])){
 
  $firstname = empty($user->getFirstName())?"":$user->getFirstName();
  $lastname = empty($user->getLastName())?$user->getEmail():$user->getLastName();
+ $profile_img = empty($user->getProfileImage()) ? "assets/img/logo.svg" : $user->getProfileImage();
 
  $article = new Article($articleId);
  if(!$article->isPublished()){
@@ -108,6 +109,7 @@ if(!isset($_SESSION['userId'])){
     <input type="text" name="article-id" id="article-id" value="<?php echo $articleId?>" hidden/>
     <input type="text" name="firstname" id="firstname" value="<?php echo $firstname?>" hidden/>
     <input type="text" name="lastname" id="lastname" value="<?php echo $lastname?>" hidden/>
+    <input type="text" name="avatar" id="avatar-img" value="<?php echo $profile_img?>" hidden/>
 
 
     <!-- Modal -->

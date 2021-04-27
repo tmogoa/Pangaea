@@ -23,7 +23,7 @@ $email = $user->getEmail()
     >
        
         <span class="w-8 h-8 overflow-hidden rounded-full border shadow">
-            <img id="avatar" src="assets/img/larry.jpeg" class="w-full h-full object-cover" alt="">
+            <img id="avatar" src="<?php echo $user->getProfileImage();?>" class="w-full h-full object-cover" alt="">
         </span>
         
         <span class="flex flex-col items-center mx-2">
