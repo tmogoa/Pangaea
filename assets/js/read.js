@@ -58,7 +58,6 @@ $("#post-btn").click(function () {
 });
 
 function addComment(comment) {
-    console.log($("#avatar-img").val());
     $("#comments").append(`
         <div class="flex flex-row text-gray-500 p-4 w-full justify-center">
             <div class="mx-2">
@@ -81,4 +80,11 @@ function addComment(comment) {
                 <div class="text-xs ml-2">${comment}</div>
             </div>
         </div>`);
+
+    incrementCommmentCount();
+}
+
+function incrementCommmentCount() {
+    const count = Number.parseInt($("#num-comments").val());
+    $("#num-comment").text(count + 1);
 }
